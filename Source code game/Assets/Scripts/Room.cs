@@ -55,20 +55,27 @@ public class Room : MonoBehaviour
     walls[Directions.BOTTOM] = bottomWall;
     walls[Directions.LEFT] = leftWall;
 
-    walls[Directions.TOP] = topDoor;
-    walls[Directions.RIGHT] = rightDoor;
-    walls[Directions.BOTTOM] = bottomDoor;
-    walls[Directions.LEFT] = leftDoor;
+    doors[Directions.TOP] = topDoor;
+    doors[Directions.RIGHT] = rightDoor;
+    doors[Directions.BOTTOM] = bottomDoor;
+    doors[Directions.LEFT] = leftDoor;
   }
 
-  private void SetActive(Directions dir, bool flag)
+  private void SetActive(Directions dir, bool flag, string type="wall")
   {
-    walls[dir].SetActive(flag);
+    if (type == "wall")
+    {
+      walls[dir].SetActive(flag);
+    }else
+    {
+      doors[dir].SetActive(flag);
+    }
+    
   }
 
-  public void SetDirFlag(Directions dir, bool flag)
+  public void SetDirFlag(Directions dir, bool flag, string type="wall")
   {
     dirflags[dir] = flag;
-    SetActive(dir, flag);
+    SetActive(dir, flag, type);
   }
 }

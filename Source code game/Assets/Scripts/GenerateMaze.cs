@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Pathfinding;
 
 public class GenerateMaze : MonoBehaviour
 {
@@ -33,6 +35,25 @@ public class GenerateMaze : MonoBehaviour
 
   bool generating = false;
   bool finished = false;
+
+  // door generation
+  [SerializeField]
+  private Seeker startAISeeker;
+
+  [SerializeField]
+  private AIAgent finishAI;
+
+  private float totalDistance;
+  // public float spawnDistance;
+  private bool isDistanceCalculated = false;
+  public int spawnPercentage {  get; private set; }
+  
+  [SerializeField]
+  private int lowerPercentageLimit, upperPercentageLimit = 0;
+
+
+
+
 
   private void GetRoomSize()
   {
@@ -261,7 +282,86 @@ public class GenerateMaze : MonoBehaviour
     Generate();
 
     AstarPath.active.Scan();
+
+    CheckTotalDistance();
+    GenerateDoor();
    }
+
+  //Gets ordered list of room objects based on Astar path to maze exit
+  private List<Room> GetOrderedRoomPath()
+  {
+    List<GraphNode> nodes = finishAI.seeker.GetCurrentPath().path;
+    List<Room> roomPath = new List<Room>();
+
+    foreach (GraphNode node in nodes)
+    {
+      Room room = GetRoomAtNode(node);
+      if (room != null && !roomPath.Contains(room)) // avoid duplicates
+        roomPath.Add(room);
+    }
+
+    // roomPath.Reverse(); // now ordered furthest from goal → closest to goal
+    return roomPath;
+  }
+
+  // Get room object that overlaps with graphnode
+  private Room GetRoomAtNode(GraphNode node)
+  {
+    Collider2D hit = Physics2D.OverlapPoint((Vector3)node.position);
+    return hit != null ? hit.GetComponent<Room>() : null;
+  }
+
+  void GenerateDoor()
+  {
+    if (GameManager.Instance.GetCurrentGameState() == "Practice") { return; } //! TODO 
+    Debug.Log("Gen Door function reached");
+
+    List<Room> rooms = GetOrderedRoomPath();
+
+    // pick a random room inbetween the percentage range
+    int percentage = GetSpawnPercentage();
+    int roomIdx = (int)Math.Floor((double)(percentage * rooms.Count) / 100);
+    Room room = rooms[roomIdx];
+
+    // set doors active (//! temporarily ALL doors TODO: only 2 correct doors)
+    foreach (Room.Directions dir in Enum.GetValues(
+      typeof(Room.Directions)))
+    {
+      if (dir != Room.Directions.NONE)
+      {
+        room.SetDirFlag(dir, true, "door");
+      }
+    }
+  }
+
+  private int GetSpawnPercentage()
+  {
+      return UnityEngine.Random.Range(lowerPercentageLimit, upperPercentageLimit);
+  }
+
+  private int maxTries = 50;
+  // IEnumerator CheckTotalDistanceCoroutine()
+  private void CheckTotalDistance()
+  {
+    int attempts = 0;
+    float distance = 0;
+
+    if (finishAI.path == null)
+    {
+      Debug.Log("Condition not met yet.");
+      // attempts++;
+      // yield return new WaitForSecondsRealtime(0.05f);
+    }
+    distance = finishAI.path.remainingDistance;
+
+    if (distance > 50f && !float.IsInfinity(distance))
+    {
+      totalDistance = distance;
+      // isDistanceCalculated = true;
+    }
+    spawnPercentage = GetSpawnPercentage();
+    Debug.Log("Total distance has been checked");
+  }
 
   void Generate()
   {
