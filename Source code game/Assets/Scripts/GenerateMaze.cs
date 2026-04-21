@@ -254,6 +254,7 @@ public class GenerateMaze : MonoBehaviour
 
     RemoveRoomWall(numX - 1, numY - 1, Room.Directions.RIGHT);
 
+    rooms[0, 0].visited = true; // prevent creating multiple paths from start to exit
     stack.Push(rooms[0, 0]);
 
     // StartCoroutine(Coroutine_Generate());
