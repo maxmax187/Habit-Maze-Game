@@ -270,9 +270,15 @@ public class GameManager : MonoBehaviour
     {
         pickedUpCoin = true;
         coinPickupTime = Math.Round((decimal)countdownTimer.timeRemaining, 2);
-        if (isCoinDevalued) { return; }
         if (gameState == GameState.Practice) { return; }
-        score++;
+        if (isSilver)
+            score += 1;
+        else
+            if (isCoinDevalued) { return; }
+            else
+                score += 2;
+
+
         uiManager.SetScore(score);
     }
 
@@ -309,6 +315,8 @@ public class GameManager : MonoBehaviour
     }
 
     private int maxTries = 50;
+    private bool isSilver;
+
     IEnumerator CheckTotalDistanceCoroutine()
     {
         int attempts = 0;
