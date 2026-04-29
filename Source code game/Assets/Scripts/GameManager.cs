@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
+
 public class GameManager : MonoBehaviour
 {
     private enum GameState
@@ -168,6 +170,12 @@ public class GameManager : MonoBehaviour
 
         trainingLevels = new int[trainingRounds];
         testLevels = new int[testRounds];
+
+        //generate here the order of gold vs silver coins (rounds, amt_gold, seed)
+        int[] coinOrderTraining = CoinOrderGenerator.GenerateRandomCoinOrder(trainingRounds, 1, 999);
+        int[] coinOrderTest = CoinOrderGenerator.GenerateRandomCoinOrder(testRounds, 1, 999);
+        Debug.Log($"Generated coin order for Training rounds of length: {trainingRounds}");
+        Debug.Log("Coin order: " + String.Join(", ", coinOrderTraining));
 
         Array.Copy(allLevels, 0, trainingLevels, 0, trainingRounds);
         Array.Copy(allLevels, trainingRounds, testLevels, 0, testRounds);
