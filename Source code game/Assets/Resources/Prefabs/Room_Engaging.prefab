@@ -305,6 +305,7 @@ GameObject:
   - component: {fileID: 5970895366468253169}
   - component: {fileID: 3890828653306007067}
   - component: {fileID: 564058910614433697}
+  - component: {fileID: 8973847131222662227}
   m_Layer: 6
   m_Name: Left Door
   m_TagString: Untagged
@@ -416,7 +417,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -432,6 +433,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &8973847131222662227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3615084440238311336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6745523a523f9a64e9a32e43c5da3d0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DoorCollision
 --- !u!1 &4703107114258003969
 GameObject:
   m_ObjectHideFlags: 0
@@ -995,6 +1008,7 @@ GameObject:
   - component: {fileID: 3941777650144906395}
   - component: {fileID: 3189766711981773138}
   - component: {fileID: 4478731603029878562}
+  - component: {fileID: 69880120012598847}
   m_Layer: 6
   m_Name: Bottom Door
   m_TagString: Untagged
@@ -1106,7 +1120,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -1122,6 +1136,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &69880120012598847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7436824906595521979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6745523a523f9a64e9a32e43c5da3d0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DoorCollision
 --- !u!1 &7893840743941246153
 GameObject:
   m_ObjectHideFlags: 0
@@ -1409,6 +1435,7 @@ GameObject:
   - component: {fileID: 6477089112147687520}
   - component: {fileID: 8280693757625501329}
   - component: {fileID: 4414360957909128663}
+  - component: {fileID: 7315831332828122905}
   m_Layer: 6
   m_Name: Top Door
   m_TagString: Untagged
@@ -1520,7 +1547,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -1536,6 +1563,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &7315831332828122905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8033331612779489991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6745523a523f9a64e9a32e43c5da3d0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DoorCollision
 --- !u!1 &8925957687890584457
 GameObject:
   m_ObjectHideFlags: 0
@@ -1547,6 +1586,7 @@ GameObject:
   - component: {fileID: 4372939865017493078}
   - component: {fileID: 8044724334351975102}
   - component: {fileID: 791943966633994824}
+  - component: {fileID: 1081479717589088940}
   m_Layer: 6
   m_Name: Right Door
   m_TagString: Untagged
@@ -1658,7 +1698,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -1674,6 +1714,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1081479717589088940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8925957687890584457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6745523a523f9a64e9a32e43c5da3d0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DoorCollision
 --- !u!1 &9078105398249069227
 GameObject:
   m_ObjectHideFlags: 0
