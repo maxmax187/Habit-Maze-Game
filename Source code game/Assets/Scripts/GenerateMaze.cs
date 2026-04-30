@@ -359,8 +359,7 @@ public class GenerateMaze : MonoBehaviour
             Debug.LogError($"[GenerateMaze.cs] GetRoomAtNode No room found near node at position {nodePos}");
         }
 
-        Debug.Log($"Found suitable room for door placement at position: {roomatNode.transform.position}");
-
+        // Debug.Log($"Found suitable room for door placement at position: {roomatNode.transform.position}");
         return roomatNode;
     }
 
@@ -388,17 +387,6 @@ public class GenerateMaze : MonoBehaviour
         Room room = rooms[roomIdx];
         SetDoorDirection(room, rooms[roomIdx - 1]); //Set entrance door (the door between the room before and the room)
         SetDoorDirection(room, rooms[roomIdx + 1]); //Set exit door (the door between the room after and the room)
-
-        //NOTE Amber: Don't think you will need this anymore as now only the entrance and exit door get spawned
-        // set doors active (//! temporarily ALL doors TODO: only 2 correct doors)
-        /*  foreach (Room.Directions dir in Enum.GetValues(
-            typeof(Room.Directions)))
-          {
-              if (dir != Room.Directions.NONE)
-              {
-                  room.SetDirFlag(dir, true, "door");
-              }
-          }*/
     }
 
     private void SetDoorDirection(Room room, Room otherRoom)
@@ -477,6 +465,11 @@ public class GenerateMaze : MonoBehaviour
                 rooms[i, j].SetDirFlag(Room.Directions.RIGHT, true);
                 rooms[i, j].SetDirFlag(Room.Directions.BOTTOM, true);
                 rooms[i, j].SetDirFlag(Room.Directions.LEFT, true);
+
+                rooms[i, j].SetDirFlag(Room.Directions.TOP, false, "door");
+                rooms[i, j].SetDirFlag(Room.Directions.RIGHT, false, "door");
+                rooms[i, j].SetDirFlag(Room.Directions.BOTTOM, false, "door");
+                rooms[i, j].SetDirFlag(Room.Directions.LEFT, false, "door");
                 rooms[i, j].visited = false;
             }
         }
