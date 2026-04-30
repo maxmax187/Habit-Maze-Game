@@ -12,6 +12,7 @@ public class Room : MonoBehaviour
     NONE,
   }
 
+  //walls
   [SerializeField]
   GameObject topWall;
   [SerializeField]
@@ -21,7 +22,19 @@ public class Room : MonoBehaviour
   [SerializeField]
   GameObject leftWall;
 
+  //doors
+  [SerializeField]
+  GameObject topDoor;
+  [SerializeField]
+  GameObject rightDoor;
+  [SerializeField]
+  GameObject bottomDoor;
+  [SerializeField]
+  GameObject leftDoor;
+
   Dictionary<Directions, GameObject> walls =
+    new Dictionary<Directions, GameObject>();
+  Dictionary<Directions, GameObject> doors =
     new Dictionary<Directions, GameObject>();
 
   public Vector2Int Index
@@ -41,16 +54,28 @@ public class Room : MonoBehaviour
     walls[Directions.RIGHT] = rightWall;
     walls[Directions.BOTTOM] = bottomWall;
     walls[Directions.LEFT] = leftWall;
+
+    doors[Directions.TOP] = topDoor;
+    doors[Directions.RIGHT] = rightDoor;
+    doors[Directions.BOTTOM] = bottomDoor;
+    doors[Directions.LEFT] = leftDoor;
   }
 
-  private void SetActive(Directions dir, bool flag)
+  private void SetActive(Directions dir, bool flag, string type="wall")
   {
-    walls[dir].SetActive(flag);
+    if (type == "wall")
+    {
+      walls[dir].SetActive(flag);
+    }else
+    {
+      doors[dir].SetActive(flag);
+    }
+    
   }
 
-  public void SetDirFlag(Directions dir, bool flag)
+  public void SetDirFlag(Directions dir, bool flag, string type="wall")
   {
     dirflags[dir] = flag;
-    SetActive(dir, flag);
+    SetActive(dir, flag, type);
   }
 }
