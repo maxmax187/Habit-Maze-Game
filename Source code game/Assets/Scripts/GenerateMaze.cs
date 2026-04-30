@@ -1,8 +1,8 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Pathfinding;
+using System;
+using System.Collections.Generic;
+using Unity.Mathematics;
+using UnityEngine;
 
 public class GenerateMaze : MonoBehaviour
 {
@@ -51,9 +51,7 @@ public class GenerateMaze : MonoBehaviour
     [SerializeField]
     private int lowerPercentageLimit, upperPercentageLimit = 0;
 
-
-
-
+    private Path _path;
 
     private void GetRoomSize()
     {
@@ -267,7 +265,10 @@ public class GenerateMaze : MonoBehaviour
 
     public void CreateMaze()
     {
-        if (generating) return;
+        if (generating)
+        {
+            return;
+        }
 
         Reset();
 
@@ -302,8 +303,10 @@ public class GenerateMaze : MonoBehaviour
             return;
         }
 
+        _path = p;
         CheckTotalDistance();
         GenerateDoor(p);
+        // StartCoroutine(ABC(p));
     }
 
     //Gets ordered list of room objects based on Astar path to maze exit
@@ -324,8 +327,10 @@ public class GenerateMaze : MonoBehaviour
         foreach (GraphNode node in path.path)
         {
             Room room = GetRoomAtNode(node);
-            if (room != null && !roomPath.Contains(room)) // avoid duplicates
+            if (room != null && !roomPath.Contains(room)) // avoid duplicates{
+            {
                 roomPath.Add(room);
+            }
         }
 
         // roomPath.Reverse(); // now ordered furthest from goal → closest to goal
@@ -335,8 +340,28 @@ public class GenerateMaze : MonoBehaviour
     // Get room object that overlaps with graphnode
     private Room GetRoomAtNode(GraphNode node)
     {
-        Collider2D hit = Physics2D.OverlapPoint((Vector3)node.position);
-        return hit != null ? hit.GetComponent<Room>() : null;
+        float roomsize = 10f;
+
+        Vector3 nodePos = (Vector3)node.position;
+        Room roomatNode = null;
+        foreach (Room room in rooms)
+        {
+            float distance = math.distance(nodePos, room.transform.position);
+            if (distance < roomsize)
+            {
+                roomsize = distance;
+                roomatNode = room;
+            }
+        }
+
+        if (roomatNode == null)
+        {
+            Debug.LogError($"[GenerateMaze.cs] GetRoomAtNode No room found near node at position {nodePos}");
+        }
+
+        Debug.Log($"Found suitable room for door placement at position: {roomatNode.transform.position}");
+
+        return roomatNode;
     }
 
     void GenerateDoor(Path calculatedPath)
@@ -361,16 +386,43 @@ public class GenerateMaze : MonoBehaviour
             rooms.Count - 1
         );
         Room room = rooms[roomIdx];
+        SetDoorDirection(room, rooms[roomIdx - 1]); //Set entrance door (the door between the room before and the room)
+        SetDoorDirection(room, rooms[roomIdx + 1]); //Set exit door (the door between the room after and the room)
 
+        //NOTE Amber: Don't think you will need this anymore as now only the entrance and exit door get spawned
         // set doors active (//! temporarily ALL doors TODO: only 2 correct doors)
-        foreach (Room.Directions dir in Enum.GetValues(
-          typeof(Room.Directions)))
+        /*  foreach (Room.Directions dir in Enum.GetValues(
+            typeof(Room.Directions)))
+          {
+              if (dir != Room.Directions.NONE)
+              {
+                  room.SetDirFlag(dir, true, "door");
+              }
+          }*/
+    }
+
+    private void SetDoorDirection(Room room, Room otherRoom)
+    {
+        Vector2 roomPosition = room.transform.position;
+        Vector2 otherRoomPosition = otherRoom.transform.position;
+        Vector2 direction = (otherRoomPosition - roomPosition).normalized;
+
+        Room.Directions roomDirection = direction switch
         {
-            if (dir != Room.Directions.NONE)
-            {
-                room.SetDirFlag(dir, true, "door");
-            }
+            { x: 1, y: 0 } => Room.Directions.RIGHT,
+            { x: -1, y: 0 } => Room.Directions.LEFT,
+            { x: 0, y: 1 } => Room.Directions.TOP,
+            { x: 0, y: -1 } => Room.Directions.BOTTOM,
+            _ => Room.Directions.NONE
+        };
+
+        if (roomDirection == Room.Directions.NONE)
+        {
+            Debug.LogWarning($"GetDoorDirection direction of door between room {room.name} and {otherRoom.name} not found");
+            return;
         }
+
+        room.SetDirFlag(roomDirection, true, "door");
     }
 
     private int GetSpawnPercentage()
@@ -432,7 +484,6 @@ public class GenerateMaze : MonoBehaviour
 
     private void Update()
     {
-
         if (!generating && !finished)
         {
             // Create maze for round 1
