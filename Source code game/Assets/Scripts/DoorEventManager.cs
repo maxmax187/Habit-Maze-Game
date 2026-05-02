@@ -49,6 +49,7 @@ public class DoorEventManager : MonoBehaviour
             // if doors not locked, move player in and out through doors
             if (doorsLocked)
             {
+                transitioning = false;
                 Debug.Log("[LOCKED] Player attempted to move through Locked doors");
             }
             else
@@ -63,7 +64,7 @@ public class DoorEventManager : MonoBehaviour
     {
         (Room.Directions dir, GameObject gameObject)? exitDoorTuple = GetExitDoor(entryDoor);
         if (exitDoorTuple == null) yield break;
-
+        Debug.Log("[DoorEventManager] Moving player in and out of room");
         //move player into room
         yield return StartCoroutine(DoTransition(entryDoor, player, reEnableMovement: false));
 
@@ -201,29 +202,44 @@ public class DoorEventManager : MonoBehaviour
             yield return null;
         }
 
+        // door boundaries, used to physically stop player from moving through locked doors
+        DoorBoundary entryBoundary = entryDoorTuple.Value.gameObject.transform.Find("PhysicalDoorBoundary").GetComponent<DoorBoundary>();
+        DoorBoundary exitBoundary = exitDoorTuple.Value.gameObject.transform.Find("PhysicalDoorBoundary").GetComponent<DoorBoundary>();
+
         if (receivedInput == 1) // 5.1 received keycode SPACE for going backwards to the coin
         {
             Debug.Log("received SPACE");
             yield return StartCoroutine(DoTransition(entryDoor, player, toInside: false, exitDir:entryDir));
 
             Debug.Log("[TODO] Use CoinController here to spawn coin");
-            yield return StartCoroutine(LockDoorsTemporarily());
+            // temporarily lock doors
+            yield return StartCoroutine(LockDoorsTemporarily(entryBoundary, exitBoundary));
         }
         else if (receivedInput == 0) // 5.2 received keycode "FORWARD" MOVEMENT for continuing without the coin
         {
             Debug.Log("received MOVEMENT KEY FORWARD");
             yield return StartCoroutine(DoTransition(exitDoor, player, toInside:false, exitDir:exitDir));
             doorsLocked = true;
+
+            // enable box collider for doors (permanent for level)
+            entryBoundary.Enable();
+            exitBoundary.Enable();
             Debug.Log("[DoorEventManager] permanently locked doors");
         };
     }
 
-    private IEnumerator LockDoorsTemporarily()
+    private IEnumerator LockDoorsTemporarily(DoorBoundary entryBoundary, DoorBoundary exitBoundary)
     {
         doorsLocked = true;
+        entryBoundary.Enable();
+        exitBoundary.Enable();
         Debug.Log($"[DoorEventManager] Doors temporarily locked for {doorLockedCooldown} seconds");
+
         yield return new WaitForSeconds(doorLockedCooldown);
+
         doorsLocked = false;
+        entryBoundary.Disable();
+        exitBoundary.Disable();
         Debug.Log("[DoorEventManager] Doors unlocked");
     }
 }
