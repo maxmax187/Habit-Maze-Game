@@ -173,7 +173,7 @@ public class DoorEventManager : MonoBehaviour
         // 3. Enable coin bubble GameObject with the silver sprite or gold sprite
         Debug.Log("[COIN THOUGHT BUBBLE]");
 
-        // 4. await key press
+        // key press to room direction mappings
         var exitWASDKeys = new Dictionary<Room.Directions, KeyCode>
         {
             { Room.Directions.TOP,    KeyCode.W         },
@@ -190,6 +190,7 @@ public class DoorEventManager : MonoBehaviour
             { Room.Directions.LEFT,   KeyCode.LeftArrow  }
         };
 
+        // 4. await key press
         int receivedInput = -1;
         while (receivedInput == -1)
         {
@@ -200,29 +201,29 @@ public class DoorEventManager : MonoBehaviour
             yield return null;
         }
 
-        if (receivedInput == 1)
+        if (receivedInput == 1) // 5.1 received keycode SPACE for going backwards to the coin
         {
             Debug.Log("received SPACE");
-        }else if (receivedInput == 0)
+            yield return StartCoroutine(DoTransition(entryDoor, player, toInside: false, exitDir:entryDir));
+
+            Debug.Log("[TODO] Use CoinController here to spawn coin");
+            yield return StartCoroutine(LockDoorsTemporarily());
+        }
+        else if (receivedInput == 0) // 5.2 received keycode "FORWARD" MOVEMENT for continuing without the coin
         {
-            Debug.Log("received movement key forward");
+            Debug.Log("received MOVEMENT KEY FORWARD");
+            yield return StartCoroutine(DoTransition(exitDoor, player, toInside:false, exitDir:exitDir));
+            doorsLocked = true;
+            Debug.Log("[DoorEventManager] permanently locked doors");
         };
+    }
 
-        //TODO fix exiting through correct direction
-        //  yield return StartCoroutine(DoTransition(triggeredDoor, player, toInside: false, exitDir: exitDir));
-
-          // user spacebar:
-        // 5.1 Spawn coin (CoinController.cs)
-        
-        // 6.1 DoTransition (outside, back)
-
-        // 7.1 Disable door trigger for some length of time
-
-
-
-        // user "forward" movement
-        // 5.2 DoTransition (outside, forward)
-
-        // 6.2 Disable door permanently
+    private IEnumerator LockDoorsTemporarily()
+    {
+        doorsLocked = true;
+        Debug.Log($"[DoorEventManager] Doors temporarily locked for {doorLockedCooldown} seconds");
+        yield return new WaitForSeconds(doorLockedCooldown);
+        doorsLocked = false;
+        Debug.Log("[DoorEventManager] Doors unlocked");
     }
 }

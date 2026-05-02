@@ -60777,7 +60777,7 @@ MonoBehaviour:
   player: {fileID: 580501515}
   finish: {fileID: 216827165}
   enableDevTools: 1
-  devToolKeyPressDuration: 2
+  devToolKeyPressDuration: 1
   levelSkipKey: 13
 --- !u!1001 &5910021378070460872
 PrefabInstance:
