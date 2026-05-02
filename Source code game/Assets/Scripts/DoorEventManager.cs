@@ -202,10 +202,6 @@ public class DoorEventManager : MonoBehaviour
             yield return null;
         }
 
-        // door boundaries, used to physically stop player from moving through locked doors
-        // DoorBoundary entryBoundary = entryDoorTuple.Value.gameObject.transform.Find("PhysicalDoorBoundary").GetComponent<DoorBoundary>();
-        // DoorBoundary exitBoundary = exitDoorTuple.Value.gameObject.transform.Find("PhysicalDoorBoundary").GetComponent<DoorBoundary>();
-
         if (receivedInput == 1) // 5.1 received keycode SPACE for going backwards to the coin
         {
             Debug.Log("received SPACE");
@@ -227,19 +223,14 @@ public class DoorEventManager : MonoBehaviour
         };
     }
 
-    // private IEnumerator LockDoorsTemporarily(DoorBoundary entryBoundary, DoorBoundary exitBoundary)
     private IEnumerator LockDoorsTemporarily()
     {
         doorsLocked = true;
-        // entryBoundary.Enable();
-        // exitBoundary.Enable();
         Debug.Log($"[DoorEventManager] Doors temporarily locked for {doorLockedCooldown} seconds");
 
         yield return new WaitForSeconds(doorLockedCooldown);
 
         doorsLocked = false;
-        // entryBoundary.Disable();
-        // exitBoundary.Disable();
         Debug.Log("[DoorEventManager] Doors unlocked");
     }
 }
