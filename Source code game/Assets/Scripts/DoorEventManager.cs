@@ -203,8 +203,8 @@ public class DoorEventManager : MonoBehaviour
         }
 
         // door boundaries, used to physically stop player from moving through locked doors
-        DoorBoundary entryBoundary = entryDoorTuple.Value.gameObject.transform.Find("PhysicalDoorBoundary").GetComponent<DoorBoundary>();
-        DoorBoundary exitBoundary = exitDoorTuple.Value.gameObject.transform.Find("PhysicalDoorBoundary").GetComponent<DoorBoundary>();
+        // DoorBoundary entryBoundary = entryDoorTuple.Value.gameObject.transform.Find("PhysicalDoorBoundary").GetComponent<DoorBoundary>();
+        // DoorBoundary exitBoundary = exitDoorTuple.Value.gameObject.transform.Find("PhysicalDoorBoundary").GetComponent<DoorBoundary>();
 
         if (receivedInput == 1) // 5.1 received keycode SPACE for going backwards to the coin
         {
@@ -213,7 +213,9 @@ public class DoorEventManager : MonoBehaviour
 
             Debug.Log("[TODO] Use CoinController here to spawn coin");
             // temporarily lock doors
-            yield return StartCoroutine(LockDoorsTemporarily(entryBoundary, exitBoundary));
+            yield return StartCoroutine(LockDoorsTemporarily());
+            // Refresh and Re-fire trigger for any player already standing in the previously locked doorway
+            entryDoor.GetComponent<DoorTrigger>().Refresh();   
         }
         else if (receivedInput == 0) // 5.2 received keycode "FORWARD" MOVEMENT for continuing without the coin
         {
@@ -221,25 +223,23 @@ public class DoorEventManager : MonoBehaviour
             yield return StartCoroutine(DoTransition(exitDoor, player, toInside:false, exitDir:exitDir));
             doorsLocked = true;
 
-            // enable box collider for doors (permanent for level)
-            entryBoundary.Enable();
-            exitBoundary.Enable();
             Debug.Log("[DoorEventManager] permanently locked doors");
         };
     }
 
-    private IEnumerator LockDoorsTemporarily(DoorBoundary entryBoundary, DoorBoundary exitBoundary)
+    // private IEnumerator LockDoorsTemporarily(DoorBoundary entryBoundary, DoorBoundary exitBoundary)
+    private IEnumerator LockDoorsTemporarily()
     {
         doorsLocked = true;
-        entryBoundary.Enable();
-        exitBoundary.Enable();
+        // entryBoundary.Enable();
+        // exitBoundary.Enable();
         Debug.Log($"[DoorEventManager] Doors temporarily locked for {doorLockedCooldown} seconds");
 
         yield return new WaitForSeconds(doorLockedCooldown);
 
         doorsLocked = false;
-        entryBoundary.Disable();
-        exitBoundary.Disable();
+        // entryBoundary.Disable();
+        // exitBoundary.Disable();
         Debug.Log("[DoorEventManager] Doors unlocked");
     }
 }

@@ -20,6 +20,7 @@ public class DoorSlideAnimation : MonoBehaviour
     private Vector3 rightHalf_open;
 
     private bool isOpen = false;
+    private DoorBoundary doorBoundary;
     private Coroutine activeCoroutine;
 
     void Awake()
@@ -36,6 +37,8 @@ public class DoorSlideAnimation : MonoBehaviour
 
         leftHalf_open  = leftHalf_closed  - axis * slideDistance;
         rightHalf_open = rightHalf_closed + axis * slideDistance;
+
+        doorBoundary = GetComponentInChildren<DoorBoundary>();
     }
 
     public void Open()
@@ -43,6 +46,7 @@ public class DoorSlideAnimation : MonoBehaviour
         if (isOpen) return;
         isOpen = true;
         if (activeCoroutine != null) StopCoroutine(activeCoroutine);
+        if (doorBoundary != null) doorBoundary.Disable(); // disable when door opens
         activeCoroutine = StartCoroutine(Slide(leftHalf_closed, leftHalf_open,
                                                rightHalf_closed, rightHalf_open));
     }
@@ -52,6 +56,7 @@ public class DoorSlideAnimation : MonoBehaviour
         if (!isOpen) return;
         isOpen = false;
         if (activeCoroutine != null) StopCoroutine(activeCoroutine);
+        if (doorBoundary != null) doorBoundary.Enable(); // enable when door closes
         activeCoroutine = StartCoroutine(Slide(leftHalf_open, leftHalf_closed,
                                                rightHalf_open, rightHalf_closed));
     }
