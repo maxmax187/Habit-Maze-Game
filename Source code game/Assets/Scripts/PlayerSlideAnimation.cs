@@ -9,6 +9,8 @@ public class PlayerSlideAnimation : MonoBehaviour
 
     public IEnumerator SlideToTarget(Vector3 target)
     {
+        target.z = transform.position.z;
+        
         while (Vector2.Distance(transform.position, target) > arrivalThreshold)
         {
             transform.position = Vector2.MoveTowards(
@@ -18,7 +20,6 @@ public class PlayerSlideAnimation : MonoBehaviour
             );
             yield return null;
         }
-
         transform.position = target;
     }
 }
