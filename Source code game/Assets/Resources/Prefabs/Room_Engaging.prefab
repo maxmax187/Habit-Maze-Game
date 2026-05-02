@@ -101,6 +101,7 @@ GameObject:
   m_Component:
   - component: {fileID: 278865042858429648}
   - component: {fileID: 2904491324891019713}
+  - component: {fileID: 1272730212626369184}
   m_Layer: 0
   m_Name: Room_Engaging
   m_TagString: Untagged
@@ -156,6 +157,20 @@ MonoBehaviour:
   rightDoor: {fileID: 3102842820709707505}
   bottomDoor: {fileID: 6726219913760960578}
   leftDoor: {fileID: 3615084440238311336}
+--- !u!114 &1272730212626369184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 964316816940393564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a460dd25d387ae2459d1b9b36029a5e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DoorEventManager
+  roomCenter: {fileID: 278865042858429648}
+  doors: []
 --- !u!1 &2556933729780299649
 GameObject:
   m_ObjectHideFlags: 0
@@ -236,7 +251,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.7843138, g: 0.7843138, b: 0.7843138, a: 1}
@@ -579,8 +594,8 @@ GameObject:
   - component: {fileID: 7063211560264718762}
   - component: {fileID: 3012796527502288309}
   - component: {fileID: 8938806301769813338}
-  - component: {fileID: 7514832990849416251}
-  - component: {fileID: 2434710966853116999}
+  - component: {fileID: 2483319414241421832}
+  - component: {fileID: 2242803046680340861}
   m_Layer: 6
   m_Name: Right Door
   m_TagString: Untagged
@@ -652,7 +667,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 0}
@@ -722,26 +737,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6745523a523f9a64e9a32e43c5da3d0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorCollision
---- !u!114 &7514832990849416251
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3102842820709707505}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59b8185d3081b41498c30be2aa0ae563, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
-  roomCenter: {fileID: 278865042858429648}
-  moveSpeed: 5
-  arrivalThreshold: 0.05
-  doorNewPosition: {x: 0, y: 1, z: 0}
-  doorNewRotation: 0
-  useLocalPosition: 1
-  slidingDoor: {fileID: 2434710966853116999}
---- !u!114 &2434710966853116999
+--- !u!114 &2483319414241421832
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -752,11 +748,9 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7114621e886ef7243b40cb2b88d9d272, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SlidingDoor
-  orientation: 3
-  halfA: {fileID: 6704408457099932930}
-  halfB: {fileID: 3266086093453862283}
-  slideDistance: 0.5
+  m_EditorClassIdentifier: Assembly-CSharp::DoorSlideAnimation
+  LeftHalf: {fileID: 6704408457099932930}
+  RightHalf: {fileID: 3266086093453862283}
   duration: 0.4
   easeCurve:
     serializedVersion: 2
@@ -782,6 +776,19 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  slideDistanceMultiplier: 0.6
+--- !u!114 &2242803046680340861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3102842820709707505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59b8185d3081b41498c30be2aa0ae563, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
 --- !u!1 &3615084440238311336
 GameObject:
   m_ObjectHideFlags: 0
@@ -794,8 +801,8 @@ GameObject:
   - component: {fileID: 3890828653306007067}
   - component: {fileID: 564058910614433697}
   - component: {fileID: 8973847131222662227}
-  - component: {fileID: 5211499960938096463}
-  - component: {fileID: 631180522736740265}
+  - component: {fileID: 7601116316487477789}
+  - component: {fileID: 4882685254666478848}
   m_Layer: 6
   m_Name: Left Door
   m_TagString: Untagged
@@ -867,7 +874,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 0}
@@ -937,26 +944,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6745523a523f9a64e9a32e43c5da3d0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorCollision
---- !u!114 &5211499960938096463
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3615084440238311336}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59b8185d3081b41498c30be2aa0ae563, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
-  roomCenter: {fileID: 278865042858429648}
-  moveSpeed: 5
-  arrivalThreshold: 0.05
-  doorNewPosition: {x: 0, y: 1, z: 0}
-  doorNewRotation: 0
-  useLocalPosition: 1
-  slidingDoor: {fileID: 631180522736740265}
---- !u!114 &631180522736740265
+--- !u!114 &7601116316487477789
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -967,11 +955,9 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7114621e886ef7243b40cb2b88d9d272, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SlidingDoor
-  orientation: 2
-  halfA: {fileID: 4657478282764265521}
-  halfB: {fileID: 8872363983801931125}
-  slideDistance: 0.5
+  m_EditorClassIdentifier: Assembly-CSharp::DoorSlideAnimation
+  LeftHalf: {fileID: 4657478282764265521}
+  RightHalf: {fileID: 8872363983801931125}
   duration: 0.4
   easeCurve:
     serializedVersion: 2
@@ -997,6 +983,19 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  slideDistanceMultiplier: 0.6
+--- !u!114 &4882685254666478848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3615084440238311336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59b8185d3081b41498c30be2aa0ae563, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
 --- !u!1 &3659152433589395583
 GameObject:
   m_ObjectHideFlags: 0
@@ -1100,8 +1099,8 @@ GameObject:
   - component: {fileID: 2673877767718026813}
   - component: {fileID: 2467375750008186065}
   - component: {fileID: 8928773160021873399}
-  - component: {fileID: 3340821269890941448}
-  - component: {fileID: 2939742813232258439}
+  - component: {fileID: 4949105394788954401}
+  - component: {fileID: 637378042712835508}
   m_Layer: 6
   m_Name: Top Door
   m_TagString: Untagged
@@ -1173,7 +1172,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 0}
@@ -1243,26 +1242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6745523a523f9a64e9a32e43c5da3d0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorCollision
---- !u!114 &3340821269890941448
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3948419914186043830}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59b8185d3081b41498c30be2aa0ae563, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
-  roomCenter: {fileID: 278865042858429648}
-  moveSpeed: 5
-  arrivalThreshold: 0.05
-  doorNewPosition: {x: 0, y: 1, z: 0}
-  doorNewRotation: 0
-  useLocalPosition: 1
-  slidingDoor: {fileID: 2939742813232258439}
---- !u!114 &2939742813232258439
+--- !u!114 &4949105394788954401
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1273,11 +1253,9 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7114621e886ef7243b40cb2b88d9d272, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SlidingDoor
-  orientation: 0
-  halfA: {fileID: 2577042375323108600}
-  halfB: {fileID: 4152528471233326873}
-  slideDistance: 0.5
+  m_EditorClassIdentifier: Assembly-CSharp::DoorSlideAnimation
+  LeftHalf: {fileID: 2577042375323108600}
+  RightHalf: {fileID: 4152528471233326873}
   duration: 0.4
   easeCurve:
     serializedVersion: 2
@@ -1303,6 +1281,19 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  slideDistanceMultiplier: 0.6
+--- !u!114 &637378042712835508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3948419914186043830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59b8185d3081b41498c30be2aa0ae563, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
 --- !u!1 &4509022494720110876
 GameObject:
   m_ObjectHideFlags: 0
@@ -1474,7 +1465,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.7843138, g: 0.7843138, b: 0.7843138, a: 1}
@@ -1703,7 +1694,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.7843138, g: 0.7843138, b: 0.7843138, a: 1}
@@ -1773,8 +1764,8 @@ GameObject:
   - component: {fileID: 571071671824603511}
   - component: {fileID: 3417011698925324904}
   - component: {fileID: 6527103596489681767}
-  - component: {fileID: 7077653733089114551}
-  - component: {fileID: 5108890802366827701}
+  - component: {fileID: 1907388669795230621}
+  - component: {fileID: 9151496046020765780}
   m_Layer: 6
   m_Name: Bottom Door
   m_TagString: Untagged
@@ -1846,7 +1837,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 0}
@@ -1916,26 +1907,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6745523a523f9a64e9a32e43c5da3d0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorCollision
---- !u!114 &7077653733089114551
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6726219913760960578}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59b8185d3081b41498c30be2aa0ae563, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
-  roomCenter: {fileID: 278865042858429648}
-  moveSpeed: 5
-  arrivalThreshold: 0.05
-  doorNewPosition: {x: 0, y: 1, z: 0}
-  doorNewRotation: 0
-  useLocalPosition: 1
-  slidingDoor: {fileID: 5108890802366827701}
---- !u!114 &5108890802366827701
+--- !u!114 &1907388669795230621
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1946,11 +1918,9 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7114621e886ef7243b40cb2b88d9d272, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SlidingDoor
-  orientation: 1
-  halfA: {fileID: 5137616842177455988}
-  halfB: {fileID: 6985085869682382301}
-  slideDistance: 0.5
+  m_EditorClassIdentifier: Assembly-CSharp::DoorSlideAnimation
+  LeftHalf: {fileID: 5137616842177455988}
+  RightHalf: {fileID: 6985085869682382301}
   duration: 0.4
   easeCurve:
     serializedVersion: 2
@@ -1976,6 +1946,19 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  slideDistanceMultiplier: 0.6
+--- !u!114 &9151496046020765780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6726219913760960578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59b8185d3081b41498c30be2aa0ae563, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
 --- !u!1 &6758605561519237253
 GameObject:
   m_ObjectHideFlags: 0
@@ -2147,7 +2130,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.7843138, g: 0.7843138, b: 0.7843138, a: 1}
@@ -2285,7 +2268,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.7843138, g: 0.7843138, b: 0.7843138, a: 1}
@@ -2423,7 +2406,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.7843138, g: 0.7843138, b: 0.7843138, a: 1}
@@ -2561,7 +2544,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.7843138, g: 0.7843138, b: 0.7843138, a: 1}
@@ -2790,7 +2773,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.7843138, g: 0.7843138, b: 0.7843138, a: 1}
