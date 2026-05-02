@@ -8,30 +8,29 @@ public class DoorEventManager : MonoBehaviour
 {
     [Header("Room")]
     public Transform roomCenter;
-    public bool doorEventHasHappened = false;
 
-    [Header("Doors")]
-    public DoorSlideAnimation[] doors;  // TODO possibly remove, don't think this is a required/used feature. Maybe for if we want to open all doors though, once the player has collected the coin??
+    [Header("Doors / Coin Event")]
     public float doorLockedCooldown = 5f;
     public float bufferDelay = 3f; // TODO make this a range instead of single variable
+    public bool doorsLocked = false;
+    public bool doorEventHasHappened = false;
+
 
     private bool transitioning = false;
 
 
     private Room room;
-    private Vector3 roomScale;
 
-    // set room script and transform component of gameObject this script is attached to
     private void Awake()
     {
         room = GetComponent<Room>();
-        // roomCenter = GetComponent<Transform>(); // experimental
-        // roomScale = roomCenter.localScale;
     }
 
     public void OnDoorTriggered(DoorSlideAnimation triggeredDoor, GameObject player)
     {
         if (transitioning) return;
+        Debug.Log("[TRIGGER] Player triggered door event");
+
         transitioning = true; //is only set to false again after exiting the room.
 
         // check if we should start coin spawn event or post-event door behaviour
@@ -39,14 +38,23 @@ public class DoorEventManager : MonoBehaviour
         {
             doorEventHasHappened = true;
             // StartCoroutine(DoTransition(triggeredDoor, player));
-            //DoCoinPresentation(BackDir, ForwardDir)
-            transitioning = false; //TODO temporary
+            (Room.Directions dir, GameObject gameObject)? entryDoorTuple = GetDoorTuple(triggeredDoor);
+            (Room.Directions dir, GameObject gameObject)? exitDoorTuple = GetExitDoor(triggeredDoor);
+
+            StartCoroutine(DoCoinPresentation(entryDoorTuple, exitDoorTuple, player));
+            // transitioning = false; //TODO temporary, will later happen automatically after player moved outside of door
         } else
         {
-            //TODO check if the player is allowed to go through the door yet, or whether it should be locked
-            // For now: simply moves player in through one door and out through the other
-            // perform some action here on the other active door that is not triggerdDoor
-            StartCoroutine(InAndOut(triggeredDoor, player));
+            //TODO thought bubble with locked door thought maybe??
+            // if doors not locked, move player in and out through doors
+            if (doorsLocked)
+            {
+                Debug.Log("[LOCKED] Player attempted to move through Locked doors");
+            }
+            else
+            {
+                StartCoroutine(InAndOut(triggeredDoor, player));  
+            }  
         }
     }
 
@@ -72,6 +80,18 @@ public class DoorEventManager : MonoBehaviour
         foreach (var kvp in activeDoors)
         {
             if (kvp.Value.GetComponent<DoorSlideAnimation>() != entryDoor)
+                return (kvp.Key, kvp.Value);
+        }
+        return null;
+    }
+
+    // Returns the active door and its room direction as a tuple
+    private (Room.Directions dir, GameObject gameObject)? GetDoorTuple(DoorSlideAnimation doorAnim)
+    {
+        Dictionary<Room.Directions, GameObject> activeDoors = room.GetActiveDoors();
+        foreach (var kvp in activeDoors)
+        {
+            if (kvp.Value.GetComponent<DoorSlideAnimation>() == doorAnim)
                 return (kvp.Key, kvp.Value);
         }
         return null;
@@ -127,7 +147,7 @@ public class DoorEventManager : MonoBehaviour
         // 4. Re-enable movement (unless specified otherwise)
         if (movement != null && reEnableMovement) movement.movementEnabled = true;
 
-        // 5. Close the door behind them
+        // 5. Close the door again
         door.Close();
 
         // 6. Only allow new door trigger to happen after having exited the room again
@@ -135,19 +155,63 @@ public class DoorEventManager : MonoBehaviour
     }
 
 
-    private IEnumerator DoCoinPresentation(DoorSlideAnimation triggeredDoor, GameObject player)
+    private IEnumerator DoCoinPresentation((Room.Directions dir, GameObject gameObject)? entryDoorTuple, (Room.Directions dir, GameObject gameObject)? exitDoorTuple, GameObject player)
     {
+        if (exitDoorTuple == null || entryDoorTuple == null || player == null) yield break;
+        Debug.Log("reached DoCoinPresentation");
+        DoorSlideAnimation exitDoor = exitDoorTuple.Value.gameObject.GetComponent<DoorSlideAnimation>();
+        Room.Directions exitDir = exitDoorTuple.Value.dir;
+
+        DoorSlideAnimation entryDoor = entryDoorTuple.Value.gameObject.GetComponent<DoorSlideAnimation>();
+        Room.Directions entryDir = entryDoorTuple.Value.dir;
+
         // 1. wait until player is moved inside room, do not re-enable movement yet.
-        yield return StartCoroutine(DoTransition(triggeredDoor, player, reEnableMovement: false));
+        yield return StartCoroutine(DoTransition(entryDoor, player, reEnableMovement: false));
 
         // 2. Some amount of delay as specified by bufferDelay variable
         yield return new WaitForSeconds(bufferDelay);
         // 3. Enable coin bubble GameObject with the silver sprite or gold sprite
+        Debug.Log("[COIN THOUGHT BUBBLE]");
 
         // 4. await key press
+        var exitWASDKeys = new Dictionary<Room.Directions, KeyCode>
+        {
+            { Room.Directions.TOP,    KeyCode.W         },
+            { Room.Directions.RIGHT,  KeyCode.D         },
+            { Room.Directions.BOTTOM, KeyCode.S         },
+            { Room.Directions.LEFT,   KeyCode.A         }
+        };
 
+        var exitArrowKeys = new Dictionary<Room.Directions, KeyCode>
+        {
+            { Room.Directions.TOP,    KeyCode.UpArrow    },
+            { Room.Directions.RIGHT,  KeyCode.RightArrow },
+            { Room.Directions.BOTTOM, KeyCode.DownArrow  },
+            { Room.Directions.LEFT,   KeyCode.LeftArrow  }
+        };
 
-        // user spacebar:
+        int receivedInput = -1;
+        while (receivedInput == -1)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+                receivedInput = 1;
+            else if (Input.GetKeyDown(exitWASDKeys[exitDir]) || Input.GetKeyDown(exitArrowKeys[exitDir]))
+                receivedInput = 0;
+            yield return null;
+        }
+
+        if (receivedInput == 1)
+        {
+            Debug.Log("received SPACE");
+        }else if (receivedInput == 0)
+        {
+            Debug.Log("received movement key forward");
+        };
+
+        //TODO fix exiting through correct direction
+        //  yield return StartCoroutine(DoTransition(triggeredDoor, player, toInside: false, exitDir: exitDir));
+
+          // user spacebar:
         // 5.1 Spawn coin (CoinController.cs)
         
         // 6.1 DoTransition (outside, back)

@@ -21,5 +21,9 @@ public class PlayerSlideAnimation : MonoBehaviour
             yield return null;
         }
         transform.position = target;
+
+        // stop persistance of walking animation after sliding player
+        Animator animator = GetComponent<Animator>();
+            if (animator != null) animator.SetFloat("Speed", 0f);
     }
 }

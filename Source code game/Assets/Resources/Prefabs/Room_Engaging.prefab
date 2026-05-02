@@ -170,7 +170,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorEventManager
   roomCenter: {fileID: 278865042858429648}
-  doors: []
+  doorLockedCooldown: 5
+  bufferDelay: 3
+  doorsLocked: 0
+  doorEventHasHappened: 0
 --- !u!1 &2556933729780299649
 GameObject:
   m_ObjectHideFlags: 0
@@ -593,9 +596,8 @@ GameObject:
   - component: {fileID: 8350160082872683413}
   - component: {fileID: 7063211560264718762}
   - component: {fileID: 3012796527502288309}
-  - component: {fileID: 8938806301769813338}
-  - component: {fileID: 2483319414241421832}
   - component: {fileID: 2242803046680340861}
+  - component: {fileID: 2483319414241421832}
   m_Layer: 6
   m_Name: Right Door
   m_TagString: Untagged
@@ -725,7 +727,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &8938806301769813338
+--- !u!114 &2242803046680340861
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -734,9 +736,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 3102842820709707505}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6745523a523f9a64e9a32e43c5da3d0c, type: 3}
+  m_Script: {fileID: 11500000, guid: 59b8185d3081b41498c30be2aa0ae563, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DoorCollision
+  m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
 --- !u!114 &2483319414241421832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -777,18 +779,6 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   slideDistanceMultiplier: 0.6
---- !u!114 &2242803046680340861
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3102842820709707505}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59b8185d3081b41498c30be2aa0ae563, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
 --- !u!1 &3615084440238311336
 GameObject:
   m_ObjectHideFlags: 0
@@ -802,7 +792,6 @@ GameObject:
   - component: {fileID: 564058910614433697}
   - component: {fileID: 8973847131222662227}
   - component: {fileID: 7601116316487477789}
-  - component: {fileID: 4882685254666478848}
   m_Layer: 6
   m_Name: Left Door
   m_TagString: Untagged
@@ -941,7 +930,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3615084440238311336}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6745523a523f9a64e9a32e43c5da3d0c, type: 3}
+  m_Script: {fileID: 11500000, guid: 59b8185d3081b41498c30be2aa0ae563, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorCollision
 --- !u!114 &7601116316487477789
@@ -984,18 +973,6 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   slideDistanceMultiplier: 0.6
---- !u!114 &4882685254666478848
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3615084440238311336}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59b8185d3081b41498c30be2aa0ae563, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
 --- !u!1 &3659152433589395583
 GameObject:
   m_ObjectHideFlags: 0
@@ -1100,7 +1077,6 @@ GameObject:
   - component: {fileID: 2467375750008186065}
   - component: {fileID: 8928773160021873399}
   - component: {fileID: 4949105394788954401}
-  - component: {fileID: 637378042712835508}
   m_Layer: 6
   m_Name: Top Door
   m_TagString: Untagged
@@ -1239,7 +1215,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3948419914186043830}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6745523a523f9a64e9a32e43c5da3d0c, type: 3}
+  m_Script: {fileID: 11500000, guid: 59b8185d3081b41498c30be2aa0ae563, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorCollision
 --- !u!114 &4949105394788954401
@@ -1282,18 +1258,6 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   slideDistanceMultiplier: 0.6
---- !u!114 &637378042712835508
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3948419914186043830}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59b8185d3081b41498c30be2aa0ae563, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
 --- !u!1 &4509022494720110876
 GameObject:
   m_ObjectHideFlags: 0
@@ -1763,9 +1727,8 @@ GameObject:
   - component: {fileID: 1610778833533900362}
   - component: {fileID: 571071671824603511}
   - component: {fileID: 3417011698925324904}
-  - component: {fileID: 6527103596489681767}
-  - component: {fileID: 1907388669795230621}
   - component: {fileID: 9151496046020765780}
+  - component: {fileID: 1907388669795230621}
   m_Layer: 6
   m_Name: Bottom Door
   m_TagString: Untagged
@@ -1895,7 +1858,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &6527103596489681767
+--- !u!114 &9151496046020765780
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1904,9 +1867,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6726219913760960578}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6745523a523f9a64e9a32e43c5da3d0c, type: 3}
+  m_Script: {fileID: 11500000, guid: 59b8185d3081b41498c30be2aa0ae563, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DoorCollision
+  m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
 --- !u!114 &1907388669795230621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1947,18 +1910,6 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   slideDistanceMultiplier: 0.6
---- !u!114 &9151496046020765780
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6726219913760960578}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59b8185d3081b41498c30be2aa0ae563, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DoorTrigger
 --- !u!1 &6758605561519237253
 GameObject:
   m_ObjectHideFlags: 0
