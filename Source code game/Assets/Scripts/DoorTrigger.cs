@@ -17,6 +17,20 @@ public class DoorTrigger : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag("Player")) return;
+
+        // Show approach instruction on round 1 of DoorPractice
+        if (InstructionManager.Instance != null
+            && GameManager.Instance.GetCurrentGameState() == "DoorPractice"
+            && GameManager.Instance.round == 1
+            && !doorEventManager.doorEventHasHappened)
+        {
+            InstructionManager.Instance.ShowInstruction(
+                "You're approaching a door!\n\nWalk into it to enter the room.",
+                onDismiss: () => doorEventManager.OnDoorTriggered(doorAnimation, other.gameObject)
+            );
+            return; // don't fire OnDoorTriggered yet — wait for dismiss
+        }
+
         doorEventManager.OnDoorTriggered(doorAnimation, other.gameObject);
     }
 

@@ -419,6 +419,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void PauseTimer()
+    {
+        countdownTimer.StopTimer();
+    }
+
+    public void ResumeTimer()
+    {
+        countdownTimer.StartTimer();
+    }
+
     public string GetCurrentTotalRounds()
     {
         switch (gameState)

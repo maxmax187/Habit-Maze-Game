@@ -31,6 +31,21 @@ public class DoorEventManager : MonoBehaviour
         if (transitioning) return;
         Debug.Log("[TRIGGER] Player triggered door event");
 
+        // Show instruction on first ever door trigger during DoorPractice round 1
+        if (GameManager.Instance.GetCurrentGameState() == "DoorPractice"
+            && GameManager.Instance.round == 1
+            && !doorEventHasHappened)
+        {
+            InstructionManager.Instance.ShowInstruction(
+                "You have reached the security area. \r\nWalk to the first door to get inside. "
+            );
+            // Don't proceed until player dismisses — the coroutine will handle the rest
+            // So we return here and re-trigger after dismiss
+            StartCoroutine(WaitForDismissThenTrigger(triggeredDoor, player));
+            return;
+        }
+
+        transitioning = true;
         transitioning = true; //is only set to false again after exiting the room.
 
         // check if we should start coin spawn event or post-event door behaviour
@@ -57,6 +72,21 @@ public class DoorEventManager : MonoBehaviour
                 StartCoroutine(InAndOut(triggeredDoor, player));  
             }  
         }
+    }
+
+    // Coroutine for instructionpanel
+    private IEnumerator WaitForDismissThenTrigger(DoorSlideAnimation triggeredDoor, GameObject player)
+    {
+        // Wait until the instruction panel is dismissed (timeScale returns to 1)
+        yield return new WaitUntil(() => Time.timeScale == 1f);
+
+        // Now fire the normal door logic
+        transitioning = true;
+        doorEventHasHappened = true;
+
+        (Room.Directions dir, GameObject gameObject)? entryDoorTuple = GetDoorTuple(triggeredDoor);
+        (Room.Directions dir, GameObject gameObject)? exitDoorTuple = GetExitDoor(triggeredDoor);
+        StartCoroutine(DoCoinPresentation(entryDoorTuple, exitDoorTuple, player));
     }
 
     // Move player into room through entry door, then out through exit door
@@ -168,6 +198,22 @@ public class DoorEventManager : MonoBehaviour
 
         // 1. wait until player is moved inside room, do not re-enable movement yet.
         yield return StartCoroutine(DoTransition(entryDoor, player, reEnableMovement: false));
+
+        // NEW: Show inside-room instruction on round 1 of DoorPractice
+        if (GameManager.Instance.GetCurrentGameState() == "DoorPractice"
+            && GameManager.Instance.round == 1)
+        {
+            bool dismissed = false;
+            InstructionManager.Instance.ShowInstruction(
+                "You're now inside the room!\n\n" +
+                "Press SPACE to go back and collect the coin.\n" +
+                "Or press your movement key toward the exit to continue without it.",
+                onDismiss: () => dismissed = true
+            );
+
+            // Wait for dismiss — use unscaled time since timeScale is 0
+            yield return new WaitUntil(() => dismissed);
+        }
 
         // 2. Some amount of delay as specified by bufferDelay variable
         yield return new WaitForSeconds(bufferDelay);

@@ -19,7 +19,7 @@ public class CountdownTimer : MonoBehaviour
         {
             if (timeRemaining > Mathf.Epsilon) // Mathf.Epsilon = floating point zero
             {
-                timeRemaining -= Time.deltaTime;
+                timeRemaining -= Time.unscaledDeltaTime;
                 GameManager.Instance.uiManager.SetTimer(timeRemaining);
             }
             else
