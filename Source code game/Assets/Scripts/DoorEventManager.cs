@@ -31,21 +31,6 @@ public class DoorEventManager : MonoBehaviour
         if (transitioning) return;
         Debug.Log("[TRIGGER] Player triggered door event");
 
-        // Show instruction on first ever door trigger during DoorPractice round 1
-        if (GameManager.Instance.GetCurrentGameState() == "DoorPractice"
-            && GameManager.Instance.round == 1
-            && !doorEventHasHappened)
-        {
-            InstructionManager.Instance.ShowInstruction(
-                "You have reached the security area. \r\nWalk to the first door to get inside. "
-            );
-            // Don't proceed until player dismisses — the coroutine will handle the rest
-            // So we return here and re-trigger after dismiss
-            StartCoroutine(WaitForDismissThenTrigger(triggeredDoor, player));
-            return;
-        }
-
-        transitioning = true;
         transitioning = true; //is only set to false again after exiting the room.
 
         // check if we should start coin spawn event or post-event door behaviour
@@ -206,12 +191,13 @@ public class DoorEventManager : MonoBehaviour
             bool dismissed = false;
             InstructionManager.Instance.ShowInstruction(
                 "You're now inside the room!\n\n" +
-                "Press SPACE to go back and collect the coin.\n" +
-                "Or press your movement key toward the exit to continue without it.",
+                "You remember you have dropped a coin along the way. \n\n"+
+                "Press SPACE to open the back door to go back and collect the coin.\n" +
+                "OR press your movement key toward the exit to open the front door to continue without collecting it.",
                 onDismiss: () => dismissed = true
             );
 
-            // Wait for dismiss — use unscaled time since timeScale is 0
+            // Wait for dismiss
             yield return new WaitUntil(() => dismissed);
         }
 

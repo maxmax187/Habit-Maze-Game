@@ -250,7 +250,7 @@ public class GameManager : MonoBehaviour
         if (gameState == GameState.DoorPractice && round == doorPracticeRounds)
         {
             gameState = GameState.Training;
-            uiManager.ShowFinishedPractice();
+            uiManager.ShowFinishedDoorPractice();
             round = 1;
             score = 0;
             return;
