@@ -35,7 +35,9 @@ public class GameManager : MonoBehaviour
 
     public int practiceRounds = 5;
     public int trainingRounds = 5;
+    public int trainingGoldCoinAmt = 2;
     public int testRounds = 5;
+    public int testGoldCoinAmt = 2;
 
     public int round { get; private set; } = 1;
     public int totalRound { get; private set; } = 0;
@@ -172,8 +174,8 @@ public class GameManager : MonoBehaviour
         testLevels = new int[testRounds];
 
         //generate here the order of gold vs silver coins (rounds, amt_gold, seed)
-        int[] coinOrderTraining = CoinOrderGenerator.GenerateRandomCoinOrder(trainingRounds, 1, 999);
-        int[] coinOrderTest = CoinOrderGenerator.GenerateRandomCoinOrder(testRounds, 1, 999);
+        int[] coinOrderTraining = CoinOrderGenerator.GenerateRandomCoinOrder(trainingRounds, trainingGoldCoinAmt, seed);
+        int[] coinOrderTest = CoinOrderGenerator.GenerateRandomCoinOrder(testRounds, testGoldCoinAmt, seed);
         Debug.Log($"Generated coin order for Training rounds of length: {trainingRounds}");
         Debug.Log("Coin order: " + String.Join(", ", coinOrderTraining));
 
