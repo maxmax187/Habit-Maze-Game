@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 338319399282343630}
   - component: {fileID: 7967112065894029250}
   m_Layer: 0
-  m_Name: Coin
+  m_Name: Coin_silver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 4076866757865450810}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.08, y: -0.128, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -84,8 +84,8 @@ SpriteRenderer:
   m_SortingLayer: 2
   m_SortingOrder: 2
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -4119655120671059145, guid: bbd0c4c4ad1e3df4b80dbd17928809c8, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 7550714796630118033, guid: 21913adc67138e54a996e6f82866322d, type: 3}
+  m_Color: {r: 0.89433956, g: 0.8690281, b: 0.8690281, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -142,6 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdb65336f8405e243bb6f69e12e962a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSilver: 1
   collisionClip: {fileID: 8300000, guid: cee3a43db33939c4b9340740b8f18fb1, type: 3}
 --- !u!82 &7967112065894029250
 AudioSource:

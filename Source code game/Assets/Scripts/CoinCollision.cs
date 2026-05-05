@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class CoinCollision : MonoBehaviour
 {
+    [SerializeField] private bool isSilver = true;
 
     public AudioClip collisionClip;
 

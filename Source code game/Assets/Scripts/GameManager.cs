@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
+
 public class GameManager : MonoBehaviour
 {
     private enum GameState
@@ -169,6 +171,12 @@ public class GameManager : MonoBehaviour
         trainingLevels = new int[trainingRounds];
         testLevels = new int[testRounds];
 
+        //generate here the order of gold vs silver coins (rounds, amt_gold, seed)
+        int[] coinOrderTraining = CoinOrderGenerator.GenerateRandomCoinOrder(trainingRounds, 1, 999);
+        int[] coinOrderTest = CoinOrderGenerator.GenerateRandomCoinOrder(testRounds, 1, 999);
+        Debug.Log($"Generated coin order for Training rounds of length: {trainingRounds}");
+        Debug.Log("Coin order: " + String.Join(", ", coinOrderTraining));
+
         Array.Copy(allLevels, 0, trainingLevels, 0, trainingRounds);
         Array.Copy(allLevels, trainingRounds, testLevels, 0, testRounds);
 
@@ -270,9 +278,15 @@ public class GameManager : MonoBehaviour
     {
         pickedUpCoin = true;
         coinPickupTime = Math.Round((decimal)countdownTimer.timeRemaining, 2);
-        if (isCoinDevalued) { return; }
         if (gameState == GameState.Practice) { return; }
-        score++;
+        if (isSilver)
+            score += 1;
+        else
+            if (isCoinDevalued) { return; }
+            else
+                score += 2;
+
+
         uiManager.SetScore(score);
     }
 
@@ -309,6 +323,8 @@ public class GameManager : MonoBehaviour
     }
 
     private int maxTries = 50;
+    private bool isSilver;
+
     IEnumerator CheckTotalDistanceCoroutine()
     {
         int attempts = 0;
