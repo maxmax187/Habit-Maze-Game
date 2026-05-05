@@ -11,7 +11,7 @@ public class DoorEventManager : MonoBehaviour
 
     [Header("Doors / Coin Event")]
     public float doorLockedCooldown = 5f;
-    public float bufferDelay = 3f; // TODO make this a range instead of single variable
+    public float bufferDelay = 2f; // TODO make this a range instead of single variable
     public bool doorsLocked = false;
     public bool doorEventHasHappened = false;
 
@@ -170,9 +170,13 @@ public class DoorEventManager : MonoBehaviour
         yield return StartCoroutine(DoTransition(entryDoor, player, reEnableMovement: false));
 
         // 2. Some amount of delay as specified by bufferDelay variable
-        yield return new WaitForSeconds(bufferDelay);
+        
         // 3. Enable coin bubble GameObject with the silver sprite or gold sprite
         Debug.Log("[COIN THOUGHT BUBBLE]");
+        ThoughtBubble bubble = player.GetComponent<ThoughtBubble>();
+        bubble.Show(true, bufferDelay); //TODO adjust gold/silver based on the predetermined distribution
+        yield return new WaitForSeconds(bufferDelay);
+
 
         // key press to room direction mappings
         var exitWASDKeys = new Dictionary<Room.Directions, KeyCode>
@@ -201,6 +205,8 @@ public class DoorEventManager : MonoBehaviour
                 receivedInput = 0;
             yield return null;
         }
+
+        bubble.Hide();
 
         if (receivedInput == 1) // 5.1 received keycode SPACE for going backwards to the coin
         {
