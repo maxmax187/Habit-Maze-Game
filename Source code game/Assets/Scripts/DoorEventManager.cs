@@ -217,7 +217,8 @@ public class DoorEventManager : MonoBehaviour
             Debug.Log("received SPACE");
             yield return StartCoroutine(DoTransition(entryDoor, player, toInside: false, exitDir:entryDir));
 
-            Debug.Log("[TODO] Use CoinController here to spawn coin");
+            // spawn actual coin behind player in maze
+            GameManager.Instance.coinController.SpawnCoin(currentCoinIdentity);
             // temporarily lock doors
             yield return StartCoroutine(LockDoorsTemporarily());
             // Refresh and Re-fire trigger for any player already standing in the previously locked doorway
