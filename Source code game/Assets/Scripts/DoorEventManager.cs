@@ -175,10 +175,11 @@ public class DoorEventManager : MonoBehaviour
         // 2. Some amount of delay as specified by bufferDelay variable
         
         // 3. Show thought bubble, and after buffer delay show gold/silver coin
-        Debug.Log("[COIN THOUGHT BUBBLE]");
         ThoughtBubble bubble = player.GetComponent<ThoughtBubble>();
 
         float bufferDelay = GetSeededDelay(GameManager.Instance.currentSeed);
+        Debug.Log($"[DoorEventManager] Showing coin with identity: TODO after buffer delay of: {bufferDelay}");
+
         bubble.Show(true, bufferDelay); //TODO adjust gold/silver based on the predetermined distribution
         yield return new WaitForSeconds(bufferDelay);
 
