@@ -142,6 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdb65336f8405e243bb6f69e12e962a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSilver: 0
   collisionClip: {fileID: 8300000, guid: cee3a43db33939c4b9340740b8f18fb1, type: 3}
 --- !u!82 &7967112065894029250
 AudioSource:
