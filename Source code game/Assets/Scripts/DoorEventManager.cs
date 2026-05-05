@@ -162,7 +162,6 @@ public class DoorEventManager : MonoBehaviour
     private IEnumerator DoCoinPresentation((Room.Directions dir, GameObject gameObject)? entryDoorTuple, (Room.Directions dir, GameObject gameObject)? exitDoorTuple, GameObject player)
     {
         if (exitDoorTuple == null || entryDoorTuple == null || player == null) yield break;
-        Debug.Log("reached DoCoinPresentation");
         DoorSlideAnimation exitDoor = exitDoorTuple.Value.gameObject.GetComponent<DoorSlideAnimation>();
         Room.Directions exitDir = exitDoorTuple.Value.dir;
 
@@ -171,10 +170,8 @@ public class DoorEventManager : MonoBehaviour
 
         // 1. wait until player is moved inside room, do not re-enable movement yet.
         yield return StartCoroutine(DoTransition(entryDoor, player, reEnableMovement: false));
-
-        // 2. Some amount of delay as specified by bufferDelay variable
-        
-        // 3. Show thought bubble, and after buffer delay show gold/silver coin
+      
+        // 2. Show thought bubble, and after buffer delay show gold/silver coin
         ThoughtBubble bubble = player.GetComponent<ThoughtBubble>();
 
         float bufferDelay = GetSeededDelay(GameManager.Instance.currentSeed);
@@ -201,7 +198,7 @@ public class DoorEventManager : MonoBehaviour
             { Room.Directions.LEFT,   KeyCode.LeftArrow  }
         };
 
-        // 4. await key press
+        // 3. await key press
         int receivedInput = -1;
         while (receivedInput == -1)
         {
@@ -214,7 +211,7 @@ public class DoorEventManager : MonoBehaviour
 
         bubble.Hide(); // hide thought bubble and coin again
 
-        if (receivedInput == 1) // 5.1 received keycode SPACE for going backwards to the coin
+        if (receivedInput == 1) // 4.1 received keycode SPACE for going backwards to the coin
         {
             Debug.Log("received SPACE");
             yield return StartCoroutine(DoTransition(entryDoor, player, toInside: false, exitDir:entryDir));
@@ -225,7 +222,7 @@ public class DoorEventManager : MonoBehaviour
             // Refresh and Re-fire trigger for any player already standing in the previously locked doorway
             entryDoor.GetComponent<DoorTrigger>().Refresh();   
         }
-        else if (receivedInput == 0) // 5.2 received keycode "FORWARD" MOVEMENT for continuing without the coin
+        else if (receivedInput == 0) // 4.2 received keycode "FORWARD" MOVEMENT for continuing without the coin
         {
             Debug.Log("received MOVEMENT KEY FORWARD");
             yield return StartCoroutine(DoTransition(exitDoor, player, toInside:false, exitDir:exitDir));

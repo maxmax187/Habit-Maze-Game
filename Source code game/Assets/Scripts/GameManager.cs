@@ -192,6 +192,9 @@ public class GameManager : MonoBehaviour
     public void FinishRound(bool reachedFinish)
     {
         dataController.Stop();
+        player.GetComponent<PlayerSlideAnimation>()?.StopSliding(); // terminate slide animation in case player got stuck with bad timing after door event
+        player.GetComponent<PlayerMovement>().movementEnabled = true; // re-enable in case it was locked mid-transition
+        player.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero; // zero out momentum to prevent occasional animation reset error
         player.enabled = false;
 
         Rigidbody2D rbPlayer = player.gameObject.GetComponent<Rigidbody2D>();
