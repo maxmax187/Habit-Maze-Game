@@ -175,9 +175,10 @@ public class DoorEventManager : MonoBehaviour
         ThoughtBubble bubble = player.GetComponent<ThoughtBubble>();
 
         float bufferDelay = GetSeededDelay(GameManager.Instance.currentSeed);
-        Debug.Log($"[DoorEventManager] Showing coin with identity: TODO after buffer delay of: {bufferDelay}");
+        int currentCoinIdentity = GameManager.Instance.currentCoinIdentity;
+        Debug.Log($"[DoorEventManager] Showing coin with identity: {currentCoinIdentity} after buffer delay of: {bufferDelay}");
 
-        bubble.Show(true, bufferDelay); //TODO adjust gold/silver based on the predetermined distribution
+        bubble.Show(currentCoinIdentity, bufferDelay); //TODO adjust gold/silver based on the predetermined distribution
         yield return new WaitForSeconds(bufferDelay);
 
 

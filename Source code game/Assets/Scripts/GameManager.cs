@@ -50,6 +50,9 @@ public class GameManager : MonoBehaviour
     private int[] testLevels;
 
     public int currentSeed;
+    public int currentCoinIdentity;
+    private int[] coinOrderTraining;
+    private int[] coinOrderTest;
 
     public float currentTotalDistance = 0;
 
@@ -174,8 +177,8 @@ public class GameManager : MonoBehaviour
         testLevels = new int[testRounds];
 
         //generate here the order of gold vs silver coins (rounds, amt_gold, seed)
-        int[] coinOrderTraining = CoinOrderGenerator.GenerateRandomCoinOrder(trainingRounds, trainingGoldCoinAmt, seed);
-        int[] coinOrderTest = CoinOrderGenerator.GenerateRandomCoinOrder(testRounds, testGoldCoinAmt, seed);
+        coinOrderTraining = CoinOrderGenerator.GenerateRandomCoinOrder(trainingRounds, trainingGoldCoinAmt, seed);
+        coinOrderTest = CoinOrderGenerator.GenerateRandomCoinOrder(testRounds, testGoldCoinAmt, seed);
         Debug.Log($"Generated coin order for Training rounds of length: {trainingRounds}");
         Debug.Log("Coin order: " + String.Join(", ", coinOrderTraining));
 
@@ -209,6 +212,7 @@ public class GameManager : MonoBehaviour
 
         roundInfo.participantEmail = participantData.email;
         roundInfo.seed = currentSeed;
+        //TODO roundInfo.coinIdentity = currentCoinIdentity
         roundInfo.round = round;
         roundInfo.didCoinSpawn = coinController.hasSpawned;
         roundInfo.pickedUpCoin = pickedUpCoin;
@@ -399,12 +403,14 @@ public class GameManager : MonoBehaviour
         if (gameState == GameState.Training)
         {
             currentSeed = trainingLevels[round - 1];
+            currentCoinIdentity = coinOrderTraining[round - 1];
             UnityEngine.Random.InitState(currentSeed);
         }
 
         if (gameState == GameState.Test)
         {
             currentSeed = testLevels[round - 1];
+            currentCoinIdentity = coinOrderTest[round - 1];
             UnityEngine.Random.InitState(currentSeed);
         }
     }

@@ -19,12 +19,12 @@ public class ThoughtBubble : MonoBehaviour
     }
 
     // Call this from your event, passing true for gold, false for silver
-    public void Show(bool isGold, float bufferDelay = 1f)
+    public void Show(int coinIdentity, float bufferDelay = 1f)
     {
         if (showRoutine != null)
             StopCoroutine(showRoutine);
 
-        showRoutine = StartCoroutine(ShowRoutine(isGold, bufferDelay));
+        showRoutine = StartCoroutine(ShowRoutine(coinIdentity, bufferDelay));
     }
 
     public void Hide()
@@ -37,7 +37,7 @@ public class ThoughtBubble : MonoBehaviour
         SetVisible(false);
     }
 
-    private IEnumerator ShowRoutine(bool isGold, float bufferDelay)
+    private IEnumerator ShowRoutine(int coinIdentity, float bufferDelay)
     {
         // Show bubble immediately, coin hidden
         coinRenderer.enabled = false;
@@ -45,7 +45,7 @@ public class ThoughtBubble : MonoBehaviour
 
         // Wait for buffer delay, then reveal coin
         yield return new WaitForSeconds(bufferDelay);
-        coinRenderer.sprite = isGold ? goldCoin : silverCoin; //gold coin = 1, silver = 0
+        coinRenderer.sprite = coinIdentity == 1 ? goldCoin : silverCoin; //gold coin = 1, silver = 0
         coinRenderer.enabled = true;
 
         showRoutine = null;
