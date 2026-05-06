@@ -194,6 +194,7 @@ public class GameManager : MonoBehaviour
 
     public void FinishRound(bool reachedFinish)
     {
+        Debug.Log("FinishRound reached");
         dataController.Stop();
         player.enabled = false;
 
@@ -285,6 +286,8 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        Debug.Log("All checks in FinishRound done");
+        Debug.Log(reachedFinish);
         uiManager.ShowRoundFinished(reachedFinish);
     }
 
@@ -301,6 +304,7 @@ public class GameManager : MonoBehaviour
 
     public void NextRound(bool isNewPhase, bool isEngaging, bool isFirst)
     {
+        Debug.Log("NextRound reached");
         uiManager.HideUI();
         if (!isNewPhase) { round++; }
         totalRound++;
