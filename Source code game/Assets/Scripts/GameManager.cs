@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     {
         Introduction,
         Practice, // No reward yet, familiarilizing with controls
+        DoorPractice, // No reward yet, familiarizing with mechanics door
         Training, // Training phase, with reward.
         DevalueIntroduction,
         Test,
@@ -33,7 +34,8 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance { get; private set; }
 
-    public int practiceRounds = 5;
+    public int practiceRounds = 3;
+    public int doorPracticeRounds = 3;
     public int trainingRounds = 5;
     public int testRounds = 5;
 
@@ -44,6 +46,7 @@ public class GameManager : MonoBehaviour
     public bool isCoinDevalued = false;
 
     private int[] practiceLevels;
+    private int[] doorPracticeLevels;
     private int[] trainingLevels;
     private int[] testLevels;
 
@@ -95,6 +98,7 @@ public class GameManager : MonoBehaviour
         {
             sceneControllerDay1.SetActive(true);
             GeneratePracticeLevels();
+            GenerateDoorPracticeLevels();
         }
 
         if (day == 2 || day == 3)
@@ -136,6 +140,15 @@ public class GameManager : MonoBehaviour
         Debug.Log("Pratice Levels: " + string.Join(", ", practiceLevels));
     }
 
+    private void GenerateDoorPracticeLevels()
+    {
+        int startValue = 800; //Different range from practice
+        doorPracticeLevels = new int[doorPracticeRounds];
+        for (int i = 0; i < doorPracticeRounds; i++)
+        {
+            doorPracticeLevels[i] = startValue + i;
+        }
+    }
     private void GenerateLevelOrder()
     {
         System.DateTime now = System.DateTime.Now;
@@ -189,6 +202,7 @@ public class GameManager : MonoBehaviour
 
     public void FinishRound(bool reachedFinish)
     {
+        Debug.Log("FinishRound reached");
         dataController.Stop();
         player.enabled = false;
 
@@ -226,7 +240,7 @@ public class GameManager : MonoBehaviour
         dataController.InsertRoundDB(roundData);
 
 
-        if (reachedFinish && gameState != GameState.Practice)
+        if (reachedFinish && gameState != GameState.Practice && gameState != GameState.DoorPractice)
         {
             score += 2;
             uiManager.SetScore(score);
@@ -235,8 +249,17 @@ public class GameManager : MonoBehaviour
         // Check if finished practice
         if (gameState == GameState.Practice && round == practiceRounds)
         {
-            gameState = GameState.Training;
+            gameState = GameState.DoorPractice;
             uiManager.ShowFinishedPractice();
+            round = 1;
+            score = 0;
+            return;
+        }
+
+        if (gameState == GameState.DoorPractice && round == doorPracticeRounds)
+        {
+            gameState = GameState.Training;
+            uiManager.ShowFinishedDoorPractice();
             round = 1;
             score = 0;
             return;
@@ -271,6 +294,8 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        Debug.Log("All checks in FinishRound done");
+        Debug.Log(reachedFinish);
         uiManager.ShowRoundFinished(reachedFinish);
     }
 
@@ -279,13 +304,14 @@ public class GameManager : MonoBehaviour
         pickedUpCoin = true;
         coinPickupTime = Math.Round((decimal)countdownTimer.timeRemaining, 2);
         if (gameState == GameState.Practice) { return; }
+        if (gameState == GameState.DoorPractice) { return; }
+
         if (isSilver)
             score += 1;
         else
             if (isCoinDevalued) { return; }
             else
                 score += 2;
-
 
         uiManager.SetScore(score);
     }
@@ -362,6 +388,8 @@ public class GameManager : MonoBehaviour
                 return "Introduction";
             case GameState.Practice:
                 return "Practice";
+            case GameState.DoorPractice:
+                return "DoorPractice";
             case GameState.Training:
                 return "Training";
             case GameState.DevalueIntroduction:
@@ -391,6 +419,12 @@ public class GameManager : MonoBehaviour
             UnityEngine.Random.InitState(currentSeed);
         }
 
+        if (gameState == GameState.DoorPractice)
+        {
+            currentSeed = doorPracticeLevels[round - 1];
+            UnityEngine.Random.InitState(currentSeed);
+        }
+
         if (gameState == GameState.Training)
         {
             currentSeed = trainingLevels[round - 1];
@@ -404,12 +438,24 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void PauseTimer()
+    {
+        countdownTimer.StopTimer();
+    }
+
+    public void ResumeTimer()
+    {
+        countdownTimer.StartTimer();
+    }
+
     public string GetCurrentTotalRounds()
     {
         switch (gameState)
         {
             case GameState.Practice:
                 return practiceRounds.ToString();
+            case GameState.DoorPractice:
+                return doorPracticeRounds.ToString();
             case GameState.Training:
                 return trainingRounds.ToString();
             case GameState.Test:

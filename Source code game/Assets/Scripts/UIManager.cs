@@ -7,7 +7,7 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private TMP_Text roundText, scoreText, timerText, timesUpText;
     [SerializeField]
-    private GameObject roundFinishedTimeUI, roundFinishedUI, practiceFinishedUI, trainingFinishedUI, testFinishedUI;
+    private GameObject roundFinishedTimeUI, roundFinishedUI, practiceFinishedUI, doorPracticeFinishedUI, trainingFinishedUI, testFinishedUI;
 
     public void SetRound(int round)
     {
@@ -34,7 +34,6 @@ public class UIManager : MonoBehaviour
 
     public void ShowRoundFinished(bool reachedFinish)
     {
-
         if (reachedFinish)
         {
             roundFinishedUI.SetActive(true);
@@ -48,6 +47,12 @@ public class UIManager : MonoBehaviour
     {
         practiceFinishedUI.SetActive(true);
     }
+
+    public void ShowFinishedDoorPractice()
+    {
+        doorPracticeFinishedUI.SetActive(true);
+    }
+
 
     public void ShowFinishedTraining()
     {
@@ -64,6 +69,7 @@ public class UIManager : MonoBehaviour
         roundFinishedTimeUI.SetActive(false);
         roundFinishedUI.SetActive(false);
         practiceFinishedUI.SetActive(false);
+        doorPracticeFinishedUI.SetActive(false);
         trainingFinishedUI.SetActive(false);
         testFinishedUI.SetActive(false);
     }
