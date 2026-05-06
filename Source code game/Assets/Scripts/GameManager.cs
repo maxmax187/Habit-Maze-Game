@@ -304,7 +304,6 @@ public class GameManager : MonoBehaviour
 
     public void NextRound(bool isNewPhase, bool isEngaging, bool isFirst)
     {
-        Debug.Log("NextRound reached");
         uiManager.HideUI();
         if (!isNewPhase) { round++; }
         totalRound++;

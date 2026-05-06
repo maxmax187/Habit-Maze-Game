@@ -34,7 +34,6 @@ public class UIManager : MonoBehaviour
 
     public void ShowRoundFinished(bool reachedFinish)
     {
-
         if (reachedFinish)
         {
             roundFinishedUI.SetActive(true);
