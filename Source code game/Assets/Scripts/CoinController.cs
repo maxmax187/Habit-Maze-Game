@@ -14,7 +14,8 @@ public class CoinController : MonoBehaviour
 
 
     [SerializeField]
-    private GameObject coinPrefab;
+    public GameObject goldCoinPrefab;
+    public GameObject silverCoinPrefab;
     private GameObject coinInstance;
 
     [SerializeField]
@@ -97,7 +98,7 @@ public class CoinController : MonoBehaviour
 
         if (AstarPath.active.graphs.Length == 0) { return; }
 
-        SpawnCoin();
+        // SpawnCoin(); // TODO this was old code from paul's game, has been temporarily removed to see if things don't break because of removal
     }
 
     void OnDestroy()
@@ -106,21 +107,25 @@ public class CoinController : MonoBehaviour
         startAISeeker.pathCallback -= OnPathComplete;
     }
 
-    void SpawnCoin()
+    public void SpawnCoin(int coinIdentity)
     {
-        if (GameManager.Instance.GetCurrentGameState() == "Practice") { return; }
-        if (hasSpawned || !isDistanceCalculated) { return; }
-
-        //if (timer.timeRemaining >= spawnPercentage) { return; }
-
+        Debug.Log($"[CoinController] Attempting coin spawn with identity: {coinIdentity}");
         AIPath finishPath = finishAI.path;
-        spawnDistance = totalDistance - ((totalDistance / 100) * spawnPercentage);
+        spawnDistance = totalDistance - (totalDistance / 100 * spawnPercentage);
 
         float currentPathLength = finishPath.remainingDistance;
 
-        if (float.IsInfinity(currentPathLength)) { return;  }
+        if (float.IsInfinity(currentPathLength)) 
+        { 
+            Debug.LogWarning("[CoinController] Path length inf - no coin spawned");
+            return;  
+        }
 
-        if (currentPathLength > spawnDistance) {  return; }
+        if (currentPathLength > spawnDistance) 
+        { 
+            Debug.LogWarning("[CoinController] currentPathLength > spawnDistance - continuing anyway");
+            // return; 
+        }
 
 
         Path currentPath = startAISeeker.GetCurrentPath();
@@ -128,9 +133,11 @@ public class CoinController : MonoBehaviour
 
         if (nodes.Count <= nodesDistance)
         {
+            Debug.LogWarning("[CoinController] nodes.Count <= nodesDistance - no coin spawned");
             return;
         }
 
+        // TODO max: idk why this is hardcoded, perhaps leave as is for now
         double percentage = 60; // Enter the percentage as a whole number
 
         // Calculate the percentage
@@ -139,13 +146,55 @@ public class CoinController : MonoBehaviour
         //GraphNode node = nodes[nodes.Count - nodesDistance - 1];
         GraphNode node = nodes[(int)Math.Round(result)];
 
+        GameObject coinPrefab = coinIdentity == 1 ? goldCoinPrefab : silverCoinPrefab; // attach gold prefab if coinIdentity == 1, else attach silver prefab
         coinInstance = Instantiate(coinPrefab, (Vector3)node.position, Quaternion.identity);
 
-        hasSpawned = true;
+        // hasSpawned = true;  Max: don't think this is needed anymore
         GameManager.Instance.pickedUpCoin = false;
         spawnTime = GameManager.Instance.dataController.time;
-        //dataController.Begin();
+        //dataController.Begin(); Max: this was already commented out
     }
+
+    // void SpawnCoin()
+    // {
+    //     if (GameManager.Instance.GetCurrentGameState() == "Practice") { return; }
+    //     if (hasSpawned || !isDistanceCalculated) { return; }
+
+    //     //if (timer.timeRemaining >= spawnPercentage) { return; }
+
+    //     AIPath finishPath = finishAI.path;
+    //     spawnDistance = totalDistance - ((totalDistance / 100) * spawnPercentage);
+
+    //     float currentPathLength = finishPath.remainingDistance;
+
+    //     if (float.IsInfinity(currentPathLength)) { return;  }
+
+    //     if (currentPathLength > spawnDistance) {  return; }
+
+
+    //     Path currentPath = startAISeeker.GetCurrentPath();
+    //     List<GraphNode> nodes = currentPath.path;
+
+    //     if (nodes.Count <= nodesDistance)
+    //     {
+    //         return;
+    //     }
+
+    //     double percentage = 60; // Enter the percentage as a whole number
+
+    //     // Calculate the percentage
+    //     double result = (nodes.Count * percentage) / 100.0;
+
+    //     //GraphNode node = nodes[nodes.Count - nodesDistance - 1];
+    //     GraphNode node = nodes[(int)Math.Round(result)];
+
+    //     coinInstance = Instantiate(coinPrefab, (Vector3)node.position, Quaternion.identity);
+
+    //     hasSpawned = true;
+    //     GameManager.Instance.pickedUpCoin = false;
+    //     spawnTime = GameManager.Instance.dataController.time;
+    //     //dataController.Begin();
+    // }
 
     public void Reset()
     {

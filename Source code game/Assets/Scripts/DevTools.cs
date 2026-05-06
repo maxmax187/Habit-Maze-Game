@@ -9,6 +9,9 @@ public class DevTools : MonoBehaviour
     public float devToolKeyPressDuration = 1f;
     [Header("Level Skip")]
     public KeyCode levelSkipKey = KeyCode.Return;
+    [Header("All Levels Same Seed")] // logic handled in GameManager.cs
+    public bool enableAllLevelsSameSeed = false;
+    public int seed = 0;
 
     void Update()
     {
@@ -61,4 +64,5 @@ public class DevTools : MonoBehaviour
         yield return new WaitForSeconds(seconds);
         delayElapsed = true;
     }
+
 }

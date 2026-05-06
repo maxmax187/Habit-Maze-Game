@@ -37,7 +37,9 @@ public class GameManager : MonoBehaviour
     public int practiceRounds = 3;
     public int doorPracticeRounds = 3;
     public int trainingRounds = 5;
+    public int trainingGoldCoinAmt = 2;
     public int testRounds = 5;
+    public int testGoldCoinAmt = 2;
 
     public int round { get; private set; } = 1;
     public int totalRound { get; private set; } = 0;
@@ -51,6 +53,9 @@ public class GameManager : MonoBehaviour
     private int[] testLevels;
 
     public int currentSeed;
+    public int currentCoinIdentity;
+    private int[] coinOrderTraining;
+    private int[] coinOrderTest;
 
     public float currentTotalDistance = 0;
 
@@ -179,14 +184,26 @@ public class GameManager : MonoBehaviour
             allLevels[j] = temp;
         }
 
+        DevTools devTools = GetComponent<DevTools>();
+        if(devTools.enableDevTools && devTools.enableAllLevelsSameSeed)
+        {
+            //overwrite all levels to be the same seed
+            int overrideSeed = GetComponent<DevTools>().seed;
+            for (int i = 0; i < allLevels.Length; i++)
+            {
+                allLevels[i] = overrideSeed;
+            }
+            Debug.Log($"[DEVTOOLS / GAMEMANAGER] overwritten all level seeds to be: {overrideSeed}");
+        }
+
         Debug.Log("Training Levels: " + string.Join(", ", allLevels));
 
         trainingLevels = new int[trainingRounds];
         testLevels = new int[testRounds];
 
         //generate here the order of gold vs silver coins (rounds, amt_gold, seed)
-        int[] coinOrderTraining = CoinOrderGenerator.GenerateRandomCoinOrder(trainingRounds, 1, 999);
-        int[] coinOrderTest = CoinOrderGenerator.GenerateRandomCoinOrder(testRounds, 1, 999);
+        coinOrderTraining = CoinOrderGenerator.GenerateRandomCoinOrder(trainingRounds, trainingGoldCoinAmt, seed);
+        coinOrderTest = CoinOrderGenerator.GenerateRandomCoinOrder(testRounds, testGoldCoinAmt, seed);
         Debug.Log($"Generated coin order for Training rounds of length: {trainingRounds}");
         Debug.Log("Coin order: " + String.Join(", ", coinOrderTraining));
 
@@ -204,6 +221,9 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("FinishRound reached");
         dataController.Stop();
+        player.GetComponent<PlayerSlideAnimation>()?.StopSliding(); // terminate slide animation in case player got stuck with bad timing after door event
+        player.GetComponent<ThoughtBubble>().Hide();
+        player.GetComponent<PlayerMovement>().movementEnabled = true; // re-enable in case it was locked mid-transition
         player.enabled = false;
 
         Rigidbody2D rbPlayer = player.gameObject.GetComponent<Rigidbody2D>();
@@ -218,6 +238,7 @@ public class GameManager : MonoBehaviour
 
         roundInfo.participantEmail = participantData.email;
         roundInfo.seed = currentSeed;
+        //TODO roundInfo.coinIdentity = currentCoinIdentity
         roundInfo.round = round;
         roundInfo.didCoinSpawn = coinController.hasSpawned;
         roundInfo.pickedUpCoin = pickedUpCoin;
@@ -428,12 +449,14 @@ public class GameManager : MonoBehaviour
         if (gameState == GameState.Training)
         {
             currentSeed = trainingLevels[round - 1];
+            currentCoinIdentity = coinOrderTraining[round - 1];
             UnityEngine.Random.InitState(currentSeed);
         }
 
         if (gameState == GameState.Test)
         {
             currentSeed = testLevels[round - 1];
+            currentCoinIdentity = coinOrderTest[round - 1];
             UnityEngine.Random.InitState(currentSeed);
         }
     }

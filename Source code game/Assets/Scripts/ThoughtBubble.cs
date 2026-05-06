@@ -1,25 +1,59 @@
+using System.Collections;
 using UnityEngine;
 
 public class ThoughtBubble : MonoBehaviour
 {
+    [Header("References")]
+    public SpriteRenderer coinRenderer;   
+    public SpriteRenderer bubbleRenderer;
+
+    [Header("Sprites")]
     public Sprite goldCoin;
     public Sprite silverCoin;
 
-    private SpriteRenderer bubbleRenderer;
-    
+    private Coroutine showRoutine;
+
     void Awake()
     {
-        bubbleRenderer = GetComponent<SpriteRenderer>();
-        bubbleRenderer.enabled = false;
+        SetVisible(false);
     }
 
-    public void Show()
+    // Call this from your event, passing true for gold, false for silver
+    public void Show(int coinIdentity, float bufferDelay = 1f)
     {
-        bubbleRenderer.enabled = true;
+        if (showRoutine != null)
+            StopCoroutine(showRoutine);
+
+        showRoutine = StartCoroutine(ShowRoutine(coinIdentity, bufferDelay));
     }
 
     public void Hide()
     {
-        bubbleRenderer.enabled = false;
+        if (showRoutine != null)
+        {
+            StopCoroutine(showRoutine);
+            showRoutine = null;
+        }
+        SetVisible(false);
+    }
+
+    private IEnumerator ShowRoutine(int coinIdentity, float bufferDelay)
+    {
+        // Show bubble immediately, coin hidden
+        coinRenderer.enabled = false;
+        bubbleRenderer.enabled = true;
+
+        // Wait for buffer delay, then reveal coin
+        yield return new WaitForSeconds(bufferDelay);
+        coinRenderer.sprite = coinIdentity == 1 ? goldCoin : silverCoin; //gold coin = 1, silver = 0
+        coinRenderer.enabled = true;
+
+        showRoutine = null;
+    }
+
+    private void SetVisible(bool visible)
+    {
+        bubbleRenderer.enabled = visible;
+        coinRenderer.enabled = visible;
     }
 }

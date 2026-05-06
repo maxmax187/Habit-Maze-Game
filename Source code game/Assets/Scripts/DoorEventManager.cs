@@ -11,9 +11,12 @@ public class DoorEventManager : MonoBehaviour
 
     [Header("Doors / Coin Event")]
     public float doorLockedCooldown = 5f;
-    public float bufferDelay = 3f; // TODO make this a range instead of single variable
+
+    public float bufferDelayMinSecs = 1f;
+    public float bufferDelayMaxSecs = 4f;
+
     public bool doorsLocked = false;
-    public bool doorEventHasHappened = false;
+    private bool doorEventHasHappened = false;
 
 
     private bool transitioning = false;
@@ -24,6 +27,14 @@ public class DoorEventManager : MonoBehaviour
     private void Awake()
     {
         room = GetComponent<Room>();
+    }
+
+    public void Reset()
+    {
+        doorsLocked = false;
+        doorEventHasHappened = false;
+        transitioning = false;
+        StopAllCoroutines();
     }
 
     public void OnDoorTriggered(DoorSlideAnimation triggeredDoor, GameObject player)
@@ -174,7 +185,6 @@ public class DoorEventManager : MonoBehaviour
     private IEnumerator DoCoinPresentation((Room.Directions dir, GameObject gameObject)? entryDoorTuple, (Room.Directions dir, GameObject gameObject)? exitDoorTuple, GameObject player)
     {
         if (exitDoorTuple == null || entryDoorTuple == null || player == null) yield break;
-        Debug.Log("reached DoCoinPresentation");
         DoorSlideAnimation exitDoor = exitDoorTuple.Value.gameObject.GetComponent<DoorSlideAnimation>();
         Room.Directions exitDir = exitDoorTuple.Value.dir;
 
@@ -183,10 +193,12 @@ public class DoorEventManager : MonoBehaviour
 
         // 1. wait until player is moved inside room, do not re-enable movement yet.
         yield return StartCoroutine(DoTransition(entryDoor, player, reEnableMovement: false));
+      
+        // 2. Show thought bubble, and after buffer delay show gold/silver coin
+        ThoughtBubble bubble = player.GetComponent<ThoughtBubble>();
 
         // NEW: Show inside-room instruction on round 1 of DoorPractice
-        if (GameManager.Instance.GetCurrentGameState() == "DoorPractice"
-            && GameManager.Instance.round == 1)
+        if (GameManager.Instance.GetCurrentGameState() == "DoorPractice" && GameManager.Instance.round == 1)
         {
             bool dismissed = false;
             InstructionManager.Instance.ShowInstruction(
@@ -202,9 +214,13 @@ public class DoorEventManager : MonoBehaviour
         }
 
         // 2. Some amount of delay as specified by bufferDelay variable
+        float bufferDelay = GetSeededDelay(GameManager.Instance.currentSeed);
+        int currentCoinIdentity = GameManager.Instance.currentCoinIdentity;
+        Debug.Log($"[DoorEventManager] Showing coin with identity: {currentCoinIdentity} after buffer delay of: {bufferDelay}");
+
+        bubble.Show(currentCoinIdentity, bufferDelay); //TODO adjust gold/silver based on the predetermined distribution
         yield return new WaitForSeconds(bufferDelay);
-        // 3. Enable coin bubble GameObject with the silver sprite or gold sprite
-        Debug.Log("[COIN THOUGHT BUBBLE]");
+
 
         // key press to room direction mappings
         var exitWASDKeys = new Dictionary<Room.Directions, KeyCode>
@@ -223,7 +239,7 @@ public class DoorEventManager : MonoBehaviour
             { Room.Directions.LEFT,   KeyCode.LeftArrow  }
         };
 
-        // 4. await key press
+        // 3. await key press
         int receivedInput = -1;
         while (receivedInput == -1)
         {
@@ -234,18 +250,21 @@ public class DoorEventManager : MonoBehaviour
             yield return null;
         }
 
-        if (receivedInput == 1) // 5.1 received keycode SPACE for going backwards to the coin
+        bubble.Hide(); // hide thought bubble and coin again
+
+        if (receivedInput == 1) // 4.1 received keycode SPACE for going backwards to the coin
         {
             Debug.Log("received SPACE");
             yield return StartCoroutine(DoTransition(entryDoor, player, toInside: false, exitDir:entryDir));
 
-            Debug.Log("[TODO] Use CoinController here to spawn coin");
+            // spawn actual coin behind player in maze
+            GameManager.Instance.coinController.SpawnCoin(currentCoinIdentity);
             // temporarily lock doors
             yield return StartCoroutine(LockDoorsTemporarily());
             // Refresh and Re-fire trigger for any player already standing in the previously locked doorway
             entryDoor.GetComponent<DoorTrigger>().Refresh();   
         }
-        else if (receivedInput == 0) // 5.2 received keycode "FORWARD" MOVEMENT for continuing without the coin
+        else if (receivedInput == 0) // 4.2 received keycode "FORWARD" MOVEMENT for continuing without the coin
         {
             Debug.Log("received MOVEMENT KEY FORWARD");
             yield return StartCoroutine(DoTransition(exitDoor, player, toInside:false, exitDir:exitDir));
@@ -264,5 +283,11 @@ public class DoorEventManager : MonoBehaviour
 
         doorsLocked = false;
         Debug.Log("[DoorEventManager] Doors unlocked");
+    }
+
+    private float GetSeededDelay(int seed)
+    {
+        Random.InitState(seed);
+        return Random.Range(bufferDelayMinSecs, bufferDelayMaxSecs);
     }
 }
