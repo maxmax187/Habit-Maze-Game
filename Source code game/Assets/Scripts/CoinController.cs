@@ -14,8 +14,8 @@ public class CoinController : MonoBehaviour
 
 
     [SerializeField]
-    private GameObject goldCoinPrefab;
-    private GameObject silverCoinPrefab;
+    public GameObject goldCoinPrefab;
+    public GameObject silverCoinPrefab;
     private GameObject coinInstance;
 
     [SerializeField]
@@ -123,8 +123,8 @@ public class CoinController : MonoBehaviour
 
         if (currentPathLength > spawnDistance) 
         { 
-            Debug.LogWarning("[CoinController] currentPathLength > spawnDistance - no coin spawned");
-            return; 
+            Debug.LogWarning("[CoinController] currentPathLength > spawnDistance - continuing anyway");
+            // return; 
         }
 
 
