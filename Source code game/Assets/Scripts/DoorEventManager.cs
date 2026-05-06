@@ -16,7 +16,7 @@ public class DoorEventManager : MonoBehaviour
     public float bufferDelayMaxSecs = 4f;
 
     public bool doorsLocked = false;
-    private bool doorEventHasHappened = false;
+    public bool doorEventHasHappened = false;
 
 
     private bool transitioning = false;
