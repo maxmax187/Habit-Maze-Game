@@ -332,7 +332,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startAISeeker: {fileID: 1255942824}
   finishAI: {fileID: 1410166892}
-  coinPrefab: {fileID: 4076866757865450810, guid: 7d0de0c78a8cfb144813a64848a54129, type: 3}
+  goldCoinPrefab: {fileID: 4076866757865450810, guid: 7d0de0c78a8cfb144813a64848a54129, type: 3}
+  silverCoinPrefab: {fileID: 4076866757865450810, guid: 499ca462a24900841a6f4b5f8e56feb3, type: 3}
   timer: {fileID: 1445099397}
   lowerPercentageLimit: 65
   upperPercentageLimit: 85
