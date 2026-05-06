@@ -368,7 +368,7 @@ GameObject:
   - component: {fileID: 77604409}
   - component: {fileID: 77604408}
   m_Layer: 5
-  m_Name: Canvas (1)
+  m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21724,7 +21724,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1519507775}
   m_Layer: 5
-  m_Name: Continue (1)
+  m_Name: Continue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -54725,7 +54725,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1832631120
 RectTransform:
   m_ObjectHideFlags: 0
@@ -62439,7 +62439,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5363610577149727260, guid: ad13d7d574b01354d944f80310d4ca8c, type: 3}
       propertyPath: practiceRounds
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5363610577149727260, guid: ad13d7d574b01354d944f80310d4ca8c, type: 3}
       propertyPath: trainingRounds
@@ -62447,7 +62447,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5363610577149727260, guid: ad13d7d574b01354d944f80310d4ca8c, type: 3}
       propertyPath: doorPracticeRounds
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5363610577149727260, guid: ad13d7d574b01354d944f80310d4ca8c, type: 3}
       propertyPath: sceneControllerDay1
