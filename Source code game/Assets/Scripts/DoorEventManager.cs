@@ -16,7 +16,7 @@ public class DoorEventManager : MonoBehaviour
     public float bufferDelayMaxSecs = 4f;
 
     public bool doorsLocked = false;
-    public bool doorEventHasHappened = false;
+    private bool doorEventHasHappened = false;
 
 
     private bool transitioning = false;
@@ -27,6 +27,14 @@ public class DoorEventManager : MonoBehaviour
     private void Awake()
     {
         room = GetComponent<Room>();
+    }
+
+    public void Reset()
+    {
+        doorsLocked = false;
+        doorEventHasHappened = false;
+        transitioning = false;
+        StopAllCoroutines();
     }
 
     public void OnDoorTriggered(DoorSlideAnimation triggeredDoor, GameObject player)

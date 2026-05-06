@@ -41,6 +41,16 @@ public class DoorSlideAnimation : MonoBehaviour
         doorBoundary = GetComponentInChildren<DoorBoundary>();
     }
 
+    private void OnDisable()
+    {
+        if (activeCoroutine != null) StopCoroutine(activeCoroutine);
+        activeCoroutine = null;
+        isOpen = false;
+        if (LeftHalf != null) LeftHalf.localPosition = leftHalf_closed;
+        if (RightHalf != null) RightHalf.localPosition = rightHalf_closed;
+        if (doorBoundary != null) doorBoundary.Enable();
+    }
+
     public void Open()
     {
         if (isOpen) return;

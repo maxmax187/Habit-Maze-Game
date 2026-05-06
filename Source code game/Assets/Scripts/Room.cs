@@ -92,4 +92,9 @@ public class Room : MonoBehaviour
         }
         return activeDoors;
     }
+
+    public Dictionary<Directions, GameObject> GetAllDoors()
+    {
+        return new Dictionary<Directions, GameObject>(doors);
+    }
 }

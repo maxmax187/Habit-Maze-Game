@@ -60977,6 +60977,8 @@ MonoBehaviour:
   enableDevTools: 1
   devToolKeyPressDuration: 1
   levelSkipKey: 13
+  enableAllLevelsSameSeed: 0
+  seed: 0
 --- !u!1001 &5910021378070460872
 PrefabInstance:
   m_ObjectHideFlags: 0

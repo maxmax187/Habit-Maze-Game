@@ -365,7 +365,7 @@ public class GenerateMaze : MonoBehaviour
 
     void GenerateDoor(Path calculatedPath)
     {
-        if (GameManager.Instance.GetCurrentGameState() == "Practice") { return; } //! TODO 
+        if (GameManager.Instance.GetCurrentGameState() == "Practice") { return; }
         Debug.Log("Gen Door function reached");
 
         List<Room> rooms = GetOrderedRoomPath(calculatedPath);
@@ -471,6 +471,9 @@ public class GenerateMaze : MonoBehaviour
                 rooms[i, j].SetDirFlag(Room.Directions.BOTTOM, false, "door");
                 rooms[i, j].SetDirFlag(Room.Directions.LEFT, false, "door");
                 rooms[i, j].visited = false;
+
+                // reset door event state
+                rooms[i, j].GetComponent<DoorEventManager>()?.Reset();
             }
         }
     }

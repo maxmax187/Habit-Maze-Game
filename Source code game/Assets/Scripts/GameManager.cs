@@ -171,6 +171,18 @@ public class GameManager : MonoBehaviour
             allLevels[j] = temp;
         }
 
+        DevTools devTools = GetComponent<DevTools>();
+        if(devTools.enableDevTools && devTools.enableAllLevelsSameSeed)
+        {
+            //overwrite all levels to be the same seed
+            int overrideSeed = GetComponent<DevTools>().seed;
+            for (int i = 0; i < allLevels.Length; i++)
+            {
+                allLevels[i] = overrideSeed;
+            }
+            Debug.Log($"[DEVTOOLS / GAMEMANAGER] overwritten all level seeds to be: {overrideSeed}");
+        }
+
         Debug.Log("Training Levels: " + string.Join(", ", allLevels));
 
         trainingLevels = new int[trainingRounds];
@@ -196,8 +208,8 @@ public class GameManager : MonoBehaviour
     {
         dataController.Stop();
         player.GetComponent<PlayerSlideAnimation>()?.StopSliding(); // terminate slide animation in case player got stuck with bad timing after door event
+        player.GetComponent<ThoughtBubble>().Hide();
         player.GetComponent<PlayerMovement>().movementEnabled = true; // re-enable in case it was locked mid-transition
-        player.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero; // zero out momentum to prevent occasional animation reset error
         player.enabled = false;
 
         Rigidbody2D rbPlayer = player.gameObject.GetComponent<Rigidbody2D>();
