@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance { get; private set; }
 
+    [Header("Level configurations")]
     public int practiceRounds = 3;
     public int doorPracticeRounds = 3;
     public int trainingRounds = 5;
@@ -45,7 +46,11 @@ public class GameManager : MonoBehaviour
     public int totalRound { get; private set; } = 0;
     public int score { get; set; } = 0;
 
+    [Header("Coin Valuation & Score")]
     public bool isCoinDevalued = false;
+    public int goldCoinValue = 2;
+    public int silverCoinValue = 1;
+    public int mazeCompletionValue = 2;
 
     private int[] practiceLevels;
     private int[] doorPracticeLevels;
@@ -54,6 +59,7 @@ public class GameManager : MonoBehaviour
 
     public int currentSeed;
     public int currentCoinIdentity;
+    private bool pickedUpCoinIsGold = true; // true = gold, false = silver. This is bad code but I can't be bothered to fix it.
     private int[] coinOrderTraining;
     private int[] coinOrderTest;
 
@@ -263,7 +269,14 @@ public class GameManager : MonoBehaviour
 
         if (reachedFinish && gameState != GameState.Practice && gameState != GameState.DoorPractice)
         {
-            score += 2;
+            if(pickedUpCoin && pickedUpCoinIsGold)
+            {
+                score += goldCoinValue;
+            }else if (pickedUpCoin)
+            {
+                score += silverCoinValue;
+            }
+            score += mazeCompletionValue;
             uiManager.SetScore(score);
         }
 
@@ -320,21 +333,22 @@ public class GameManager : MonoBehaviour
         uiManager.ShowRoundFinished(reachedFinish);
     }
 
-    public void PickUpCoin()
+    public void PickUpCoin(bool isGold)
     {
         pickedUpCoin = true;
+        pickedUpCoinIsGold = isGold;
         coinPickupTime = Math.Round((decimal)countdownTimer.timeRemaining, 2);
-        if (gameState == GameState.Practice) { return; }
-        if (gameState == GameState.DoorPractice) { return; }
+        // if (gameState == GameState.Practice) { return; }
+        // if (gameState == GameState.DoorPractice) { return; }
 
-        if (isSilver)
-            score += 1;
-        else
-            if (isCoinDevalued) { return; }
-            else
-                score += 2;
+        // if (isSilver)
+        //     score += 1;
+        // else
+        //     if (isCoinDevalued) { return; }
+        //     else
+        //         score += 2;
 
-        uiManager.SetScore(score);
+        // uiManager.SetScore(score);
     }
 
     public void NextRound(bool isNewPhase, bool isEngaging, bool isFirst)
@@ -370,7 +384,6 @@ public class GameManager : MonoBehaviour
     }
 
     private int maxTries = 50;
-    private bool isSilver;
 
     IEnumerator CheckTotalDistanceCoroutine()
     {

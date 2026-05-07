@@ -13,7 +13,7 @@ public class DoorEventManager : MonoBehaviour
     public float doorLockedCooldown = 5f;
 
     public float bufferDelayMinSecs = 1f;
-    public float bufferDelayMaxSecs = 4f;
+    public float bufferDelayMaxSecs = 3f;
 
     public bool doorsLocked = false;
     public bool doorEventHasHappened = false;

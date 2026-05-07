@@ -171,7 +171,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DoorEventManager
   roomCenter: {fileID: 278865042858429648}
   doorLockedCooldown: 5
-  bufferDelay: 3
+  bufferDelayMinSecs: 1
+  bufferDelayMaxSecs: 3
   doorsLocked: 0
   doorEventHasHappened: 0
 --- !u!1 &2556933729780299649
