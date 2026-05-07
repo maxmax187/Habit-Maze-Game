@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
         Practice, // No reward yet, familiarilizing with controls
         DoorPractice, // No reward yet, familiarizing with mechanics door
         Training, // Training phase, with reward.
+        SRBAISurvey,
         DevalueIntroduction,
         Test,
         Debrief
@@ -310,11 +311,19 @@ public class GameManager : MonoBehaviour
 
 
         // Check if finished training
+        // if (gameState == GameState.Training && round == trainingRounds)
+        // {
+        //     isCoinDevalued = true;
+        //     gameState = GameState.Test;
+        //     uiManager.ShowFinishedTraining();
+        //     round = 1;
+        //     return;
+        // }
         if (gameState == GameState.Training && round == trainingRounds)
         {
             isCoinDevalued = true;
-            gameState = GameState.Test;
-            uiManager.ShowFinishedTraining();
+            gameState = GameState.SRBAISurvey; // wait here, not Test yet
+            uiManager.ShowSRBAISurvey();       // show survey via UIManager
             round = 1;
             return;
         }
@@ -328,9 +337,16 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        Debug.Log("All checks in FinishRound done");
-        Debug.Log(reachedFinish);
+        // Debug.Log("All checks in FinishRound done");
+        // Debug.Log(reachedFinish);
         uiManager.ShowRoundFinished(reachedFinish);
+    }
+
+    // from SRBAI to next round (first test round)
+    public void AdvanceFromSurveyToTest()
+    {
+        gameState = GameState.Test;
+        NextRound(true, false, false);
     }
 
     public void PickUpCoin(bool isGold)

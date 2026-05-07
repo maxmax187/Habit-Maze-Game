@@ -314,8 +314,8 @@ public class GenerateMaze : MonoBehaviour
     {
         //var currentPath = startAISeeker.GetCurrentPath(); 
 
-        Debug.Log($"Current path: {path}");
-        Debug.Log($"Current path nodes: {path?.path?.Count}");
+        // Debug.Log($"Current path: {path}");
+        // Debug.Log($"Current path nodes: {path?.path?.Count}");
 
         // Return empty list if path isn't calculated yet
         if (path == null || path.path == null)
@@ -366,7 +366,7 @@ public class GenerateMaze : MonoBehaviour
     void GenerateDoor(Path calculatedPath)
     {
         if (GameManager.Instance.GetCurrentGameState() == "Practice") { return; }
-        Debug.Log("Gen Door function reached");
+        // Debug.Log("Gen Door function reached");
 
         List<Room> rooms = GetOrderedRoomPath(calculatedPath);
 
@@ -376,15 +376,6 @@ public class GenerateMaze : MonoBehaviour
             Debug.LogWarning("DoorController: Room path is empty, cannot generate door.");
             return;
         }
-
-        // // pick a random room inbetween the percentage range
-        // int percentage = GetSpawnPercentage();
-        // int roomIdx = Mathf.Clamp(
-        //     (int)Math.Floor((double)(percentage * rooms.Count) / 100),
-        //     0,
-        //     rooms.Count - 1
-        // );
-        // Room room = rooms[roomIdx];
 
         Room room = null;
         int roomIdx = -1;
@@ -425,6 +416,7 @@ public class GenerateMaze : MonoBehaviour
 
         SetDoorDirection(room, rooms[roomIdx - 1]); //Set entrance door (the door between the room before and the room)
         SetDoorDirection(room, rooms[roomIdx + 1]); //Set exit door (the door between the room after and the room)
+        Debug.Log("[GenerateMaze] succesfully generated maze and door");
     }
 
     private void SetDoorDirection(Room room, Room otherRoom)

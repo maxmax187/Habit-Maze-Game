@@ -8,7 +8,13 @@ public class UIManager : MonoBehaviour
     private TMP_Text roundText, scoreText, timerText, timesUpText;
     [SerializeField]
     private GameObject roundFinishedTimeUI, roundFinishedUI, practiceFinishedUI, doorPracticeFinishedUI, trainingFinishedUI, testFinishedUI;
+    [SerializeField] private SRBAISurveyController srbaISurveyController;
 
+    public void ShowSRBAISurvey()
+    {
+        srbaISurveyController.Show();
+    }
+    
     public void SetRound(int round)
     {
         roundText.text = "Floor: " + round.ToString() + "/" + GameManager.Instance.GetCurrentTotalRounds();
