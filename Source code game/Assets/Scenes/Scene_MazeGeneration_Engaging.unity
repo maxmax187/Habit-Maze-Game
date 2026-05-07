@@ -3826,6 +3826,7 @@ Transform:
   - {fileID: 1147117542}
   - {fileID: 2107766708}
   - {fileID: 661206979}
+  - {fileID: 1997063350}
   m_Father: {fileID: 1100012005}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &385715216
@@ -62720,7 +62721,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5363610577149727260, guid: ad13d7d574b01354d944f80310d4ca8c, type: 3}
       propertyPath: practiceRounds
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5363610577149727260, guid: ad13d7d574b01354d944f80310d4ca8c, type: 3}
       propertyPath: trainingRounds
@@ -62728,9 +62729,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5363610577149727260, guid: ad13d7d574b01354d944f80310d4ca8c, type: 3}
       propertyPath: doorPracticeRounds
-      value: 3
-      propertyPath: testGoldCoinAmt
-      value: 10
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5363610577149727260, guid: ad13d7d574b01354d944f80310d4ca8c, type: 3}
       propertyPath: sceneControllerDay1

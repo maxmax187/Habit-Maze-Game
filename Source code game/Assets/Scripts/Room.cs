@@ -97,4 +97,12 @@ public class Room : MonoBehaviour
     {
         return new Dictionary<Directions, GameObject>(doors);
     }
+
+    public int GetActiveWallCount()
+    {
+        int count = 0;
+        foreach (var kvp in walls)
+            if (kvp.Value != null && kvp.Value.activeSelf) count++;
+        return count;
+    }
 }

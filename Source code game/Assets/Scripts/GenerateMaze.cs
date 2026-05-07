@@ -377,14 +377,52 @@ public class GenerateMaze : MonoBehaviour
             return;
         }
 
-        // pick a random room inbetween the percentage range
-        int percentage = GetSpawnPercentage();
-        int roomIdx = Mathf.Clamp(
-            (int)Math.Floor((double)(percentage * rooms.Count) / 100),
-            0,
-            rooms.Count - 1
-        );
-        Room room = rooms[roomIdx];
+        // // pick a random room inbetween the percentage range
+        // int percentage = GetSpawnPercentage();
+        // int roomIdx = Mathf.Clamp(
+        //     (int)Math.Floor((double)(percentage * rooms.Count) / 100),
+        //     0,
+        //     rooms.Count - 1
+        // );
+        // Room room = rooms[roomIdx];
+
+        Room room = null;
+        int roomIdx = -1;
+        int maxAttempts = 5;
+
+        // try maxAttempt times to spawn a door on a room with only 2 walls (prevent T-junction spawn)
+        // if unsuccesful after maxAttempts, spawn door regardless.
+        for (int attempt = 0; attempt < maxAttempts; attempt++)
+        {
+            int percentage = GetSpawnPercentage();
+            int candidateIdx = Mathf.Clamp(
+                (int)Math.Floor((double)(percentage * rooms.Count) / 100),
+                1,                  // clamp to 1 so roomIdx - 1 is always valid
+                rooms.Count - 2     // clamp to Count-2 so roomIdx + 1 is always valid
+            );
+
+            // check if room has exactly 2 active walls (corridor, not T-intersection)
+            int activeWallCount = rooms[candidateIdx].GetActiveWallCount();
+            if (activeWallCount == 2)
+            {
+                roomIdx = candidateIdx;
+                room = rooms[roomIdx];
+                break;
+            }
+
+            Debug.Log($"[GenerateMaze] Attempt {attempt + 1}: Room at index {candidateIdx} has {activeWallCount} active walls, retrying.");
+        }
+
+        if (room == null)
+        {
+            Debug.LogWarning("[GenerateMaze] Could not find a corridor room after max attempts, using last candidate.");
+            roomIdx = Mathf.Clamp(
+                (int)Math.Floor((double)(GetSpawnPercentage() * rooms.Count) / 100),
+                1, rooms.Count - 2
+            );
+            room = rooms[roomIdx];
+        }
+
         SetDoorDirection(room, rooms[roomIdx - 1]); //Set entrance door (the door between the room before and the room)
         SetDoorDirection(room, rooms[roomIdx + 1]); //Set exit door (the door between the room after and the room)
     }
