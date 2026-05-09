@@ -16,7 +16,8 @@ public class DatabaseHandler : MonoBehaviour
         //////////////////////////////////////////////////////////////
 
         Debug.Log("[DatabaseHandler] isProd: false");
-        return "localhost:3000";
+        Debug.Log("[DatabaseHandler] returning \"localhost:8080\" instead of \"/api\"");
+        return "localhost:8080";
     }
     public void GetParticipantByEmail(string email, Action<Participant> onSuccess, Action<string> onError)
     {
