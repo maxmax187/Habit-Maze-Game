@@ -356,11 +356,15 @@ public class GameManager : MonoBehaviour
     // from SRBAI to next round (first test round)
     public void AdvanceFromSurveyToTest()
     {
-        gameState = GameState.DevalueIntroduction;
+        // gameState = GameState.DevalueIntroduction; //TODO this just breaks the game, idk what is needed to get devalue introduction to happen between 
 
-        
+        // isCoinDevalued = true;
         // gameState = GameState.Test;
-        // NextRound(true, false, false);
+        // uiManager.ShowFinishedTraining();
+        // round = 1;
+        
+        gameState = GameState.Test;
+        NextRound(true, false, false);
     }
 
     public void PickUpCoin(bool isGold)
