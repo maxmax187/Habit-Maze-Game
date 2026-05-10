@@ -10,6 +10,7 @@ if (file_exists(__DIR__ . '/.env')) {
 }
 
 // Database connection using environment variables
+// TODO Max: should we change this?? or are these simply default values
 $db = new mysqli(
     getenv('DB_HOST') ?: '127.0.0.1',
     getenv('DB_USER') ?: 'pevers',
@@ -128,23 +129,42 @@ function handleAddRoundWithTransaction($db) {
 
         try {
             // Insert round
-            $stmt = $db->prepare("INSERT INTO rounds (participantEmail, seed, round, didCoinSpawn, pickedUpCoin, finished, phase, date, totalDistance, distanceCoinSpawn, remainingTime, totalRoundsFinished, day, coinSpawnTime, coinPickupTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("siiiiissdddiidd",
+            // OLD: $stmt = $db->prepare("INSERT INTO rounds (participantEmail, seed, round, didCoinSpawn, pickedUpCoin, finished, phase, date, totalDistance, distanceCoinSpawn, remainingTime, totalRoundsFinished, day, coinSpawnTime, coinPickupTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            // OLD: $stmt->bind_param("siiiiissdddiidd",
+            //     $round['participantEmail'],
+            //     $round['seed'],
+            //     $round['round'],
+            //     $round['didCoinSpawn'],
+            //     $round['pickedUpCoin'],
+            //     $round['finished'],
+            //     $round['phase'],
+            //     $round['date'],
+            //     $round['totalDistance'],
+            //     $round['distanceCoinSpawn'],
+            //     $round['remainingTime'],
+            //     $round['totalRoundsFinished'],
+            //     $round['day'],
+            //     $round['coinSpawnTime'],
+            //     $round['coinPickupTime']
+            // );
+            $stmt = $db->prepare("INSERT INTO rounds (participantEmail, seed, round, pickedUpCoin, finished, phase, date, remainingTime, totalRoundsFinished, day, thoughtBubbleTime, bufferDelay, coinPresentTime, playerChoiceTime, wentBackForCoin, coinIdentity) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("siiiiisdiiddddii",
                 $round['participantEmail'],
                 $round['seed'],
                 $round['round'],
-                $round['didCoinSpawn'],
                 $round['pickedUpCoin'],
                 $round['finished'],
                 $round['phase'],
                 $round['date'],
-                $round['totalDistance'],
-                $round['distanceCoinSpawn'],
                 $round['remainingTime'],
                 $round['totalRoundsFinished'],
                 $round['day'],
-                $round['coinSpawnTime'],
-                $round['coinPickupTime']
+                $round['thoughtBubbleTime'],
+                $round['bufferDelay'],
+                $round['coinPresentTime'],
+                $round['playerChoiceTime'],
+                $round['wentBackForCoin'],
+                $round['coinIdentity']
             );
             $stmt->execute();
             $roundId = $stmt->insert_id;

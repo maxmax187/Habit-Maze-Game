@@ -45,3 +45,10 @@ curl.exe "http://localhost:8080/api/getParticipant?email=test@test.com"
 
 
 or alternatively test by starting scene "Start" in unity editor and entering some email address, then progressing to the next scene, past the character select screen. At this point the unity editor console will either have shown an error or a debug log comment from databasehandler.cs.
+
+
+Data extraction
+install dependencies if needed (first time only)
+pip install mysql-connector-python pandas openpyxl python-dotenv
+
+use python file to bring rounds data to CSV files (will create a directory DataFiles containing the CSV files)

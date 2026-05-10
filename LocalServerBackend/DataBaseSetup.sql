@@ -15,18 +15,19 @@ CREATE TABLE `rounds` (
   `participantEmail` varchar(255),
   `seed` integer,
   `round` integer,
-  `didCoinSpawn` bool,
   `pickedUpCoin` bool,
   `finished` bool,
   `phase` varchar(20),
   `date` timestamp,
-  `totalDistance` decimal(7,2),
-  `distanceCoinSpawn` decimal(7,2),
   `remainingTime` decimal(7,2),
   `totalRoundsFinished` integer,
   `day` integer,
-  `coinSpawnTime` decimal(7,2),
-  `coinPickupTime` decimal(7,2)
+  `thoughtBubbleTime` decimal(7,2),
+  `bufferDelay` decimal(7,2),
+  `coinPresentTime` decimal(7,2),
+  `playerChoiceTime` decimal(7,2),
+  `wentBackForCoin` bool,
+  `coinIdentity` integer
 );
 
 CREATE TABLE `roundLogs` (
@@ -35,7 +36,6 @@ CREATE TABLE `roundLogs` (
   `d` decimal(7,2),
   FOREIGN KEY (`roundId`) REFERENCES `rounds` (`id`)
 );
-
 CREATE TABLE `habitSurvey` (
   `id` integer AUTO_INCREMENT PRIMARY KEY,
   `participantEmail` varchar(255),
