@@ -78,6 +78,12 @@ public class GameManager : MonoBehaviour
 
     public int day = 1;
 
+    public decimal thoughtBubbleTime = 0;
+    public float bufferDelay = 0f;
+    public decimal coinPresentTime = 0;
+    public decimal playerChoiceTime = 0;
+    public bool wentBackForCoin = false;
+
     [SerializeField] private TMP_Text dayText;
 
     [SerializeField]
@@ -245,20 +251,25 @@ public class GameManager : MonoBehaviour
 
         roundInfo.participantEmail = participantData.email;
         roundInfo.seed = currentSeed;
-        //TODO roundInfo.coinIdentity = currentCoinIdentity
         roundInfo.round = round;
-        roundInfo.didCoinSpawn = coinController.hasSpawned;
+        // roundInfo.didCoinSpawn = coinController.hasSpawned;
         roundInfo.pickedUpCoin = pickedUpCoin;
         roundInfo.finished = reachedFinish;
         roundInfo.phase = gameState.ToString();
         roundInfo.date = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-        roundInfo.totalDistance = Math.Round((decimal)coinController.totalDistance, 2); ;
-        roundInfo.distanceCoinSpawn = Math.Round((decimal)coinController.spawnDistance, 2); ;
+        // roundInfo.totalDistance = Math.Round((decimal)coinController.totalDistance, 2); 
+        // roundInfo.distanceCoinSpawn = Math.Round((decimal)coinController.spawnDistance, 2); 
         roundInfo.remainingTime = Math.Round((decimal)countdownTimer.timeRemaining, 2);
         roundInfo.totalRoundsFinished = totalRound;
         roundInfo.day = day;
-        roundInfo.coinPickupTime = coinPickupTime; // TODO: Add to db
-        roundInfo.coinSpawnTime = coinController.spawnTime; // TODO: Add to db
+        // roundInfo.coinPickupTime = coinPickupTime; 
+        // roundInfo.coinSpawnTime = coinController.spawnTime; 
+        roundInfo.thoughBubbleTime = thoughtBubbleTime;
+        roundInfo.bufferDelay = (decimal)bufferDelay;
+        roundInfo.coinPresentTime = coinPresentTime; 
+        roundInfo.playerChoiceTime = playerChoiceTime; 
+        roundInfo.wentBackForCoin = wentBackForCoin; 
+        roundInfo.coinIdentity = currentCoinIdentity;
 
         RoundData roundData = new RoundData();
         roundData.roundLogs = dataController.roundLogs;
@@ -345,6 +356,13 @@ public class GameManager : MonoBehaviour
     // from SRBAI to next round (first test round)
     public void AdvanceFromSurveyToTest()
     {
+        // gameState = GameState.DevalueIntroduction; //TODO this just breaks the game, idk what is needed to get devalue introduction to happen between 
+
+        // isCoinDevalued = true;
+        // gameState = GameState.Test;
+        // uiManager.ShowFinishedTraining();
+        // round = 1;
+        
         gameState = GameState.Test;
         NextRound(true, false, false);
     }

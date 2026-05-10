@@ -218,8 +218,10 @@ public class DoorEventManager : MonoBehaviour
         int currentCoinIdentity = GameManager.Instance.currentCoinIdentity;
         Debug.Log($"[DoorEventManager] Showing coin with identity: {currentCoinIdentity} after buffer delay of: {bufferDelay}");
 
+        decimal thoughtBubbleTime = GameManager.Instance.dataController.time;
         bubble.Show(currentCoinIdentity, bufferDelay); //TODO adjust gold/silver based on the predetermined distribution
         yield return new WaitForSeconds(bufferDelay);
+        decimal coinPresentTime = GameManager.Instance.dataController.time;
 
 
         // key press to room direction mappings
@@ -250,10 +252,13 @@ public class DoorEventManager : MonoBehaviour
             yield return null;
         }
 
+        decimal playerChoiceTime = GameManager.Instance.dataController.time;
         bubble.Hide(); // hide thought bubble and coin again
+        bool wentBackForCoin = false;
 
         if (receivedInput == 1) // 4.1 received keycode SPACE for going backwards to the coin
         {
+            wentBackForCoin = true;
             Debug.Log("received SPACE");
             yield return StartCoroutine(DoTransition(entryDoor, player, toInside: false, exitDir:entryDir));
 
@@ -272,6 +277,13 @@ public class DoorEventManager : MonoBehaviour
 
             Debug.Log("[DoorEventManager] permanently locked doors");
         };
+
+        // pass datapoints on to gamemanager
+        GameManager.Instance.thoughtBubbleTime = thoughtBubbleTime;
+        GameManager.Instance.bufferDelay = bufferDelay;
+        GameManager.Instance.coinPresentTime = coinPresentTime;
+        GameManager.Instance.playerChoiceTime = playerChoiceTime;
+        GameManager.Instance.wentBackForCoin = wentBackForCoin;
     }
 
     private IEnumerator LockDoorsTemporarily()

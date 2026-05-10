@@ -10,11 +10,14 @@ public class DatabaseHandler : MonoBehaviour
 
     private string GetHost()
     {
+        Debug.Log("[DatabaseHandler] getting host");
         ////////////// TODO: Change to your api endpoint //////////////
         if (isProd) { return "/api"; }
         //////////////////////////////////////////////////////////////
 
-        return "localhost:3000";
+        Debug.Log("[DatabaseHandler] isProd: false");
+        Debug.Log("[DatabaseHandler] returning \"localhost:8080\" instead of \"/api\"");
+        return "localhost:8080";
     }
     public void GetParticipantByEmail(string email, Action<Participant> onSuccess, Action<string> onError)
     {
