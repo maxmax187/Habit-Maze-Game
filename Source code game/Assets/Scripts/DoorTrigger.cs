@@ -25,7 +25,7 @@ public class DoorTrigger : MonoBehaviour
             && !doorEventManager.doorEventHasHappened)
         {
             InstructionManager.Instance.ShowInstruction(
-                "You're approaching a door!\n\nWalk into it to enter the room.",
+                "You've reached the security area!\n\nWalk into the first door to enter.",
                 onDismiss: () => doorEventManager.OnDoorTriggered(doorAnimation, other.gameObject)
             );
             return; // don't fire OnDoorTriggered yet — wait for dismiss

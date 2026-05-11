@@ -202,12 +202,26 @@ public class DoorEventManager : MonoBehaviour
         {
             bool dismissed = false;
             InstructionManager.Instance.ShowInstruction(
-                "You're now inside the room!\n\n" +
+                "You're now inside the security area!\n\n" +
                 "You remember you have dropped a coin along the way. \n\n"+
-                "Press SPACE to open the back door to go back and collect the coin.\n" +
-                "OR press your movement key toward the exit to open the front door to continue without collecting it.",
+                "Press SPACE to open the back door to go back and collect the coin.\n\n" +
+                "OR press your movement key toward the exit to open the front door and continue without \n" +
+                "collecting it.",
                 onDismiss: () => dismissed = true
             );
+
+            yield return new WaitUntil(() => dismissed);
+
+            dismissed = false;
+            InstructionManager.Instance.ShowInstruction(
+                "When pressing SPACE to go back for the coin, the security door has a short cool down." +
+                "You will have to wait a few seconds before going through the security area again.\n\n" +
+                "When going forward to go towards the exit without collecting the coin," +
+                "the security door locks and you can no longer go back when you change your mind.\n\n" +
+                "Coins do not reward any points yet in these practice rounds.",
+                onDismiss: () => dismissed = true
+                );
+
 
             // Wait for dismiss
             yield return new WaitUntil(() => dismissed);
