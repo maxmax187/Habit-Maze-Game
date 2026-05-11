@@ -347,6 +347,7 @@ public class GameManager : MonoBehaviour
             gameState = GameState.Debrief;
             uiManager.ShowFinishedTest();
             round = 1;
+            // TODO score -> send score data to server
             return;
         }
 
