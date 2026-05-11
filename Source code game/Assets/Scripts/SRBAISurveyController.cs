@@ -188,23 +188,9 @@ public class SRBAISurveyController : MonoBehaviour
     {
         HabitSurveyData surveyData = BuildSurveyData();
 
-        // Grab the DatabaseHandler from the same object that holds DataController,
-        // mirroring how DataController.Start() resolves it.
-        DatabaseHandler db = GameManager.Instance.dataController.GetComponent<DatabaseHandler>();
-
-        db.AddHabitSurvey(
-            surveyData,
-            onSuccess: () =>
-            {
-                Debug.Log("[SRBAISurvey] Survey submitted successfully.");
-                GameManager.Instance.AdvanceFromSurveyToTest();
-            },
-            onError: (error) =>
-            {
-                Debug.LogError($"[SRBAISurvey] Submission failed: {error}. Advancing anyway.");
-                GameManager.Instance.AdvanceFromSurveyToTest();
-            }
-        );
+        // upload survey data to the server (async) and advance to test phase
+        GameManager.Instance.dataController.InsertHabitSurveyDB(surveyData);
+        GameManager.Instance.AdvanceFromSurveyToTest();
     }
 
     /// <summary>

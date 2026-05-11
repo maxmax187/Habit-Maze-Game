@@ -153,4 +153,19 @@ public class DataController : MonoBehaviour
             }
         );
     }
+
+    internal void InsertHabitSurveyDB(HabitSurveyData surveyData)
+    {
+        databaseHandler.AddHabitSurvey(
+            surveyData,
+            () =>
+            {
+                Debug.Log("[SRBAISurvey] Survey submitted successfully.");
+            },
+            error =>
+            {
+                Debug.LogError("[SRBAISurvey] Submission failed: " + error);
+            }
+        );
+    }
 }
