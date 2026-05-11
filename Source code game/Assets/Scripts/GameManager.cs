@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Debug = UnityEngine.Debug;
 
 public class GameManager : MonoBehaviour
@@ -345,7 +346,7 @@ public class GameManager : MonoBehaviour
         if (gameState == GameState.Test && round == testRounds)
         {
             gameState = GameState.Debrief;
-            uiManager.ShowFinishedTest();
+            SceneManager.LoadScene("End");
             round = 1;
             // TODO score -> send score data to server
             return;
