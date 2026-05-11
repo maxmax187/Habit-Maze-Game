@@ -148,7 +148,7 @@ function handleAddRoundWithTransaction($db) {
             //     $round['coinPickupTime']
             // );
             $stmt = $db->prepare("INSERT INTO rounds (participantEmail, seed, round, pickedUpCoin, finished, phase, date, remainingTime, totalRoundsFinished, day, thoughtBubbleTime, bufferDelay, coinPresentTime, playerChoiceTime, wentBackForCoin, coinIdentity) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("siiiiisdiiddddii",
+            $stmt->bind_param("siiiissdiiddddii",
                 $round['participantEmail'],
                 $round['seed'],
                 $round['round'],
