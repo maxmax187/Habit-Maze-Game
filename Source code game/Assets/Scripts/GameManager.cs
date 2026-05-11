@@ -82,6 +82,7 @@ public class GameManager : MonoBehaviour
     public float bufferDelay = 0f;
     public decimal coinPresentTime = 0;
     public decimal playerChoiceTime = 0;
+    public decimal reactionTime = 0;
     public bool wentBackForCoin = false;
 
     [SerializeField] private TMP_Text dayText;
@@ -264,19 +265,20 @@ public class GameManager : MonoBehaviour
         roundInfo.day = day;
         // roundInfo.coinPickupTime = coinPickupTime; 
         // roundInfo.coinSpawnTime = coinController.spawnTime; 
-        roundInfo.thoughBubbleTime = thoughtBubbleTime;
+        roundInfo.thoughtBubbleTime = thoughtBubbleTime;
         roundInfo.bufferDelay = (decimal)bufferDelay;
         roundInfo.coinPresentTime = coinPresentTime; 
-        roundInfo.playerChoiceTime = playerChoiceTime; 
+        roundInfo.playerChoiceTime = playerChoiceTime;
+        roundInfo.reactionTime = reactionTime; 
         roundInfo.wentBackForCoin = wentBackForCoin; 
-        roundInfo.coinIdentity = currentCoinIdentity;
+        roundInfo.coinIdentity = currentCoinIdentity;  // is not reset between rounds, probably best to keep this way
 
         RoundData roundData = new RoundData();
         roundData.roundLogs = dataController.roundLogs;
         roundData.round = roundInfo;
 
-
         dataController.InsertRoundDB(roundData);
+        ResetDataCollectionPoints();
 
 
         if (reachedFinish && gameState != GameState.Practice && gameState != GameState.DoorPractice)
@@ -367,17 +369,17 @@ public class GameManager : MonoBehaviour
         pickedUpCoin = true;
         pickedUpCoinIsGold = isGold;
         coinPickupTime = Math.Round((decimal)countdownTimer.timeRemaining, 2);
-        // if (gameState == GameState.Practice) { return; }
-        // if (gameState == GameState.DoorPractice) { return; }
+    }
 
-        // if (isSilver)
-        //     score += 1;
-        // else
-        //     if (isCoinDevalued) { return; }
-        //     else
-        //         score += 2;
-
-        // uiManager.SetScore(score);
+    private void ResetDataCollectionPoints()
+    {
+        pickedUpCoin = false;
+        thoughtBubbleTime = 0;
+        bufferDelay = 0f;
+        coinPresentTime = 0;
+        playerChoiceTime = 0;
+        reactionTime = 0;
+        wentBackForCoin = false;
     }
 
     public void NextRound(bool isNewPhase, bool isEngaging, bool isFirst)

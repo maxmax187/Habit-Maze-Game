@@ -18,10 +18,11 @@ public class Round
     public int day; // day of the study (1,2 or 3)
     // public decimal coinPickupTime;
     // public decimal coinSpawnTime;
-    public decimal thoughBubbleTime; // thought bubble pop-up time
+    public decimal thoughtBubbleTime; // thought bubble pop-up time
     public decimal bufferDelay; // buffer delay between thought bubble pop-up and coin presentation
     public decimal coinPresentTime; // time when coin identity is revealed to player in thought bubble
     public decimal playerChoiceTime; // time when player reacts to coin presentation
+    public decimal reactionTime; // playerChoiceTime - coinPresentTime
 
     public bool wentBackForCoin; // did player turn back for the coin at the door choice point
     public int coinIdentity; // was coin gold or silver (1=gold, 0=silver)

@@ -26,6 +26,7 @@ CREATE TABLE `rounds` (
   `bufferDelay` decimal(7,2),
   `coinPresentTime` decimal(7,2),
   `playerChoiceTime` decimal(7,2),
+  `reactionTime` decimal(7,2),
   `wentBackForCoin` bool,
   `coinIdentity` integer
 );

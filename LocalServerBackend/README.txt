@@ -49,6 +49,6 @@ or alternatively test by starting scene "Start" in unity editor and entering som
 
 Data extraction
 install dependencies if needed (first time only)
-pip install mysql-connector-python pandas openpyxl python-dotenv
+pip install mysql-connector-python pandas openpyxl python-dotenv sqlalchemy
 
 use python file to bring rounds data to CSV files (will create a directory DataFiles containing the CSV files)
