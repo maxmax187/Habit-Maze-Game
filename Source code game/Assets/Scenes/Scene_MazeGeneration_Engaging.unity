@@ -19238,7 +19238,6 @@ RectTransform:
   m_Children:
   - {fileID: 962532980}
   - {fileID: 1524090971}
-  - {fileID: 1831045967}
   - {fileID: 1168505275}
   m_Father: {fileID: 1100012005}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -19328,7 +19327,6 @@ MonoBehaviour:
   question2Group: {fileID: 120473447}
   question3Group: {fileID: 1422444791}
   question4Group: {fileID: 56613197}
-  surveyApiUrl: /api/addHabitSurvey
 --- !u!1 &947992757
 GameObject:
   m_ObjectHideFlags: 0
@@ -65633,63 +65631,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 0
---- !u!1 &1831045966
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1831045967}
-  - component: {fileID: 1831045968}
-  m_Layer: 0
-  m_Name: LikertController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1831045967
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1831045966}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 62566.04, y: 48549.6, z: 304.4021}
-  m_LocalScale: {x: 100, y: 100, z: 100}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 947574227}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1831045968
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1831045966}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2f4865d062dc7f40a7a142aaeadb352, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pages:
-  - items:
-    - question: 
-      toggleGroup: {fileID: 565569085}
-    - question: 
-      toggleGroup: {fileID: 120473447}
-    - question: 
-      toggleGroup: {fileID: 1422444791}
-    - question: 
-      toggleGroup: {fileID: 56613197}
-  continueButton: {fileID: 1776129509}
-  backButton: {fileID: 1524090968}
-  isPXISurveyActive: 0
 --- !u!1 &1832631119
 GameObject:
   m_ObjectHideFlags: 0
