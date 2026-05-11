@@ -72,11 +72,24 @@ def export_habit_survey_data():
         index=False
     )
 
+def export_participants():
+    """Export all participant data."""
+    df_participants = pd.read_sql(
+        "SELECT * FROM participants ORDER BY email",
+        engine
+    )
+
+    df_participants.to_csv(
+        os.path.join(output_dir, f"{timestamp}_participants.csv"),
+        index=False
+    )
+
 
 # Run exports
-export_rounds()
+# export_rounds()
 # export_round_logs()
-export_habit_survey_data()
+# export_habit_survey_data()
+export_participants()
 
 engine.dispose()
 print(f"Done — files saved to {output_dir}")

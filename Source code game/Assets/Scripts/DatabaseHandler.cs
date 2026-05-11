@@ -67,7 +67,7 @@ public class DatabaseHandler : MonoBehaviour
     public void AddRoundData(RoundData roundData)
     {
         RoundData filteredRoundData = FilterRoundData(roundData);
-        string jsonData = JsonConvert.SerializeObject(roundData);
+        string jsonData = JsonConvert.SerializeObject(filteredRoundData);
 
         StartCoroutine(SendDataToServer(GetHost() + "/addRoundWithTransaction", jsonData));
     }
@@ -87,6 +87,20 @@ public class DatabaseHandler : MonoBehaviour
         }
 
         return roundData;
+    }
+
+    public void UpdateScore(ScoreUpdateData scoreData, Action onSuccess = null, Action<string> onError = null)
+    {
+        string jsonData = JsonConvert.SerializeObject(scoreData);
+
+        StartCoroutine(
+            SendDataToServer(
+                GetHost() + "/updateScore",
+                jsonData,
+                onSuccess,
+                onError
+            )
+        );
     }
 
     private IEnumerator SendDataToServer(string url, string jsonData, Action onSuccess = null, Action<string> onError = null)

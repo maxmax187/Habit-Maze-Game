@@ -3,13 +3,9 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using UnityEngine.Networking;
 
-[System.Serializable]
-public class ScoreUpdateData
-{
-    public string email;
-    public int totalScore;
-}
-
+/// <summary>
+/// This file should be redundant now
+/// </summary>
 public class ToSurvey : MonoBehaviour
 {
     void Update()

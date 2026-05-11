@@ -132,4 +132,25 @@ public class DataController : MonoBehaviour
     {
         databaseHandler.AddRoundData(roundData);
     }
+
+    internal void InsertScoreDB(int score)
+    {
+        var data = new ScoreUpdateData
+        {
+            email = GameManager.Instance.participantData.email,
+            totalScore = score
+        };
+
+        databaseHandler.UpdateScore(
+            data,
+            () =>
+            {
+                Debug.Log("[DataController] Score updated successfully");
+            },
+            error =>
+            {
+                Debug.LogError("[DataController] Error updating score: " + error);
+            }
+        );
+    }
 }

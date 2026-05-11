@@ -345,10 +345,11 @@ public class GameManager : MonoBehaviour
         // Check if finished test
         if (gameState == GameState.Test && round == testRounds)
         {
+            Debug.Log("[GameManager] reached end of day");
             gameState = GameState.Debrief;
-            SceneManager.LoadScene("End");
+            dataController.InsertScoreDB(score);
             round = 1;
-            // TODO score -> send score data to server
+            SceneManager.LoadScene("End");
             return;
         }
 
@@ -386,6 +387,7 @@ public class GameManager : MonoBehaviour
 
     public void NextRound(bool isNewPhase, bool isEngaging, bool isFirst)
     {
+        Debug.Log("[GameManager] Next Round");
         uiManager.HideUI();
         if (!isNewPhase) { round++; }
         totalRound++;
@@ -394,6 +396,7 @@ public class GameManager : MonoBehaviour
         coinPickupTime = 0;
         uiManager.SetRound(round);
         generateMazeController.CreateMaze();
+        Debug.Log("[GameManager] Next round, after createmaze");
         player.transform.position = new Vector2(9, 0);
         finishAi.StartPathFinding();
 

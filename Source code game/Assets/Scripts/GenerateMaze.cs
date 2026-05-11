@@ -1,5 +1,6 @@
 using Pathfinding;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
@@ -267,9 +268,12 @@ public class GenerateMaze : MonoBehaviour
     {
         if (generating)
         {
+            Debug.Log("[GenerateMaze] generating = true, returning");
             return;
         }
 
+        finished = false;
+        stack.Clear();
         Reset();
 
         RemoveRoomWall(0, 0, Room.Directions.BOTTOM);
@@ -283,8 +287,15 @@ public class GenerateMaze : MonoBehaviour
         Generate();
 
         AstarPath.active.Scan();
+        StartCoroutine(StartPathNextFrame());
+    }
+
+    private IEnumerator StartPathNextFrame()
+    {
+        yield return null;
 
         //Wait for path to be ready, then genenrate door
+        Debug.Log("[GenerateMaze] requesting path");
         startAISeeker.StartPath(
             startAISeeker.transform.position,
             finishAI.transform.position,
@@ -293,6 +304,7 @@ public class GenerateMaze : MonoBehaviour
     }
     private void OnFinishPathComplete(Path p)
     {
+        Debug.Log("[GenerateMaze] path is ready");
         Debug.Log($"Start pos: {startAISeeker.transform.position}");
         Debug.Log($"End pos: {finishAI.transform.position}");
         Debug.Log($"Path node count: {p.path?.Count}");
@@ -365,6 +377,7 @@ public class GenerateMaze : MonoBehaviour
 
     void GenerateDoor(Path calculatedPath)
     {
+        Debug.Log("[GenerateMaze] generating door");
         if (GameManager.Instance.GetCurrentGameState() == "Practice") { return; }
         // Debug.Log("Gen Door function reached");
 
