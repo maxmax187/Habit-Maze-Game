@@ -8,18 +8,36 @@ function Overview() {
       </div>
       <h2>Overview</h2>
       <>
-        <p style={{ fontSize: "20px", marginBottom: "28px" }}>
-          This experiment has ended. However, you can still access the
-          experiment here for educational purposes. Please note that your data
-          is no longer persisted or uploaded to TUe servers, therefore some
-          functions like scoring or character selection might not work as
-          intended. Please use the menu below to navigate to different days of
-          the experiment.
+        <p style={{ fontSize: "16px", marginBottom: "12px" }}>
+          Welcome to the Bachelor End Project study of Max te Brake and Mare Hulshof.
+          Thank you for participating.
         </p>
-        <p style={{ fontSize: "20px", marginBottom: "28px" }}>
+        <p style={{ fontSize: "16px", marginBottom: "12px" }}>
+          Here you will find the game you will be playing over the course of the study.
+          Please complete the game for Day 1 through Day 3 on three consecutive days 
+          (ideally at a similar time each day). Do not leave any gap days between sessions.
+        </p>
+        <p style={{ fontSize: "16px", marginBottom: "4px" }}>
+          Note that there are some minor differences in game structure between days, so the expected duration may vary slightly.
+          Based on our own experience, we expect that you will spend roughly:
+        </p>
+        <ul style={{ fontSize: "14px", marginBottom: "12px" }}>
+          <li>1 hour on Day 1</li>
+          <li>45 minutes on Day 2</li>
+          <li>1 hour and 20 minutes on Day 3 (including survey)</li>
+        </ul>
+        <p style={{ fontSize: "16px", marginBottom: "28px" }}>
+          After completing the Day 3 game, please don't forget to fill in the final survey via the LimeSurvey link below. 
+        </p>
+        <p style={{ fontSize: "16px", marginBottom: "28px" }}>
+          The compensation for your participation in this study will be arranged some time after May 24th, the end date of this study.
           For questions or remarks, please contact{" "}
-          <a href="mailto:p.h.a.evers@student.tue.nl">
-            p.h.a.evers@student.tue.nl
+          <a href="mailto:m.a.j.t.brake@student.tue.nl">
+            m.a.j.t.brake@student.tue.nl
+          </a>{" "}
+          or{" "}
+          <a href="mailto:m.hulshof@student.tue.nl">
+            m.hulshof@student.tue.nl
           </a>
           .
         </p>
@@ -32,6 +50,9 @@ function Overview() {
           </li>
           <li>
             <a href="/f8622112/day3">Day 3</a>
+          </li>
+          <li>
+            <a href="https://youtu.be/dQw4w9WgXcQ?si=NhMtoN9YBiqklc7q">LimeSurvey Link</a>
           </li>
         </ul>
       </>

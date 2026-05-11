@@ -20,16 +20,19 @@ export function DayInfo() {
         </li>
         <li>
           Your participation will be registered at the end of the experiment
-          each day.
+          each day. <strong><u>Do not close out of the game until you are instructed to do so.</u></strong>
         </li>
-        <li>Payment will be made at the end of the experiment.</li>
-        <li>
+        {/* <li>
           For further questions please email:{" "}
-          <a href="mailto:p.h.a.evers@student.tue.nl">
-            p.h.a.evers@student.tue.nl
+          <a href="mailto:m.a.j.t.brake@student.tue.nl">
+            m.a.j.t.brake@student.tue.nl
+          </a>{" "}
+          or{" "}
+          <a href="mailto:m.hulshof@student.tue.nl">
+            m.hulshof@student.tue.nl
           </a>
           .
-        </li>
+        </li> */}
       </ul>
     </>
   );

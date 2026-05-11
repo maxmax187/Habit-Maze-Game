@@ -4,6 +4,8 @@ import Day1 from "./components/Day1";
 import Day2 from "./components/Day2";
 import Day3 from "./components/Day3";
 import Overview from "./components/Overview";
+import DevPage from "./components/DevPage";
+
 function App() {
   return (
     <BrowserRouter>
@@ -13,6 +15,7 @@ function App() {
         <Route path="/f8622112/day1" element={<Day1 />} />
         <Route path="/f8622112/day2" element={<Day2 />} />
         <Route path="/f8622112/day3" element={<Day3 />} />
+        <Route path="/f8622112/devpage" element={<DevPage />} />
       </Routes>
     </BrowserRouter>
   );
