@@ -35,6 +35,7 @@ start MySQL (if start-on-windows-startup is not enabled):
 Start-Service MySQL97
 start php server: 
 php -S localhost:8080 index.php
+OR: double-click StartLocalServer.bat
 
 testing:
 new entry test (posting to DB):
