@@ -359,8 +359,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.33, y: 0}
-  m_SizeDelta: {x: 1187.13, y: 258.43}
+  m_AnchoredPosition: {x: 0.33, y: 1.38}
+  m_SizeDelta: {x: 1187.13, y: 255.66}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1546996055
 MonoBehaviour:
@@ -382,18 +382,19 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'You have reached the end of today''s experiment.
+  m_text: 'You have reached the end of today''s rounds.
 
 
     Your data has been
     recorded.
 
 
-    Thank you for your participation! Your participation compensation
-    will be transferred soon.
+    Please complete the surveys in the link provided by the email
+    to fulfill your participation in this study.
 
 
-    You can now safely exit the page.
+    You can now safely exit the
+    page.
 
 
 '
@@ -434,6 +435,7 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -771,6 +773,7 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -929,6 +932,7 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0

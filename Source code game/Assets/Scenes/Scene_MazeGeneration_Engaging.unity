@@ -398,7 +398,7 @@ Transform:
   m_GameObject: {fileID: 46178818}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 13.4, y: 8.2, z: 0.70285434}
+  m_LocalPosition: {x: 2.07, y: 10.07, z: 0.70285434}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -3861,6 +3861,81 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &243386849
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 243386850}
+  - component: {fileID: 243386852}
+  - component: {fileID: 243386851}
+  m_Layer: 5
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &243386850
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 243386849}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1261373518}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -678.3, y: -615.3}
+  m_SizeDelta: {x: 4.39, y: 4.39}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &243386851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 243386849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 7550714796630118033, guid: 21913adc67138e54a996e6f82866322d, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &243386852
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 243386849}
+  m_CullTransparentMesh: 1
 --- !u!1 &243597138
 GameObject:
   m_ObjectHideFlags: 0
@@ -3970,8 +4045,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -718, y: -609.2}
-  m_SizeDelta: {x: 544.6395, y: 187.619}
+  m_AnchoredPosition: {x: -718, y: -608.33923}
+  m_SizeDelta: {x: 544.6395, y: 179.0114}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &251536178
 MonoBehaviour:
@@ -5228,7 +5303,7 @@ Transform:
   m_GameObject: {fileID: 290416752}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.78, y: 17.1, z: 0.70285434}
+  m_LocalPosition: {x: -5, y: 17.73, z: 0.70285434}
   m_LocalScale: {x: 2.958256, y: 2.958256, z: 2.958256}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10926,7 +11001,7 @@ Transform:
   m_GameObject: {fileID: 480792413}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 41, y: 15, z: 0.70285434}
+  m_LocalPosition: {x: 41.53, y: 15.05, z: 0.70285434}
   m_LocalScale: {x: 2.958256, y: 2.958256, z: 2.958256}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11965,8 +12040,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -718.4206, y: -618.8009}
-  m_SizeDelta: {x: -1291.3784, y: -724.0408}
+  m_AnchoredPosition: {x: -717.1194, y: -618.56616}
+  m_SizeDelta: {x: -1289.6611, y: -721.4302}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &556075231
 MonoBehaviour:
@@ -12016,8 +12091,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 3
-  m_fontSizeBase: 3
+  m_fontSize: 2.8
+  m_fontSizeBase: 2.8
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -13967,7 +14042,7 @@ Transform:
   m_GameObject: {fileID: 654527100}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -906.42316, y: -517.8744, z: -0.13288593}
+  m_LocalPosition: {x: -905.3, y: -516.6, z: -0.13288593}
   m_LocalScale: {x: 5.6, y: 5.4004455, z: 5.4004455}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -14027,7 +14102,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 11.185925, y: 8.150798}
+  m_Size: {x: 11.893119, y: 8.666106}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -15074,6 +15149,7 @@ RectTransform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1054547311}
+  - {fileID: 1444113690}
   m_Father: {fileID: 1957823100}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -15201,10 +15277,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "<b> Practice rounds continue </b>\n\nFrom now on a \"Security Area\" will
+  m_text: "<b> Practice rounds continue </b>\n\nFrom now on a \"security area\" will
     be located somewhere on the way to the exit, enclosed by two doors. \n\nWalk
     towards the doors to see how to get through the security area and continue your
-    way onto the exit. \n\nStill no points are rewarded in this next 3 rounds.\n\nPress
+    way onto the exit. \n\nStill no points are rewarded in these next 3 rounds.\n\nPress
     space to start if you understand."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6c43c8fffbbefa14db2321e203f49481, type: 2}
@@ -22099,11 +22175,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Unlike last time, coins (     ) now offer 1 point again.
+  m_text: 'Unlike last time, gold coins (     ) now offer 2 points again and silver
+    coins (     ) offer 1 point again.
 
 
-    Try to
-    pick them up to get a higher score!'
+    Try to pick them up to get a higher
+    score!'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6c43c8fffbbefa14db2321e203f49481, type: 2}
   m_sharedMaterial: {fileID: 3003168486873295460, guid: 6c43c8fffbbefa14db2321e203f49481, type: 2}
@@ -22597,7 +22674,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -729.64233, y: -631.1054}
+  m_AnchoredPosition: {x: -729.47, y: -631.06}
   m_SizeDelta: {x: 3.9, y: 3.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1074546738
@@ -24125,7 +24202,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -683.92, y: -632.43}
+  m_AnchoredPosition: {x: -683.99, y: -631.5}
   m_SizeDelta: {x: 4.39, y: 4.39}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1178377890
@@ -25750,6 +25827,7 @@ RectTransform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1435264705}
+  - {fileID: 243386850}
   m_Father: {fileID: 2093804482}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -29342,7 +29420,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -716.8, y: -610}
+  m_AnchoredPosition: {x: -716.8, y: -610.4}
   m_SizeDelta: {x: 453.7307, y: 124.3647}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1435264706
@@ -29367,11 +29445,14 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Remember, going back and picking up a
 
-    coin (     ) offers 1 point.
+    gold coin (     ) offers 2
+    points. A silver coin  (     )
+
+    offers 1 point
 
 
-    Try
-    to pick them up to get a higher score!'
+    Try to pick them up
+    to get a higher score!'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6c43c8fffbbefa14db2321e203f49481, type: 2}
   m_sharedMaterial: {fileID: 3003168486873295460, guid: 6c43c8fffbbefa14db2321e203f49481, type: 2}
@@ -29450,6 +29531,81 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1435264704}
+  m_CullTransparentMesh: 1
+--- !u!1 &1444113689
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1444113690}
+  - component: {fileID: 1444113692}
+  - component: {fileID: 1444113691}
+  m_Layer: 5
+  m_Name: silver_coin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1444113690
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1444113689}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 724585466}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -713.62, y: -617.8}
+  m_SizeDelta: {x: 4.39, y: 4.39}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1444113691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1444113689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 7550714796630118033, guid: 21913adc67138e54a996e6f82866322d, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1444113692
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1444113689}
   m_CullTransparentMesh: 1
 --- !u!1 &1445099396
 GameObject:
@@ -67817,7 +67973,7 @@ MonoBehaviour:
   m_text: '<b>Important rule change!</b>
 
 
-    For the next 20 rounds the goldcoin
+    For the next 20 rounds the gold coin
     (      ) will <b>NOT</b> reward any points anymore.
 
     The coin will occasionally
@@ -71807,7 +71963,7 @@ Transform:
   m_GameObject: {fileID: 1953505291}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 49.15, y: -5.05, z: 0.70285434}
+  m_LocalPosition: {x: 49.09, y: -4.3, z: 0.70285434}
   m_LocalScale: {x: 2.958256, y: 2.958256, z: 2.958256}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -74400,7 +74556,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -740.72, y: -601.71}
+  m_AnchoredPosition: {x: -740.62, y: -600.9}
   m_SizeDelta: {x: 4.39, y: 4.39}
   m_Pivot: {x: 0.50000435, y: 0.49999818}
 --- !u!114 &2068585588
@@ -75191,7 +75347,7 @@ Transform:
   m_GameObject: {fileID: 2107119561}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 18.9, y: 10.3, z: 0.70285434}
+  m_LocalPosition: {x: 26.7, y: 12.8, z: 0.70285434}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 1
   m_Children: []
