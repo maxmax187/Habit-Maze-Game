@@ -253,8 +253,10 @@ public class DoorEventManager : MonoBehaviour
         }
 
         decimal playerChoiceTime = GameManager.Instance.dataController.time;
-        bubble.Hide(); // hide thought bubble and coin again
+        decimal reactionTime = playerChoiceTime - coinPresentTime;
         bool wentBackForCoin = false;
+        
+        bubble.Hide(); // hide thought bubble and coin again
 
         if (receivedInput == 1) // 4.1 received keycode SPACE for going backwards to the coin
         {
@@ -283,6 +285,7 @@ public class DoorEventManager : MonoBehaviour
         GameManager.Instance.bufferDelay = bufferDelay;
         GameManager.Instance.coinPresentTime = coinPresentTime;
         GameManager.Instance.playerChoiceTime = playerChoiceTime;
+        GameManager.Instance.reactionTime = reactionTime;
         GameManager.Instance.wentBackForCoin = wentBackForCoin;
     }
 

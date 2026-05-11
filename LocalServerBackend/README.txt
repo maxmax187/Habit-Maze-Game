@@ -35,6 +35,7 @@ start MySQL (if start-on-windows-startup is not enabled):
 Start-Service MySQL97
 start php server: 
 php -S localhost:8080 index.php
+OR: double-click StartLocalServer.bat
 
 testing:
 new entry test (posting to DB):
@@ -49,6 +50,6 @@ or alternatively test by starting scene "Start" in unity editor and entering som
 
 Data extraction
 install dependencies if needed (first time only)
-pip install mysql-connector-python pandas openpyxl python-dotenv
+pip install pandas python-dotenv sqlalchemy
 
 use python file to bring rounds data to CSV files (will create a directory DataFiles containing the CSV files)
