@@ -18,18 +18,66 @@ output_dir = os.path.join(script_dir, "DataFiles")
 os.makedirs(output_dir, exist_ok=True)
 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
-# Export rounds
-df_rounds = pd.read_sql("SELECT * FROM rounds ORDER BY participantEmail, day, round", engine)
-df_rounds.to_csv(os.path.join(output_dir, f"{timestamp}_rounds.csv"), index=False)
 
-# Export round logs
-df_logs = pd.read_sql("""
-    SELECT r.participantEmail, r.day, r.round, r.phase, rl.t, rl.d
-    FROM roundLogs rl
-    JOIN rounds r ON r.id = rl.roundId
-    ORDER BY r.participantEmail, r.day, r.round, rl.t
-""", engine)
-df_logs.to_csv(os.path.join(output_dir, f"{timestamp}_round_logs.csv"), index=False)
+def export_rounds():
+    """Export rounds table."""
+    df_rounds = pd.read_sql(
+        "SELECT * FROM rounds ORDER BY participantEmail, day, round",
+        engine
+    )
+
+    df_rounds.to_csv(
+        os.path.join(output_dir, f"{timestamp}_rounds.csv"),
+        index=False
+    )
+
+
+def export_round_logs():
+    """Export round logs with round metadata."""
+    df_logs = pd.read_sql(
+        """
+        SELECT r.participantEmail, r.day, r.round, r.phase, rl.t, rl.d
+        FROM roundLogs rl
+        JOIN rounds r ON r.id = rl.roundId
+        ORDER BY r.participantEmail, r.day, r.round, rl.t
+        """,
+        engine
+    )
+
+    df_logs.to_csv(
+        os.path.join(output_dir, f"{timestamp}_round_logs.csv"),
+        index=False
+    )
+
+
+def export_habit_survey_data():
+    """Export habit survey responses."""
+    df_habit_survey = pd.read_sql(
+        """
+        SELECT
+            participantEmail,
+            day,
+            srbai1,
+            srbai2,
+            srbai3,
+            srbai4
+        FROM habitSurvey
+        ORDER BY participantEmail, day
+        """,
+        engine
+    )
+
+    df_habit_survey.to_csv(
+        os.path.join(output_dir, f"{timestamp}_habit_survey.csv"),
+        index=False
+    )
+
+
+# Run exports
+export_rounds()
+# export_round_logs()
+export_habit_survey_data()
 
 engine.dispose()
 print(f"Done — files saved to {output_dir}")
+

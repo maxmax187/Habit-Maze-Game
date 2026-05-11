@@ -1,6 +1,4 @@
-using System.Collections;
 using UnityEngine;
-using UnityEngine.Networking;
 using UnityEngine.UI;
 
 /// <summary>
@@ -48,9 +46,8 @@ public class SRBAISurveyController : MonoBehaviour
     [Tooltip("ItemGroup > Question4 > Likert (ToggleGroup component)")]
     [SerializeField] private ToggleGroup question4Group;
 
-    [Header("API")]
-    [Tooltip("Endpoint to POST HabitSurveyData JSON to.")]
-    [SerializeField] private string surveyApiUrl = "/api/addHabitSurvey";
+    // Submission is routed through DataController > DatabaseHandler,
+    // which handles host selection (isProd flag) and JSON serialization.
 
     // Stores the selected scale value (1-7) for each question; 0 = unanswered.
     private readonly int[] answers = new int[4];
@@ -150,6 +147,7 @@ public class SRBAISurveyController : MonoBehaviour
             }
         }
         continueButton.gameObject.SetActive(true);
+        continueButton.interactable = true;
     }
 
     /// <summary>
@@ -167,6 +165,7 @@ public class SRBAISurveyController : MonoBehaviour
         }
 
         continueButton.gameObject.SetActive(false);
+        continueButton.interactable = true;
     }
 
     /// <summary>
@@ -175,41 +174,37 @@ public class SRBAISurveyController : MonoBehaviour
     /// </summary>
     private void OnContinueClicked()
     {
-        // Disable button immediately to prevent double-clicks during the web request.
+        // Disable button immediately to prevent double-clicks during submission.
         continueButton.gameObject.SetActive(false);
         Hide();
-        StartCoroutine(SubmitAndAdvance());
+        SubmitAndAdvance();
     }
 
     /// <summary>
-    /// Sends survey data to the API endpoint, then advances to the Test phase.
-    /// The game advances whether or not the request succeeds - a network error
-    /// should never soft-lock the participant.
+    /// Submits survey data via DatabaseHandler (which respects the isProd host flag),
+    /// then advances to the Test phase regardless of network result.
     /// </summary>
-    private IEnumerator SubmitAndAdvance()
+    private void SubmitAndAdvance()
     {
         HabitSurveyData surveyData = BuildSurveyData();
-        string jsonData = JsonUtility.ToJson(surveyData);
 
-        Debug.Log($"[SRBAISurvey] Submitting: {jsonData}");
+        // Grab the DatabaseHandler from the same object that holds DataController,
+        // mirroring how DataController.Start() resolves it.
+        DatabaseHandler db = GameManager.Instance.dataController.GetComponent<DatabaseHandler>();
 
-        using (UnityWebRequest request = new UnityWebRequest(surveyApiUrl, "POST"))
-        {
-            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonData);
-            request.uploadHandler = new UploadHandlerRaw(bodyRaw);
-            request.downloadHandler = new DownloadHandlerBuffer();
-            request.SetRequestHeader("Content-Type", "application/json");
-
-            yield return request.SendWebRequest();
-
-            if (request.result == UnityWebRequest.Result.Success)
-                Debug.Log("[SRBAISurvey] Survey data submitted successfully.");
-            else
-                Debug.LogError($"[SRBAISurvey] Submission failed: {request.error}. Advancing anyway.");
-        }
-
-        // Advance to Test phase regardless of API result.
-        GameManager.Instance.AdvanceFromSurveyToTest();
+        db.AddHabitSurvey(
+            surveyData,
+            onSuccess: () =>
+            {
+                Debug.Log("[SRBAISurvey] Survey submitted successfully.");
+                GameManager.Instance.AdvanceFromSurveyToTest();
+            },
+            onError: (error) =>
+            {
+                Debug.LogError($"[SRBAISurvey] Submission failed: {error}. Advancing anyway.");
+                GameManager.Instance.AdvanceFromSurveyToTest();
+            }
+        );
     }
 
     /// <summary>

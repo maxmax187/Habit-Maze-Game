@@ -58,6 +58,12 @@ public class DatabaseHandler : MonoBehaviour
         StartCoroutine(SendDataToServer(GetHost() + "/addParticipant", jsonData));
     }
 
+    public void AddHabitSurvey(HabitSurveyData surveyData, Action onSuccess = null, Action<string> onError = null)
+    {
+        string jsonData = JsonConvert.SerializeObject(surveyData);
+        StartCoroutine(SendDataToServer(GetHost() + "/addHabitSurvey", jsonData, onSuccess, onError));
+    }
+
     public void AddRoundData(RoundData roundData)
     {
         RoundData filteredRoundData = FilterRoundData(roundData);
@@ -83,7 +89,7 @@ public class DatabaseHandler : MonoBehaviour
         return roundData;
     }
 
-    private IEnumerator SendDataToServer(string url, string jsonData)
+    private IEnumerator SendDataToServer(string url, string jsonData, Action onSuccess = null, Action<string> onError = null)
     {
         using (UnityWebRequest request = new UnityWebRequest(url, "POST"))
         {
@@ -97,10 +103,12 @@ public class DatabaseHandler : MonoBehaviour
             if (request.result == UnityWebRequest.Result.Success)
             {
                 Debug.Log("Added: " + request.downloadHandler.text);
+                onSuccess?.Invoke();
             }
             else
             {
                 Debug.LogError("Error adding data: " + request.error);
+                onError?.Invoke(request.error);
             }
         }
     }
