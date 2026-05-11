@@ -3970,7 +3970,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -718.2, y: -608}
+  m_AnchoredPosition: {x: -718, y: -609.2}
   m_SizeDelta: {x: 544.6395, y: 187.619}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &251536178
@@ -3993,13 +3993,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "<b>Practice rounds finished!</b>\nFrom now on you will start gaining points.\nOccasionally
-    gold or silver coins (          ) can appear behind you. Turn around and pick
-    them up to get extra points!\n\nPoints are awarded as follows:\n<b>2 points for
-    finishing the maze.\n2 points from picking up a gold coin (    ). \n1 point from
-    picking up a silver coin (    ). </b>\nPoints for picking up the coin will only
-    be rewarded when the maze is finished in time\n\nPress space to start if you
-    understand."
+  m_text: "<b>Practice rounds finished!</b>\nFrom now on you will start gaining points.\nArriving
+    at the security area, you remember you have left a gold or silver coin (         
+    ) along the way. Press SPACE to turn around and pick them up to get extra points!\n\nPoints
+    are awarded as follows:\n<b>2 points for finishing the maze.\n2 points from picking
+    up a gold coin (    ). \n1 point from picking up a silver coin (    ). </b>\nPoints
+    for picking up the coin will only be rewarded when the maze is finished in time.\n\nPress
+    space to start if you understand."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6c43c8fffbbefa14db2321e203f49481, type: 2}
   m_sharedMaterial: {fileID: 3003168486873295460, guid: 6c43c8fffbbefa14db2321e203f49481, type: 2}
@@ -4026,8 +4026,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
-  m_fontSizeBase: 18
+  m_fontSize: 17
+  m_fontSizeBase: 17
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -5228,7 +5228,7 @@ Transform:
   m_GameObject: {fileID: 290416752}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 26.49, y: 21.3, z: 0.70285434}
+  m_LocalPosition: {x: -4.78, y: 17.1, z: 0.70285434}
   m_LocalScale: {x: 2.958256, y: 2.958256, z: 2.958256}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -24125,7 +24125,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -682.17, y: -629.27}
+  m_AnchoredPosition: {x: -683.92, y: -632.43}
   m_SizeDelta: {x: 4.39, y: 4.39}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1178377890
@@ -71807,7 +71807,7 @@ Transform:
   m_GameObject: {fileID: 1953505291}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 50.73, y: -2.01, z: 0.70285434}
+  m_LocalPosition: {x: 49.15, y: -5.05, z: 0.70285434}
   m_LocalScale: {x: 2.958256, y: 2.958256, z: 2.958256}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -74400,7 +74400,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -704.06, y: -596.86}
+  m_AnchoredPosition: {x: -740.72, y: -601.71}
   m_SizeDelta: {x: 4.39, y: 4.39}
   m_Pivot: {x: 0.50000435, y: 0.49999818}
 --- !u!114 &2068585588
