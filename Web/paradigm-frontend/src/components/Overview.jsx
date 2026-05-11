@@ -25,13 +25,13 @@ function Overview() {
         </p>
         <ul style={{ fontSize: "20px", marginBottom: "28px" }}>
           <li>
-            <a href="/1af8d72c/day1">Day 1</a>
+            <a href="/f8622112/day1">Day 1</a>
           </li>
           <li>
-            <a href="/1af8d72c/day2">Day 2</a>
+            <a href="/f8622112/day2">Day 2</a>
           </li>
           <li>
-            <a href="/1af8d72c/day3">Day 3</a>
+            <a href="/f8622112/day3">Day 3</a>
           </li>
         </ul>
       </>

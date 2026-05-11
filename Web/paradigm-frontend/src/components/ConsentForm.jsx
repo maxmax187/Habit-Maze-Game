@@ -274,7 +274,7 @@ function ConsentForm() {
         <div>
           <h2>Day 1</h2>
           <DayInfo />
-          <StartExperimentButton link="/1af8d72c/experiment1" />
+          <StartExperimentButton link="/f8622112/experiment1" />
         </div>
       )}
     </div>

@@ -9,10 +9,10 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Overview />} />
-        <Route path="/1af8d72c" element={<Overview />} />
-        <Route path="/1af8d72c/day1" element={<Day1 />} />
-        <Route path="/1af8d72c/day2" element={<Day2 />} />
-        <Route path="/1af8d72c/day3" element={<Day3 />} />
+        <Route path="/f8622112" element={<Overview />} />
+        <Route path="/f8622112/day1" element={<Day1 />} />
+        <Route path="/f8622112/day2" element={<Day2 />} />
+        <Route path="/f8622112/day3" element={<Day3 />} />
       </Routes>
     </BrowserRouter>
   );

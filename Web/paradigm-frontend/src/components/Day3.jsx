@@ -10,7 +10,7 @@ function Day3() {
       </div>
       <h2>Day 3</h2>
       <DayInfo />
-      <StartExperimentButton link="/1af8d72c/experiment3" />
+      <StartExperimentButton link="/f8622112/experiment3" />
     </div>
   );
 }
