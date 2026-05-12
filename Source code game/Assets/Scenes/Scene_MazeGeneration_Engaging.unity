@@ -76081,7 +76081,7 @@ PrefabInstance:
       objectReference: {fileID: 1463007061}
     - target: {fileID: 5363610577149727260, guid: ad13d7d574b01354d944f80310d4ca8c, type: 3}
       propertyPath: testRounds
-      value: 20
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5363610577149727260, guid: ad13d7d574b01354d944f80310d4ca8c, type: 3}
       propertyPath: coinController
@@ -76105,19 +76105,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5363610577149727260, guid: ad13d7d574b01354d944f80310d4ca8c, type: 3}
       propertyPath: practiceRounds
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5363610577149727260, guid: ad13d7d574b01354d944f80310d4ca8c, type: 3}
       propertyPath: trainingRounds
-      value: 80
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5363610577149727260, guid: ad13d7d574b01354d944f80310d4ca8c, type: 3}
       propertyPath: testGoldCoinAmt
-      value: 15
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5363610577149727260, guid: ad13d7d574b01354d944f80310d4ca8c, type: 3}
       propertyPath: doorPracticeRounds
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5363610577149727260, guid: ad13d7d574b01354d944f80310d4ca8c, type: 3}
       propertyPath: sceneControllerDay1
@@ -76133,7 +76133,7 @@ PrefabInstance:
       objectReference: {fileID: 474613619}
     - target: {fileID: 5363610577149727260, guid: ad13d7d574b01354d944f80310d4ca8c, type: 3}
       propertyPath: trainingGoldCoinAmt
-      value: 60
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5363610577149727260, guid: ad13d7d574b01354d944f80310d4ca8c, type: 3}
       propertyPath: generateMazeController
@@ -76174,7 +76174,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DevTools
   player: {fileID: 580501515}
   finish: {fileID: 216827165}
-  enableDevTools: 0
+  enableDevTools: 1
   devToolKeyPressDuration: 1
   levelSkipKey: 13
   enableAllLevelsSameSeed: 0
