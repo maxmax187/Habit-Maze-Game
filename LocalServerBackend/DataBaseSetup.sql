@@ -53,4 +53,6 @@ CREATE TABLE IF NOT EXISTS `pxiSurvey` (
   `participantEmail` varchar(255),
   `day` integer,
   `aa` integer, `ch` integer, `ec` integer, `gr` integer,
-  `pf` integer, `aut` inte
+  `pf` integer, `aut` integer, `cur` integer, `imm` integer,
+  `mas` integer, `mea` integer, `enj` integer
+);
