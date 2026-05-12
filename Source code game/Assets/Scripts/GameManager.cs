@@ -315,13 +315,13 @@ public class GameManager : MonoBehaviour
         }
 
         // Check if finished training and is day 2 so should not continue to testing
-        if (gameState == GameState.Training && round == trainingRounds && day == 2)
-        {
-            gameState = GameState.Debrief;
-            uiManager.ShowFinishedTest();
-            round = 1;
-            return;
-        }
+        //if (gameState == GameState.Training && round == trainingRounds && day == 2)
+        //{
+        //    gameState = GameState.Debrief;
+        //    uiManager.ShowFinishedTest();
+        //    round = 1;
+       //     return;
+       // }
 
 
         // Check if finished training
@@ -333,6 +333,7 @@ public class GameManager : MonoBehaviour
         //     round = 1;
         //     return;
         // }
+
         if (gameState == GameState.Training && round == trainingRounds)
         {
             isCoinDevalued = true;

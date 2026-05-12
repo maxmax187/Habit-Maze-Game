@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 /// <summary>
@@ -190,7 +192,14 @@ public class SRBAISurveyController : MonoBehaviour
 
         // upload survey data to the server (async) and advance to test phase
         GameManager.Instance.dataController.InsertHabitSurveyDB(surveyData);
-        GameManager.Instance.AdvanceFromSurveyToTest();
+
+        if (GameManager.Instance.day == 2)
+        {
+            GameManager.Instance.dataController.InsertScoreDB(GameManager.Instance.score);
+            SceneManager.LoadScene("End");
+        }
+        else
+            GameManager.Instance.AdvanceFromSurveyToTest();
     }
 
     /// <summary>
