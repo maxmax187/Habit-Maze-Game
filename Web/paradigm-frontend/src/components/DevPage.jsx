@@ -1,8 +1,7 @@
 import React from "react";
-import { DayInfo } from "./DayInfo";
 import { StartExperimentButton } from "./StartExperimentButton";
 
-function Day2() {
+function DevPage() {
   return (
     <div>
       <div className="logo-container">
@@ -13,6 +12,9 @@ function Day2() {
       Developers only!
       <StartExperimentButton link="/f8622112/devtestbuild" />
       <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", marginTop: "1rem" }}>
+        <a href="/f8622112/devbuilds" rel="noreferrer">
+          Dev Builds
+        </a>
         <a href="https://htionline.tue.nl/f8622112/api/admin.php" target="_blank" rel="noreferrer">
           DB Admin
         </a>
@@ -24,4 +26,4 @@ function Day2() {
   );
 }
 
-export default Day2;
+export default DevPage;

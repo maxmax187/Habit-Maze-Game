@@ -5,6 +5,7 @@ import Day2 from "./components/Day2";
 import Day3 from "./components/Day3";
 import Overview from "./components/Overview";
 import DevPage from "./components/DevPage";
+import DevBuildsPage from "./components/DevBuildsPage";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/f8622112/day2" element={<Day2 />} />
         <Route path="/f8622112/day3" element={<Day3 />} />
         <Route path="/f8622112/devpage" element={<DevPage />} />
+        <Route path="/f8622112/devbuilds" element={<DevBuildsPage />} />
       </Routes>
     </BrowserRouter>
   );
