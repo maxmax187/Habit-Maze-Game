@@ -15103,9 +15103,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingLayerID: -97077293
+  m_SortingLayer: 3
+  m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: fb97f7d47ceb8e4489e75da054ccb422, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -19482,9 +19482,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 6
+  m_SortingLayerID: -97077293
+  m_SortingLayer: 3
+  m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: -4119655120671059145, guid: bbd0c4c4ad1e3df4b80dbd17928809c8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -27515,7 +27515,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98a68161dadb2be43827b680d7088084, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isProd: 0
+  isProd: 1
   apiPath: /f8622112/api
   localhostPath: localhost:8080
 --- !u!1 &1341536260
@@ -72122,8 +72122,8 @@ MonoBehaviour:
   numY: 8
   startAISeeker: {fileID: 1255942824}
   finishAI: {fileID: 1410166892}
-  lowerPercentageLimit: 10
-  upperPercentageLimit: 30
+  lowerPercentageLimit: 60
+  upperPercentageLimit: 80
 --- !u!4 &1957273973
 Transform:
   m_ObjectHideFlags: 0
@@ -76061,7 +76061,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5363610577149727260, guid: ad13d7d574b01354d944f80310d4ca8c, type: 3}
       propertyPath: day
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5363610577149727260, guid: ad13d7d574b01354d944f80310d4ca8c, type: 3}
       propertyPath: player
@@ -76105,19 +76105,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5363610577149727260, guid: ad13d7d574b01354d944f80310d4ca8c, type: 3}
       propertyPath: practiceRounds
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5363610577149727260, guid: ad13d7d574b01354d944f80310d4ca8c, type: 3}
       propertyPath: trainingRounds
-      value: 60
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 5363610577149727260, guid: ad13d7d574b01354d944f80310d4ca8c, type: 3}
       propertyPath: testGoldCoinAmt
-      value: 10
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 5363610577149727260, guid: ad13d7d574b01354d944f80310d4ca8c, type: 3}
       propertyPath: doorPracticeRounds
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5363610577149727260, guid: ad13d7d574b01354d944f80310d4ca8c, type: 3}
       propertyPath: sceneControllerDay1
@@ -76133,7 +76133,7 @@ PrefabInstance:
       objectReference: {fileID: 474613619}
     - target: {fileID: 5363610577149727260, guid: ad13d7d574b01354d944f80310d4ca8c, type: 3}
       propertyPath: trainingGoldCoinAmt
-      value: 30
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 5363610577149727260, guid: ad13d7d574b01354d944f80310d4ca8c, type: 3}
       propertyPath: generateMazeController
@@ -76174,7 +76174,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DevTools
   player: {fileID: 580501515}
   finish: {fileID: 216827165}
-  enableDevTools: 1
+  enableDevTools: 0
   devToolKeyPressDuration: 1
   levelSkipKey: 13
   enableAllLevelsSameSeed: 0
