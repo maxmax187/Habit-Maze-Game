@@ -1,6 +1,6 @@
 <?php
 // ============================================================
-// CONFIGURATION — change these before uploading
+// CONFIGURATION - change these before uploading
 // ============================================================
 require_once __DIR__ . '/env.php';
 loadEnv();
@@ -16,7 +16,7 @@ $error = '';
 
 // Handle login
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'])) {
-    if ($$_POST['password'] === getenv('EXPORT_PASSWORD')) {
+    if ($_POST['password'] === getenv('EXPORT_PASSWORD')) {
         $_SESSION['auth'] = true;
     } else {
         $error = 'Incorrect password.';
@@ -351,7 +351,7 @@ if ($authed && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['export']))
                 <span class="desc">habitSurvey</span>
             </label>
         </div>
-        <button type="submit">Download CSV<?= ''>s' ?></button>
+        <button type="submit">Download CSVs</button>
     </form>
     <p class="note">Single selection downloads a .csv directly. Multiple selections download a .zip containing all selected files. Filenames are prefixed with the current timestamp.</p>
     <a href="?logout" class="logout">Log out</a>
