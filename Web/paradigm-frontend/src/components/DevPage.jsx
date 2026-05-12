@@ -10,17 +10,11 @@ function DevPage() {
       <h2>Dev Page</h2>
       If you are seeing this page you are in the wrong place.
       Developers only!
-      <StartExperimentButton link="/f8622112/devtestbuild" />
+      {/* <StartExperimentButton link="/f8622112/devtestbuild" /> */}
       <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", marginTop: "1rem" }}>
-        <a href="/f8622112/devbuilds" rel="noreferrer">
-          Dev Builds
-        </a>
-        <a href="https://htionline.tue.nl/f8622112/api/admin.php" target="_blank" rel="noreferrer">
-          DB Admin
-        </a>
-        <a href="https://htionline.tue.nl/f8622112/api/export.php" target="_blank" rel="noreferrer">
-          Export Data
-        </a>
+        <a href="/f8622112/devbuilds">Dev Builds</a>
+        <a href="/f8622112/api/admin.php">DB Admin Panel</a>
+        <a href="/f8622112/api/export.php">Export Data</a>
       </div>
     </div>
   );

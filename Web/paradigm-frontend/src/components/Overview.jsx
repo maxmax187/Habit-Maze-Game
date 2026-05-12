@@ -22,9 +22,9 @@ function Overview() {
           Based on our own experience, we expect that you will spend roughly:
         </p>
         <ul style={{ fontSize: "14px", marginBottom: "12px" }}>
-          <li>1 hour on Day 1</li>
-          <li>45 minutes on Day 2</li>
-          <li>1 hour and 20 minutes on Day 3 (including survey)</li>
+          <li>1 hour and 10 minutes on Day 1</li>
+          <li>50 minutes on Day 2</li>
+          <li>1 hour and 30 minutes on Day 3 (including survey)</li>
         </ul>
         <p style={{ fontSize: "16px", marginBottom: "28px" }}>
           After completing the Day 3 game, please don't forget to fill in the final survey via the LimeSurvey link below. 
