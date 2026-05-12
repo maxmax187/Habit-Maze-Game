@@ -15,6 +15,7 @@ function DevPage() {
         <a href="/f8622112/devbuilds">Dev Builds</a>
         <a href="/f8622112/api/admin.php">DB Admin Panel</a>
         <a href="/f8622112/api/export.php">Export Data</a>
+        <a href="/f8622112/">To Participant Landing-Page</a>
       </div>
     </div>
   );
