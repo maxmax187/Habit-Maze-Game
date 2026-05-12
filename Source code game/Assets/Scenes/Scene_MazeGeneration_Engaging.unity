@@ -499,7 +499,7 @@ MonoBehaviour:
   timer: {fileID: 1445099397}
   lowerPercentageLimit: 65
   upperPercentageLimit: 85
-  nodesDistance: 70
+  nodesDistance: 1
   hasSpawned: 0
   totalDistance: 510
   spawnDistance: 0
@@ -72122,8 +72122,8 @@ MonoBehaviour:
   numY: 8
   startAISeeker: {fileID: 1255942824}
   finishAI: {fileID: 1410166892}
-  lowerPercentageLimit: 65
-  upperPercentageLimit: 85
+  lowerPercentageLimit: 10
+  upperPercentageLimit: 30
 --- !u!4 &1957273973
 Transform:
   m_ObjectHideFlags: 0
@@ -76081,7 +76081,7 @@ PrefabInstance:
       objectReference: {fileID: 1463007061}
     - target: {fileID: 5363610577149727260, guid: ad13d7d574b01354d944f80310d4ca8c, type: 3}
       propertyPath: testRounds
-      value: 4
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5363610577149727260, guid: ad13d7d574b01354d944f80310d4ca8c, type: 3}
       propertyPath: coinController
@@ -76109,11 +76109,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5363610577149727260, guid: ad13d7d574b01354d944f80310d4ca8c, type: 3}
       propertyPath: trainingRounds
-      value: 4
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 5363610577149727260, guid: ad13d7d574b01354d944f80310d4ca8c, type: 3}
       propertyPath: testGoldCoinAmt
-      value: 3
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5363610577149727260, guid: ad13d7d574b01354d944f80310d4ca8c, type: 3}
       propertyPath: doorPracticeRounds
@@ -76133,7 +76133,7 @@ PrefabInstance:
       objectReference: {fileID: 474613619}
     - target: {fileID: 5363610577149727260, guid: ad13d7d574b01354d944f80310d4ca8c, type: 3}
       propertyPath: trainingGoldCoinAmt
-      value: 3
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 5363610577149727260, guid: ad13d7d574b01354d944f80310d4ca8c, type: 3}
       propertyPath: generateMazeController
@@ -76179,6 +76179,8 @@ MonoBehaviour:
   levelSkipKey: 13
   enableAllLevelsSameSeed: 0
   seed: 0
+  capFPS: 0
+  targetFrameRate: 15
 --- !u!1001 &5910021378070460872
 PrefabInstance:
   m_ObjectHideFlags: 0

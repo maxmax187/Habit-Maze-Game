@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+
 public class DevTools : MonoBehaviour
 {
     public GameObject player;
@@ -12,6 +13,37 @@ public class DevTools : MonoBehaviour
     [Header("All Levels Same Seed")] // logic handled in GameManager.cs
     public bool enableAllLevelsSameSeed = false;
     public int seed = 0;
+    [Header("All Levels Same Seed")] // logic handled in GameManager.cs
+    [SerializeField] private bool capFPS = false;
+    [SerializeField] private int targetFrameRate = 10;
+
+    private int originalTargetFrameRate;
+    private int originalVSyncCount;
+
+    void Start()
+    {
+        originalTargetFrameRate = Application.targetFrameRate;
+        originalVSyncCount = QualitySettings.vSyncCount;
+
+        if (enabled && capFPS)
+        {
+            // cap FPS (used to simulate slow laptop)
+            Application.targetFrameRate = targetFrameRate; 
+            QualitySettings.vSyncCount = 0;
+        }
+    }
+
+    void OnDestroy()
+    {
+        Application.targetFrameRate = originalTargetFrameRate;
+        QualitySettings.vSyncCount = originalVSyncCount;
+    }
+
+    void OnDisable()
+    {
+        Application.targetFrameRate = originalTargetFrameRate;
+        QualitySettings.vSyncCount = originalVSyncCount;
+    }
 
     void Update()
     {

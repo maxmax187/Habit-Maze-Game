@@ -35,6 +35,7 @@ public class CoinController : MonoBehaviour
 
     public float totalDistance;
     public float spawnDistance;
+    private Path fullPathFromStart;
 
     public decimal spawnTime = 0;
 
@@ -97,7 +98,7 @@ public class CoinController : MonoBehaviour
         }
 
         if (AstarPath.active.graphs.Length == 0) { return; }
-
+        fullPathFromStart = p;
         // SpawnCoin(); // TODO this was old code from paul's game, has been temporarily removed to see if things don't break because of removal
     }
 
@@ -127,14 +128,12 @@ public class CoinController : MonoBehaviour
             // return; 
         }
 
-
-        Path currentPath = startAISeeker.GetCurrentPath();
-        List<GraphNode> nodes = currentPath.path;
+        List<GraphNode> nodes = fullPathFromStart.path;
 
         if (nodes.Count <= nodesDistance)
         {
-            Debug.LogWarning("[CoinController] nodes.Count <= nodesDistance - no coin spawned");
-            return;
+            Debug.LogWarning("[CoinController] nodes.Count <= nodesDistance - continuing anyway");
+            // return;
         }
 
         // TODO max: idk why this is hardcoded, perhaps leave as is for now
