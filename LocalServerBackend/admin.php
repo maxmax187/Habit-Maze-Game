@@ -44,11 +44,11 @@ $presets = [
     'all_rounds'         => 'SELECT * FROM rounds ORDER BY participantEmail, day, round',
     'all_logs'           => 'SELECT r.participantEmail, r.day, r.round, rl.t, rl.d FROM roundLogs rl JOIN rounds r ON r.id = rl.roundId ORDER BY r.participantEmail, r.day, r.round, rl.t LIMIT 500',
     'all_surveys'        => 'SELECT * FROM habitSurvey ORDER BY participantEmail, day',
-    'clear_logs'         => 'TRUNCATE TABLE roundLogs',
-    'clear_rounds'       => 'TRUNCATE TABLE rounds',
     'clear_participants' => 'TRUNCATE TABLE participants',
+    'clear_rounds'       => 'SET FOREIGN_KEY_CHECKS=0; TRUNCATE TABLE rounds; SET FOREIGN_KEY_CHECKS=1',
     'clear_surveys'      => 'TRUNCATE TABLE habitSurvey',
-    'clear_all'          => 'TRUNCATE TABLE roundLogs; TRUNCATE TABLE habitSurvey; TRUNCATE TABLE rounds; TRUNCATE TABLE participants',
+    'clear_logs'         => 'TRUNCATE TABLE roundLogs',
+    'clear_all'          => 'SET FOREIGN_KEY_CHECKS=0; TRUNCATE TABLE roundLogs; TRUNCATE TABLE habitSurvey; TRUNCATE TABLE rounds; TRUNCATE TABLE participants; SET FOREIGN_KEY_CHECKS=1',
 ];
 
 // Find all .sql files in the api directory — never directly accessible via URL

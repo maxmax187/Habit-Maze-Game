@@ -1,5 +1,5 @@
-<!-- Loads the environment variables from the .env file -->
 <?php
+// Loads the environment variables from the .env file
 function loadEnv() {
     $envFile = __DIR__ . '/.env';
     if (file_exists($envFile)) {
