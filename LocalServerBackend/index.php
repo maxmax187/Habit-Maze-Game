@@ -1,13 +1,9 @@
 <?php
 header('Content-Type: application/json');
 
-// Load environment variables from .env file if it exists (development environment)
-if (file_exists(__DIR__ . '/.env')) {
-    $env = parse_ini_file(__DIR__ . '/.env');
-    foreach ($env as $key => $value) {
-        putenv("$key=$value");
-    }
-}
+// load environment variables
+require_once __DIR__ . '/env.php';
+loadEnv();
 
 // Database connection using environment variables
 // TODO Max: should we change this?? or are these simply default values
@@ -18,6 +14,7 @@ $db = new mysqli(
     getenv('DB_NAME') ?: 'pevers',
     getenv('DB_PORT') ?: 3306
 );
+
 
 if ($db->connect_error) {
     die(json_encode([
