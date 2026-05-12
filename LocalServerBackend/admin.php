@@ -1,4 +1,10 @@
 <?php
+// Never let PHP print raw errors — they corrupt the page output
+ini_set('display_errors', 0);
+ini_set('log_errors', 1);
+ini_set('error_log', __DIR__ . '/php-errors.log');
+error_reporting(E_ALL);
+
 // ============================================================
 // CONFIGURATION
 // ============================================================
@@ -6,27 +12,16 @@ require_once __DIR__ . '/env.php';
 loadEnv();
 // ============================================================
 
-// // Load .env credentials (same pattern as index.php)
-// $envFile = __DIR__ . '/.env';
-// if (file_exists($envFile)) {
-//     $env = parse_ini_file($envFile);
-//     foreach ($env as $key => $value) {
-//         putenv("$key=$value");
-//     }
-// }
-
 session_start();
 
-$exportPassword = getenv('EXPORT_PASSWORD') ?: 'NOT_CONFIGURED';
 $error   = '';
 $message = '';
 $results = null;
 $columns = [];
-$affected = null;
 
 // Handle login
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'])) {
-    if ($_POST['password'] === getenv('EXPORT_PASSWORD')) {
+    if ($_POST['password'] === getenv('ADMIN_PASSWORD')) {
         $_SESSION['admin_auth'] = true;
     } else {
         $error = 'Incorrect password.';
@@ -44,33 +39,74 @@ $authed = isset($_SESSION['admin_auth']) && $_SESSION['admin_auth'] === true;
 
 // Preset queries
 $presets = [
-    'show_tables'    => 'SHOW TABLES',
-    'all_participants' => 'SELECT * FROM participants ORDER BY email',
-    'all_rounds'     => 'SELECT * FROM rounds ORDER BY participantEmail, day, round',
-    'all_logs'       => 'SELECT r.participantEmail, r.day, r.round, rl.t, rl.d FROM roundLogs rl JOIN rounds r ON r.id = rl.roundId ORDER BY r.participantEmail, r.day, r.round, rl.t LIMIT 500',
-    'all_surveys'    => 'SELECT * FROM habitSurvey ORDER BY participantEmail, day',
-    'clear_logs'     => 'TRUNCATE TABLE roundLogs',
-    'clear_rounds'   => 'TRUNCATE TABLE rounds',
-    'clear_participants' => 'TRUNCATE TABLE participants',
-    'clear_surveys'  => 'TRUNCATE TABLE habitSurvey',
-    'clear_all'      => 'TRUNCATE TABLE roundLogs; TRUNCATE TABLE habitSurvey; TRUNCATE TABLE rounds; TRUNCATE TABLE participants',
-];
-
-$preset_labels = [
     'show_tables'        => 'SHOW TABLES',
-    'all_participants'   => 'All participants',
-    'all_rounds'         => 'All rounds',
-    'all_logs'           => 'All round logs (limit 500)',
-    'all_surveys'        => 'All habit surveys',
-    'clear_logs'         => '⚠ Clear round logs',
-    'clear_rounds'       => '⚠ Clear rounds',
-    'clear_participants' => '⚠ Clear participants',
-    'clear_surveys'      => '⚠ Clear surveys',
-    'clear_all'          => '⚠⚠ Clear ALL tables',
+    'all_participants'   => 'SELECT * FROM participants ORDER BY email',
+    'all_rounds'         => 'SELECT * FROM rounds ORDER BY participantEmail, day, round',
+    'all_logs'           => 'SELECT r.participantEmail, r.day, r.round, rl.t, rl.d FROM roundLogs rl JOIN rounds r ON r.id = rl.roundId ORDER BY r.participantEmail, r.day, r.round, rl.t LIMIT 500',
+    'all_surveys'        => 'SELECT * FROM habitSurvey ORDER BY participantEmail, day',
+    'clear_logs'         => 'TRUNCATE TABLE roundLogs',
+    'clear_rounds'       => 'TRUNCATE TABLE rounds',
+    'clear_participants' => 'TRUNCATE TABLE participants',
+    'clear_surveys'      => 'TRUNCATE TABLE habitSurvey',
+    'clear_all'          => 'TRUNCATE TABLE roundLogs; TRUNCATE TABLE habitSurvey; TRUNCATE TABLE rounds; TRUNCATE TABLE participants',
 ];
 
-// Handle query execution
-if ($authed && $_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST['run_query']) || isset($_POST['preset']))) {
+// Find all .sql files in the api directory — never directly accessible via URL
+function getSqlFiles() {
+    $files = glob(__DIR__ . '/sql/*.sql');
+    if (!$files) return [];
+    return array_map('basename', $files);
+}
+
+// Execute a SQL string that may contain multiple statements
+// Returns [$ok, $message, $error, $rows, $columns]
+function runSql($db, $sql) {
+    try {
+        // Split on semicolons but ignore empty segments
+        $statements = array_filter(array_map('trim', explode(';', $sql)));
+
+        if (empty($statements)) {
+            return [false, '', 'No valid SQL statements found.', null, []];
+        }
+
+        $lastRows    = null;
+        $lastColumns = [];
+
+        foreach ($statements as $stmt) {
+            if (empty($stmt)) continue;
+
+            // Use mysqli_query with error suppression; check $db->error manually
+            $result = @$db->query($stmt);
+
+            if ($result === false) {
+                // Return the MySQL error message — never crash the page
+                return [false, '', 'MySQL error: ' . $db->error, null, []];
+            }
+
+            if ($result !== true) {
+                // SELECT-type query — fetch results
+                $fields      = $result->fetch_fields();
+                $lastColumns = $fields ? array_column($fields, 'name') : [];
+                $lastRows    = $result->fetch_all(MYSQLI_ASSOC);
+                $result->free();
+            }
+        }
+
+        if ($lastRows !== null) {
+            return [true, count($lastRows) . ' row(s) returned.', '', $lastRows, $lastColumns];
+        }
+        return [true, 'Executed successfully. Rows affected: ' . $db->affected_rows, '', null, []];
+
+    } catch (Throwable $e) {
+        // Catch any unexpected PHP error so the page never white-screens
+        return [false, '', 'Unexpected error: ' . $e->getMessage(), null, []];
+    }
+}
+
+// Handle all POST actions requiring a DB connection
+if ($authed && $_SERVER['REQUEST_METHOD'] === 'POST' &&
+    (isset($_POST['run_query']) || isset($_POST['preset']) || isset($_POST['run_sql_file']))) {
+
     $db = new mysqli(
         getenv('DB_HOST') ?: 'localhost',
         getenv('DB_USER'),
@@ -82,41 +118,43 @@ if ($authed && $_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST['run_query
     if ($db->connect_error) {
         $error = 'DB connection failed: ' . $db->connect_error;
     } else {
-        $sql = '';
+        $sql            = '';
+        $message_prefix = '';
 
+        // Preset
         if (isset($_POST['preset']) && isset($presets[$_POST['preset']])) {
             $sql = $presets[$_POST['preset']];
-        } elseif (isset($_POST['query'])) {
+        }
+
+        // Custom query
+        if (isset($_POST['run_query']) && isset($_POST['query'])) {
             $sql = trim($_POST['query']);
         }
 
-        if ($sql) {
-            // Handle multi-statement queries (used for clear_all)
-            if (strpos($sql, ';') !== false && substr_count($sql, ';') > 1) {
-                $statements = array_filter(array_map('trim', explode(';', $sql)));
-                $allOk = true;
-                foreach ($statements as $stmt) {
-                    if (!$db->query($stmt)) {
-                        $error = 'Error: ' . $db->error;
-                        $allOk = false;
-                        break;
-                    }
-                }
-                if ($allOk) $message = 'All statements executed successfully.';
+        // SQL file loader — basename() prevents path traversal attacks
+        if (isset($_POST['run_sql_file']) && isset($_POST['sql_file'])) {
+            $requestedFile = basename($_POST['sql_file']);
+            $filePath      = __DIR__ . '/sql/' . $requestedFile;
+
+            if (!preg_match('/\.sql$/', $requestedFile) || !file_exists($filePath)) {
+                $error = 'Invalid or missing SQL file: ' . htmlspecialchars($requestedFile);
             } else {
-                $result = $db->query($sql);
-                if ($result === false) {
-                    $error = 'Query error: ' . $db->error;
-                } elseif ($result === true) {
-                    $affected = $db->affected_rows;
-                    $message = 'Query executed. Rows affected: ' . $affected;
-                } else {
-                    $columns = array_column($result->fetch_fields(), 'name');
-                    $results = $result->fetch_all(MYSQLI_ASSOC);
-                    $message = count($results) . ' row(s) returned.';
-                }
+                $sql            = file_get_contents($filePath);
+                $message_prefix = 'File: ' . htmlspecialchars($requestedFile) . ' — ';
             }
         }
+
+        if ($sql && !$error) {
+            [$ok, $msg, $err, $rows, $cols] = runSql($db, $sql);
+            if ($ok) {
+                $message = $message_prefix . $msg;
+                $results = $rows;
+                $columns = $cols;
+            } else {
+                $error = $err;
+            }
+        }
+
         $db->close();
     }
 }
@@ -226,22 +264,6 @@ if ($authed && $_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST['run_query
 
         .btn:hover { background: #00cc6a; }
 
-        .btn-danger {
-            background: #1a1a1a;
-            color: #ff4444;
-            border: 1px solid #ff4444;
-        }
-
-        .btn-danger:hover { background: #ff4444; color: #0f0f0f; }
-
-        .btn-ghost {
-            background: #1a1a1a;
-            color: #888;
-            border: 1px solid #333;
-        }
-
-        .btn-ghost:hover { border-color: #888; color: #e0e0e0; }
-
         .error   { font-size: 0.8rem; color: #ff4444; padding: 0.75rem; background: #1a0000; border: 1px solid #440000; margin-bottom: 1rem; }
         .success { font-size: 0.8rem; color: #00ff88; padding: 0.75rem; background: #001a0d; border: 1px solid #004422; margin-bottom: 1rem; }
 
@@ -286,17 +308,50 @@ if ($authed && $_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST['run_query
         }
 
         .preset-btn:hover { color: #00ff88; background: #111; }
-
         .preset-btn.danger { color: #664444; }
         .preset-btn.danger:hover { color: #ff4444; }
 
+        /* SQL file list */
+        .sql-file-list { display: flex; flex-direction: column; gap: 0.4rem; }
+
+        .sql-file-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            padding: 0.4rem 0.5rem;
+            background: #111;
+        }
+
+        .sql-file-row span {
+            font-size: 0.75rem;
+            color: #888;
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .sql-file-row button {
+            background: none;
+            border: 1px solid #333;
+            color: #00ff88;
+            font-family: inherit;
+            font-size: 0.65rem;
+            padding: 0.2rem 0.6rem;
+            cursor: pointer;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            flex-shrink: 0;
+        }
+
+        .sql-file-row button:hover { background: #00ff88; color: #0f0f0f; border-color: #00ff88; }
+
+        .no-files { font-size: 0.75rem; color: #444; }
+
         .results-panel { overflow-x: auto; }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.78rem;
-        }
+        table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
 
         th {
             background: #111;
@@ -364,6 +419,7 @@ if ($authed && $_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST['run_query
 <div class="layout">
     <!-- Sidebar -->
     <div class="sidebar">
+
         <!-- Preset queries -->
         <div class="panel">
             <h2>Presets</h2>
@@ -415,6 +471,26 @@ if ($authed && $_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST['run_query
             </div>
         </div>
 
+        <!-- SQL file loader -->
+        <div class="panel">
+            <h2>SQL Files</h2>
+            <?php $sqlFiles = getSqlFiles(); ?>
+            <?php if (empty($sqlFiles)): ?>
+                <div class="no-files">No .sql files found in the api directory.</div>
+            <?php else: ?>
+                <div class="sql-file-list">
+                    <?php foreach ($sqlFiles as $file): ?>
+                        <form method="POST" class="sql-file-row"
+                              onsubmit="return confirm('Run <?= htmlspecialchars($file, ENT_QUOTES) ?>?\nThis may modify the database.')">
+                            <input type="hidden" name="sql_file" value="<?= htmlspecialchars($file) ?>">
+                            <span title="<?= htmlspecialchars($file) ?>"><?= htmlspecialchars($file) ?></span>
+                            <button type="submit" name="run_sql_file" value="1">Run</button>
+                        </form>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+        </div>
+
         <!-- Custom query -->
         <div class="panel">
             <h2>Custom Query</h2>
@@ -423,6 +499,7 @@ if ($authed && $_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST['run_query
                 <button type="submit" name="run_query" value="1" class="btn">Run</button>
             </form>
         </div>
+
     </div>
 
     <!-- Results -->
