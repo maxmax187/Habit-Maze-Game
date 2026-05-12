@@ -278,22 +278,25 @@ public class GameManager : MonoBehaviour
         roundData.roundLogs = dataController.roundLogs;
         roundData.round = roundInfo;
 
-        dataController.InsertRoundDB(roundData);
-        ResetDataCollectionPoints();
+        //dataController.InsertRoundDB(roundData);
+        //ResetDataCollectionPoints();
 
 
         if (reachedFinish && gameState != GameState.Practice && gameState != GameState.DoorPractice)
         {
-            if(pickedUpCoin && pickedUpCoinIsGold)
+            if(pickedUpCoin && pickedUpCoinIsGold && !isCoinDevalued)
             {
                 score += goldCoinValue;
-            }else if (pickedUpCoin)
+            }else if (pickedUpCoin && !pickedUpCoinIsGold)
             {
                 score += silverCoinValue;
             }
             score += mazeCompletionValue;
             uiManager.SetScore(score);
         }
+
+        dataController.InsertRoundDB(roundData);
+        ResetDataCollectionPoints();
 
         // Check if finished practice
         if (gameState == GameState.Practice && round == practiceRounds)

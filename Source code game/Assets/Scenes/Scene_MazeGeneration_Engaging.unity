@@ -27515,6 +27515,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98a68161dadb2be43827b680d7088084, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isProd: 0
+  apiPath: /f8622112/api
+  localhostPath: localhost:8080
 --- !u!1 &1341536260
 GameObject:
   m_ObjectHideFlags: 0
@@ -76078,7 +76081,7 @@ PrefabInstance:
       objectReference: {fileID: 1463007061}
     - target: {fileID: 5363610577149727260, guid: ad13d7d574b01354d944f80310d4ca8c, type: 3}
       propertyPath: testRounds
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5363610577149727260, guid: ad13d7d574b01354d944f80310d4ca8c, type: 3}
       propertyPath: coinController
@@ -76106,11 +76109,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5363610577149727260, guid: ad13d7d574b01354d944f80310d4ca8c, type: 3}
       propertyPath: trainingRounds
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5363610577149727260, guid: ad13d7d574b01354d944f80310d4ca8c, type: 3}
       propertyPath: testGoldCoinAmt
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5363610577149727260, guid: ad13d7d574b01354d944f80310d4ca8c, type: 3}
       propertyPath: doorPracticeRounds
@@ -76130,7 +76133,7 @@ PrefabInstance:
       objectReference: {fileID: 474613619}
     - target: {fileID: 5363610577149727260, guid: ad13d7d574b01354d944f80310d4ca8c, type: 3}
       propertyPath: trainingGoldCoinAmt
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5363610577149727260, guid: ad13d7d574b01354d944f80310d4ca8c, type: 3}
       propertyPath: generateMazeController
