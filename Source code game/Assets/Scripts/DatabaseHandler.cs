@@ -6,18 +6,21 @@ using System;
 
 public class DatabaseHandler : MonoBehaviour
 {
-    private bool isProd = false;
+    [SerializeField] private bool isProd = false;
+    [Tooltip("Set to root/api path of server (or wherever php is located)")]
+    [SerializeField] private string apiPath = "/f8622112/api";
+    [Tooltip("Set to root/api path of server (or wherever php is located)")]
+    [SerializeField] private string localhostPath = "localhost:8080";
+
 
     private string GetHost()
     {
         Debug.Log("[DatabaseHandler] getting host");
-        ////////////// TODO: Change to your api endpoint //////////////
-        if (isProd) { return "/api"; }
-        //////////////////////////////////////////////////////////////
+        if (isProd) { return apiPath; }
 
         Debug.Log("[DatabaseHandler] isProd: false");
-        Debug.Log("[DatabaseHandler] returning \"localhost:8080\" instead of \"/api\"");
-        return "localhost:8080";
+        Debug.Log($"[DatabaseHandler] returning {localhostPath} instead of {apiPath}");
+        return localhostPath;
     }
     public void GetParticipantByEmail(string email, Action<Participant> onSuccess, Action<string> onError)
     {

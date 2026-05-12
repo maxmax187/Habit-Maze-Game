@@ -1,7 +1,7 @@
-CREATE DATABASE maze_study;
-USE maze_study;
+CREATE DATABASE IF NOT EXISTS db_mhulshof;
+USE db_mhulshof;
 
-CREATE TABLE `participants` (
+CREATE TABLE IF NOT EXISTS `participants` (
   `id` integer AUTO_INCREMENT PRIMARY KEY,
   `email` varchar(255) UNIQUE,
   `totalScore` integer DEFAULT 0,
@@ -10,7 +10,7 @@ CREATE TABLE `participants` (
   `testSeeds` varchar(500)
 );
 
-CREATE TABLE `rounds` (
+CREATE TABLE IF NOT EXISTS `rounds` (
   `id` integer AUTO_INCREMENT PRIMARY KEY,
   `participantEmail` varchar(255),
   `seed` integer,
@@ -31,13 +31,14 @@ CREATE TABLE `rounds` (
   `coinIdentity` integer
 );
 
-CREATE TABLE `roundLogs` (
+CREATE TABLE IF NOT EXISTS `roundLogs` (
   `roundId` integer,
   `t` decimal(7,2),
   `d` decimal(7,2),
   FOREIGN KEY (`roundId`) REFERENCES `rounds` (`id`)
 );
-CREATE TABLE `habitSurvey` (
+
+CREATE TABLE IF NOT EXISTS `habitSurvey` (
   `id` integer AUTO_INCREMENT PRIMARY KEY,
   `participantEmail` varchar(255),
   `day` integer,
@@ -47,7 +48,7 @@ CREATE TABLE `habitSurvey` (
   `srbai4` integer
 );
 
-CREATE TABLE `pxiSurvey` (
+CREATE TABLE IF NOT EXISTS `pxiSurvey` (
   `id` integer AUTO_INCREMENT PRIMARY KEY,
   `participantEmail` varchar(255),
   `day` integer,
