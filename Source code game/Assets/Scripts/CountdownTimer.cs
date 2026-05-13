@@ -3,7 +3,7 @@ using UnityEngine;
 public class CountdownTimer : MonoBehaviour
 {
     [SerializeField]
-    private float totalTime = 60;
+    private float totalTime = 40;
     public float timeRemaining { get; private set; }
     private bool timerIsRunning = false;
 
