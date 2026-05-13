@@ -62,6 +62,7 @@ public class GameManager : MonoBehaviour
     public int currentSeed;
     public int currentCoinIdentity;
     private bool pickedUpCoinIsGold = true; // true = gold, false = silver. This is bad code but I can't be bothered to fix it.
+    private int[] coinOrderDoorPractice;
     private int[] coinOrderTraining;
     private int[] coinOrderTest;
 
@@ -168,6 +169,11 @@ public class GameManager : MonoBehaviour
         {
             doorPracticeLevels[i] = startValue + i;
         }
+
+        // Generate alternating gold/silver coins for door practice
+        // with 2 gold coin out of 3 rounds (adjust as needed)
+        coinOrderDoorPractice = CoinOrderGenerator.GenerateRandomCoinOrder(doorPracticeRounds, 2, 800);
+        Debug.Log("Door Practice coin order: " + string.Join(", ", coinOrderDoorPractice));
     }
     private void GenerateLevelOrder()
     {
@@ -496,6 +502,7 @@ public class GameManager : MonoBehaviour
         if (gameState == GameState.DoorPractice)
         {
             currentSeed = doorPracticeLevels[round - 1];
+            currentCoinIdentity = coinOrderDoorPractice[round - 1];
             UnityEngine.Random.InitState(currentSeed);
         }
 
